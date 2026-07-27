@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { getStore, markRecruitmentNotificationRead, STORAGE_KEYS } from '../../utils/store';
@@ -6,7 +6,7 @@ import { useStorageSync } from '../../utils/useStorageSync';
 import { ROLE_LABELS } from '../../utils/roles';
 import Avatar from '../shared/Avatar';
 import ConfirmDialog from '../shared/ConfirmDialog';
-import { Bell, ChevronDown, LogOut, User } from 'lucide-react';
+import { Bell, ChevronDown, LogOut, Search, User, Users, Briefcase, CalendarDays, X } from 'lucide-react';
 
 export default function Topbar() {
   const { user, logout } = useAuth();
@@ -28,10 +28,85 @@ export default function Topbar() {
     navigate('/login');
   }
 
+  // Global search
+  const [query, setQuery] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
+  const searchRef = useRef(null);
+
+  const candidates = getStore(STORAGE_KEYS.CANDIDATES);
+  const openings = getStore(STORAGE_KEYS.JOB_OPENINGS);
+  const interviews = getStore(STORAGE_KEYS.INTERVIEWS);
+
+  const searchResults = query.trim().length < 2 ? [] : [
+    ...candidates
+      .filter(c => `${c.firstName} ${c.lastName}`.toLowerCase().includes(query.toLowerCase()))
+      .slice(0, 3)
+      .map(c => ({ type: 'Candidate', label: `${c.firstName} ${c.lastName}`, sub: c.appliedPosition || '', path: `/candidates/${c.id}`, icon: Users })),
+    ...openings
+      .filter(o => o.title?.toLowerCase().includes(query.toLowerCase()))
+      .slice(0, 2)
+      .map(o => ({ type: 'Job', label: o.title, sub: o.department || '', path: '/job-openings', icon: Briefcase })),
+    ...interviews
+      .filter(i => i.round?.toLowerCase().includes(query.toLowerCase()))
+      .slice(0, 2)
+      .map(i => ({ type: 'Interview', label: i.round, sub: i.date || '', path: '/interview-schedule', icon: CalendarDays })),
+  ];
+
+  useEffect(() => {
+    function onKey(e) { if (e.key === 'Escape') { setShowSearch(false); setQuery(''); } }
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, []);
+
   return (
     <>
       <header className="h-14 bg-white border-b border-gray-100 flex items-center justify-between px-6 flex-shrink-0 sticky top-0 z-20">
-        <div />
+        {/* Global Search */}
+        <div className="relative w-64" ref={searchRef}>
+          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+          <input
+            type="text"
+            value={query}
+            onChange={e => { setQuery(e.target.value); setShowSearch(true); }}
+            onFocus={() => setShowSearch(true)}
+            placeholder="Search candidates, jobs…"
+            className="w-full h-8 pl-8 pr-8 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary focus:bg-white transition-all"
+          />
+          {query && (
+            <button onClick={() => { setQuery(''); setShowSearch(false); }} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+              <X size={11} />
+            </button>
+          )}
+          {showSearch && query.trim().length >= 2 && (
+            <>
+              <div className="fixed inset-0 z-30" onClick={() => setShowSearch(false)} />
+              <div className="absolute left-0 top-full mt-1.5 w-80 bg-white rounded-xl shadow-modal border border-gray-100 z-40 overflow-hidden">
+                {searchResults.length === 0 ? (
+                  <p className="text-xs text-gray-400 text-center py-6">No results for &ldquo;{query}&rdquo;</p>
+                ) : (
+                  <div className="py-1">
+                    {searchResults.map((r, i) => (
+                      <button
+                        key={i}
+                        onClick={() => { navigate(r.path); setShowSearch(false); setQuery(''); }}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors text-left"
+                      >
+                        <div className="w-6 h-6 rounded-md bg-primary-light flex items-center justify-center flex-shrink-0">
+                          <r.icon size={11} className="text-primary" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-medium text-gray-800 truncate">{r.label}</p>
+                          {r.sub && <p className="text-[10px] text-gray-400 truncate">{r.sub}</p>}
+                        </div>
+                        <span className="text-[10px] text-gray-400 flex-shrink-0">{r.type}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </div>
 
         <div className="flex items-center gap-1">
 
@@ -43,7 +118,9 @@ export default function Topbar() {
             >
               <Bell size={15} className="text-gray-400" />
               {notifCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full" />
+                <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center tabular-nums">
+                  {notifCount > 9 ? '9+' : notifCount}
+                </span>
               )}
             </button>
 

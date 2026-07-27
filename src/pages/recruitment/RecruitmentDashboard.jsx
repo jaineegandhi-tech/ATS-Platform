@@ -20,13 +20,18 @@ function KpiCard({ icon: Icon, label, value, subtitle, onClick }) {
     <div
       onClick={onClick}
       className={`bg-white rounded-2xl border border-gray-100 shadow-card p-5 flex flex-col justify-between min-h-[120px]
-        ${onClick ? 'cursor-pointer hover:shadow-card-hover hover:border-gray-200' : ''}
-        transition-all duration-200 group`}
+        ${onClick ? 'cursor-pointer hover:shadow-card-hover hover:border-primary/30 group' : ''}
+        transition-all duration-200`}
     >
       <div className="flex items-start justify-between">
         <p className="text-xs font-medium text-gray-400 leading-tight">{label}</p>
-        <div className="w-7 h-7 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0">
-          <Icon size={13} className="text-gray-400" />
+        <div className="flex items-center gap-1">
+          {onClick && (
+            <ArrowUpRight size={11} className="text-gray-300 opacity-0 group-hover:opacity-100 group-hover:text-primary transition-all duration-150" />
+          )}
+          <div className="w-7 h-7 rounded-lg bg-primary-light flex items-center justify-center flex-shrink-0">
+            <Icon size={13} className="text-primary" />
+          </div>
         </div>
       </div>
       <div>
@@ -96,8 +101,12 @@ function ActivityTimeline({ logs }) {
 
   if (logs.length === 0) {
     return (
-      <div className="py-10 text-center">
-        <p className="text-sm text-gray-400">No activity recorded yet.</p>
+      <div className="flex flex-col items-center justify-center py-10 text-center">
+        <div className="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center mb-3">
+          <Activity size={16} className="text-gray-300" />
+        </div>
+        <p className="text-sm font-medium text-gray-500 mb-1">No activity yet</p>
+        <p className="text-xs text-gray-400">Actions taken in the system will appear here.</p>
       </div>
     );
   }
@@ -141,8 +150,8 @@ function ActivityTimeline({ logs }) {
 function InterviewsEmptyState({ onSchedule }) {
   return (
     <div className="flex flex-col items-center justify-center py-14 px-6 text-center">
-      <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center mb-4">
-        <CalendarDays size={20} className="text-gray-300" />
+      <div className="w-12 h-12 rounded-2xl bg-primary-light border border-primary/20 flex items-center justify-center mb-4">
+        <CalendarDays size={20} className="text-primary" />
       </div>
       <p className="text-sm font-medium text-gray-600 mb-1">No interviews scheduled today</p>
       <p className="text-xs text-gray-400 mb-6 max-w-[180px] leading-relaxed">
@@ -158,17 +167,24 @@ function InterviewsEmptyState({ onSchedule }) {
 /* ─────────────────────────────────────────
    SECTION HEADER — consistent pattern
 ───────────────────────────────────────── */
-function SectionHeader({ label, title, action, onAction }) {
+function SectionHeader({ label, title, action, onAction, count }) {
   return (
     <div className="flex items-center justify-between mb-5">
-      <div>
-        {label && <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-0.5">{label}</p>}
-        <h2 className="text-sm font-semibold text-gray-800">{title}</h2>
+      <div className="flex items-center gap-2">
+        <div>
+          {label && <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-0.5">{label}</p>}
+          <h2 className="text-sm font-semibold text-gray-800">{title}</h2>
+        </div>
+        {count != null && (
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-gray-100 text-gray-500 text-[10px] font-semibold tabular-nums">
+            {count}
+          </span>
+        )}
       </div>
       {action && (
         <button
           onClick={onAction}
-          className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+          className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary-hover hover:underline transition-colors cursor-pointer"
         >
           {action} <ArrowUpRight size={11} />
         </button>
@@ -305,7 +321,8 @@ export default function RecruitmentDashboard() {
             <SectionHeader
               label="Schedule"
               title="Today's Interviews"
-              action={todaysInterviews.length > 0 ? 'View all' : null}
+              count={todaysInterviews.length}
+              action="View all"
               onAction={() => navigate('/interview-schedule')}
             />
           </div>
@@ -335,8 +352,8 @@ export default function RecruitmentDashboard() {
                       <p className="text-sm font-semibold text-gray-800 tabular-nums">{iv.time}</p>
                       <div className="flex items-center gap-0.5 mt-0.5">
                         {iv.mode === 'Online'
-                          ? <Video size={10} className="text-gray-400" />
-                          : <MapPin size={10} className="text-gray-400" />
+                          ? <Video size={10} className="text-primary" />
+                          : <MapPin size={10} className="text-primary" />
                         }
                         <span className="text-[10px] text-gray-400">{iv.mode}</span>
                       </div>
@@ -378,6 +395,7 @@ export default function RecruitmentDashboard() {
               <SectionHeader
                 label="Recruitment"
                 title="Candidate Pipeline"
+                count={scopedCandidates.length}
                 action="View pipeline"
                 onAction={() => navigate('/pipeline')}
               />
@@ -401,7 +419,9 @@ export default function RecruitmentDashboard() {
           <SectionHeader
             label="Platform"
             title="Recent Activity"
-            action={`${logs.length} events`}
+            count={logs.length}
+            action="View all"
+            onAction={() => navigate('/reports')}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
             <ActivityTimeline logs={logs.slice(0, Math.ceil(logs.length / 2))} />

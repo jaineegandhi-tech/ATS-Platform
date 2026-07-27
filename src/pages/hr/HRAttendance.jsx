@@ -3,6 +3,7 @@ import { getStore, setStore, STORAGE_KEYS, addLog } from '../../utils/store';
 import { useStorageSync } from '../../utils/useStorageSync';
 import { formatDate, formatTime, todayStr, diffMinutes, minutesToHHMM } from '../../utils/helpers';
 import Modal from '../../components/shared/Modal';
+import Pagination, { PAGE_SIZE } from '../../components/shared/Pagination';
 import { Search, Pencil, Plus } from 'lucide-react';
 
 export default function HRAttendance() {
@@ -12,6 +13,7 @@ export default function HRAttendance() {
   const [editRecord, setEditRecord] = useState(null);
   const [manualForm, setManualForm] = useState(null);
   const [, forceUpdate] = useState(0);
+  const [page, setPage] = useState(1);
   useStorageSync();
 
   const employees = getStore(STORAGE_KEYS.EMPLOYEES);
@@ -28,6 +30,8 @@ export default function HRAttendance() {
     const rec = dateRecords.find(a => a.employeeId === emp.id);
     return { emp, rec };
   });
+
+  const paginated = rows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   function saveEdit() {
     const all = getStore(STORAGE_KEYS.ATTENDANCE);
@@ -89,7 +93,7 @@ export default function HRAttendance() {
               <tr>{['Employee', 'Department', 'Check In', 'Check Out', 'Break', 'Working Hours', 'Status', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {rows.map(({ emp, rec }) => (
+              {paginated.map(({ emp, rec }) => (
                 <tr key={emp.id} className="hover:bg-gray-50">
                   <td className="table-td font-medium">{emp.firstName} {emp.lastName}</td>
                   <td className="table-td">{emp.department}</td>
@@ -111,6 +115,9 @@ export default function HRAttendance() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="px-5 pb-4">
+          <Pagination total={rows.length} page={page} onPage={setPage} />
         </div>
       </div>
 

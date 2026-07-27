@@ -8,6 +8,7 @@ import StatusBadge from '../../components/shared/StatusBadge';
 import Modal from '../../components/shared/Modal';
 import { formatDate } from '../../utils/helpers';
 import { Eye, Star, CalendarPlus, CheckCircle, XCircle, PauseCircle, Send, Clock, CheckCheck, Calendar } from 'lucide-react';
+import Pagination, { PAGE_SIZE } from '../../components/shared/Pagination';
 
 const TABS = ['Scheduled', 'Completed', 'Candidate Status'];
 
@@ -33,6 +34,8 @@ export default function Approvals() {
   const [selected, setSelected] = useState(null);
   const [remarks, setRemarks] = useState('');
   const [, forceUpdate] = useState(0);
+  const [upcomingPage, setUpcomingPage] = useState(1);
+  const [statusPage, setStatusPage] = useState(1);
 
   const candidates = getStore(STORAGE_KEYS.CANDIDATES);
   const employees = getStore(STORAGE_KEYS.EMPLOYEES);
@@ -231,7 +234,7 @@ export default function Approvals() {
                     <tr>{['Candidate', 'Position', 'Round', 'Date', 'Time', 'Mode', 'Interviewer(s)', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
-                    {upcomingInterviews.map(iv => {
+                    {upcomingInterviews.slice((upcomingPage - 1) * PAGE_SIZE, upcomingPage * PAGE_SIZE).map(iv => {
                       const cand = candOf(iv);
                       return (
                         <tr key={iv.id} className="hover:bg-gray-50">
@@ -250,6 +253,9 @@ export default function Approvals() {
                     })}
                   </tbody>
                 </table>
+                <div className="px-5 pb-4">
+                  <Pagination total={upcomingInterviews.length} page={upcomingPage} onPage={setUpcomingPage} />
+                </div>
               </div>
             )}
           </div>
@@ -339,7 +345,7 @@ export default function Approvals() {
             <tbody className="divide-y divide-gray-50">
               {statusCandidates.length === 0 ? (
                 <tr><td colSpan={8} className="table-td text-center text-gray-400 py-8">No candidates found.</td></tr>
-              ) : statusCandidates.map(c => {
+              ) : statusCandidates.slice((statusPage - 1) * PAGE_SIZE, statusPage * PAGE_SIZE).map(c => {
                 const lastEvent = c.timeline?.slice(-1)[0];
                 const updatedBy = lastEvent ? empName(lastEvent.by) : '—';
                 const updatedAt = lastEvent?.at ? new Date(lastEvent.at).toLocaleDateString() : '—';
@@ -365,6 +371,9 @@ export default function Approvals() {
               })}
             </tbody>
           </table>
+          <div className="px-5 pb-4">
+            <Pagination total={statusCandidates.length} page={statusPage} onPage={setStatusPage} />
+          </div>
         </div>
       )}
 

@@ -4,6 +4,7 @@ import { useStorageSync } from '../../utils/useStorageSync';
 import { formatDate } from '../../utils/helpers';
 import Modal from '../../components/shared/Modal';
 import StatusBadge from '../../components/shared/StatusBadge';
+import Pagination, { PAGE_SIZE } from '../../components/shared/Pagination';
 import { Check, X, Eye } from 'lucide-react';
 
 export default function HRLeaveManagement() {
@@ -17,6 +18,7 @@ export default function HRLeaveManagement() {
   const [approveForm, setApproveForm] = useState({ approvedDays: '', remarks: '' });
   const [rejectReason, setRejectReason] = useState('');
   const [, forceUpdate] = useState(0);
+  const [page, setPage] = useState(1);
   useStorageSync();
 
   const employees = getStore(STORAGE_KEYS.EMPLOYEES);
@@ -30,6 +32,8 @@ export default function HRLeaveManagement() {
       (!filterType || l.leaveType === filterType) &&
       (!filterStatus || l.status === filterStatus);
   });
+
+  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   function handleApprove() {
     const all = getStore(STORAGE_KEYS.LEAVES);
@@ -83,7 +87,7 @@ export default function HRLeaveManagement() {
             <tbody className="divide-y divide-gray-50">
               {filtered.length === 0 ? (
                 <tr><td colSpan={9} className="table-td text-center text-gray-400 py-8">No leave applications found.</td></tr>
-              ) : filtered.map(l => (
+              ) : paginated.map(l => (
                 <tr key={l.id} className="hover:bg-gray-50">
                   <td className="table-td font-medium">{l.employeeName}</td>
                   <td className="table-td">{l.department}</td>
@@ -108,6 +112,9 @@ export default function HRLeaveManagement() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="px-5 pb-4">
+          <Pagination total={filtered.length} page={page} onPage={setPage} />
         </div>
       </div>
 

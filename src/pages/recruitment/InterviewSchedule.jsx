@@ -8,6 +8,7 @@ import StatusBadge from '../../components/shared/StatusBadge';
 import Modal from '../../components/shared/Modal';
 import { Eye, Star, X, Pencil, Plus, Search } from 'lucide-react';
 import { isRecruiter } from '../../utils/roles';
+import Pagination, { PAGE_SIZE } from '../../components/shared/Pagination';
 
 const ROUNDS = ['HR Round', 'Technical Round', 'Managerial Round', 'Final Round'];
 const MODES = ['Offline', 'Online'];
@@ -27,6 +28,7 @@ export default function InterviewSchedule() {
   const [scheduleModal, setScheduleModal] = useState(false);
   const [candidateSearch, setCandidateSearch] = useState('');
   const [selectedCandidateId, setSelectedCandidateId] = useState('');
+  const [page, setPage] = useState(1);
 
   const interviews = getStore(STORAGE_KEYS.INTERVIEWS);
   const candidates = getStore(STORAGE_KEYS.CANDIDATES);
@@ -42,6 +44,8 @@ export default function InterviewSchedule() {
       (!filterRound || i.round === filterRound) &&
       (!filterStatus || i.status === filterStatus);
   }).sort((a, b) => b.date?.localeCompare(a.date));
+
+  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   function getCandidate(cid) { return candidates.find(c => c.id === cid); }
   function getEmpName(eid) { const e = employees.find(x => x.id === eid); return e ? `${e.firstName} ${e.lastName}` : eid; }
@@ -128,9 +132,9 @@ export default function InterviewSchedule() {
               <tr>{['Candidate', 'Position', 'Round', 'Date', 'Time', 'Mode', 'Interviewer(s)', 'Status', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {filtered.length === 0 ? (
+              {paginated.length === 0 ? (
                 <tr><td colSpan={9} className="table-td text-center py-12 text-gray-400">No interviews found.</td></tr>
-              ) : filtered.map(iv => {
+              ) : paginated.map(iv => {
                 const cand = getCandidate(iv.candidateId);
                 return (
                   <tr key={iv.id} className="hover:bg-gray-50 transition-colors">
@@ -159,6 +163,9 @@ export default function InterviewSchedule() {
               })}
             </tbody>
           </table>
+        </div>
+        <div className="px-5 pb-4">
+          <Pagination total={filtered.length} page={page} onPage={p => { setPage(p); }} />
         </div>
       </div>
 

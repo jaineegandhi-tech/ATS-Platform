@@ -5,6 +5,7 @@ import { formatDate } from '../../utils/helpers';
 import Avatar from '../../components/shared/Avatar';
 import StatusBadge from '../../components/shared/StatusBadge';
 import ConfirmDialog from '../../components/shared/ConfirmDialog';
+import Pagination, { PAGE_SIZE } from '../../components/shared/Pagination';
 import { Plus, Search, Eye, Pencil, UserX, UserCheck, SlidersHorizontal } from 'lucide-react';
 
 export default function EmployeeList() {
@@ -14,6 +15,7 @@ export default function EmployeeList() {
   const [filterStatus, setFilterStatus] = useState('');
   const [deactivateTarget, setDeactivateTarget] = useState(null);
   const [, forceUpdate] = useState(0);
+  const [page, setPage] = useState(1);
 
   const allEmployees = getStore(STORAGE_KEYS.EMPLOYEES);
   const departments = [...new Set(allEmployees.map(e => e.department).filter(Boolean))];
@@ -26,6 +28,8 @@ export default function EmployeeList() {
       (!filterStatus || e.status === filterStatus)
     );
   });
+
+  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   function handleDeactivate() {
     const all = getStore(STORAGE_KEYS.EMPLOYEES);
@@ -90,7 +94,7 @@ export default function EmployeeList() {
                     No employees found.
                   </td>
                 </tr>
-              ) : filtered.map(emp => (
+              ) : paginated.map(emp => (
                 <tr key={emp.id} className="table-row">
                   <td className="table-td">
                     <div className="flex items-center gap-3">
@@ -130,6 +134,9 @@ export default function EmployeeList() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="px-5 pb-4">
+          <Pagination total={filtered.length} page={page} onPage={setPage} />
         </div>
       </div>
 

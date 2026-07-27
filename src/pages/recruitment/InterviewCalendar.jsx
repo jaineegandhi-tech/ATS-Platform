@@ -22,7 +22,7 @@ function eventStyle(ivStatus, candStatus) {
   if (s === 'failed'  || s === 'rejected')                  return { bar: 'bg-red-500',     chip: 'bg-red-50   border-red-200   text-red-800',    dot: 'bg-red-500'     };
   if (s === 'next round scheduled')                         return { bar: 'bg-orange-500',  chip: 'bg-orange-50 border-orange-200 text-orange-800', dot: 'bg-orange-500'  };
   if (ivStatus === 'completed')                             return { bar: 'bg-slate-400',   chip: 'bg-slate-50 border-slate-200 text-slate-700',   dot: 'bg-slate-400'   };
-  return                                                           { bar: 'bg-indigo-500',  chip: 'bg-indigo-50 border-indigo-200 text-indigo-800', dot: 'bg-indigo-500'  };
+  return                                                           { bar: 'bg-primary',    chip: 'bg-primary-light border-primary/20 text-primary',  dot: 'bg-primary'    };
 }
 
 function initials(c) {
@@ -30,7 +30,7 @@ function initials(c) {
 }
 
 function avatarColor(id) {
-  const colors = ['bg-violet-500','bg-blue-500','bg-emerald-500','bg-orange-500','bg-pink-500','bg-teal-500'];
+  const colors = ['bg-violet-500','bg-primary','bg-emerald-500','bg-orange-500','bg-pink-500','bg-teal-500'];
   return colors[(id?.charCodeAt(4) ?? 0) % colors.length];
 }
 
@@ -138,7 +138,7 @@ export default function InterviewCalendar() {
   }
 
   const LEGEND = [
-    { color: 'bg-indigo-500',  label: 'Scheduled'   },
+    { color: 'bg-primary',     label: 'Scheduled'   },
     { color: 'bg-emerald-500', label: 'Passed'       },
     { color: 'bg-red-500',     label: 'Rejected'     },
     { color: 'bg-orange-500',  label: 'Next Round'   },
@@ -184,7 +184,7 @@ export default function InterviewCalendar() {
       <div className="bg-white rounded-2xl border border-gray-200 shadow-card overflow-hidden">
 
         {/* Navigation header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-indigo-600 to-indigo-500">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-primary to-primary-hover">
           <button onClick={prev} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors">
             <ChevronLeft size={16} />
           </button>
@@ -218,16 +218,16 @@ export default function InterviewCalendar() {
                 return (
                   <div key={i}
                     className={`min-h-[130px] p-2 border-b border-r border-gray-100 transition-colors
-                      ${!d ? 'bg-gray-50/60' : isWeekend ? 'bg-slate-50/40' : 'bg-white hover:bg-indigo-50/20'}`}>
+                      ${!d ? 'bg-gray-50/60' : isWeekend ? 'bg-slate-50/40' : 'bg-white hover:bg-primary-light/30'}`}>
                     {d && (
                       <>
                         <div className="flex items-center justify-between mb-1.5">
                           <span className={`text-xs font-bold w-7 h-7 flex items-center justify-center rounded-full transition-colors
-                            ${isToday ? 'bg-indigo-600 text-white shadow-sm' : 'text-gray-500 hover:bg-gray-100'}`}>
+                            ${isToday ? 'bg-primary text-white shadow-sm' : 'text-gray-500 hover:bg-gray-100'}`}>
                             {d}
                           </span>
                           {ivs.length > 0 && (
-                            <span className="text-[9px] font-bold text-indigo-500 bg-indigo-50 px-1.5 py-0.5 rounded-full">
+                            <span className="text-[9px] font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded-full">
                               {ivs.length}
                             </span>
                           )}
@@ -243,7 +243,7 @@ export default function InterviewCalendar() {
                           {ivs.length > 2 && (
                             <button
                               onClick={() => setOverflow({ ds, ivs })}
-                              className="text-[10px] text-indigo-500 font-semibold pl-1 hover:underline w-full text-left">
+                              className="text-[10px] text-primary font-semibold pl-1 hover:underline w-full text-left">
                               +{ivs.length - 2} more
                             </button>
                           )}
@@ -266,9 +266,9 @@ export default function InterviewCalendar() {
                 const ds = toDateStr(d.getFullYear(), d.getMonth(), d.getDate());
                 const isToday = ds === today;
                 return (
-                  <div key={i} className={`py-3 text-center border-r border-gray-100 last:border-0 ${isToday ? 'bg-indigo-50' : 'bg-gray-50/80'}`}>
+                  <div key={i} className={`py-3 text-center border-r border-gray-100 last:border-0 ${isToday ? 'bg-primary-light' : 'bg-gray-50/80'}`}>
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{DAYS_SHORT[d.getDay()]}</p>
-                    <p className={`text-lg font-bold mt-0.5 ${isToday ? 'text-indigo-600' : 'text-gray-700'}`}>{d.getDate()}</p>
+                    <p className={`text-lg font-bold mt-0.5 ${isToday ? 'text-primary' : 'text-gray-700'}`}>{d.getDate()}</p>
                   </div>
                 );
               })}
@@ -280,7 +280,7 @@ export default function InterviewCalendar() {
                 const ivs = getIvsForDate(ds);
                 const isToday = ds === today;
                 return (
-                  <div key={i} className={`p-2 border-r border-gray-100 last:border-0 space-y-1.5 ${isToday ? 'bg-indigo-50/30' : ''}`}>
+                  <div key={i} className={`p-2 border-r border-gray-100 last:border-0 space-y-1.5 ${isToday ? 'bg-primary-light/50' : ''}`}>
                     {ivs.length === 0 ? (
                       <div className="h-full flex items-center justify-center">
                         <p className="text-[10px] text-gray-300 font-medium">—</p>
@@ -305,8 +305,8 @@ export default function InterviewCalendar() {
           return (
             <div>
               {/* Day banner */}
-              <div className={`px-6 py-4 border-b border-gray-100 flex items-center gap-3 ${isToday ? 'bg-indigo-50' : 'bg-gray-50'}`}>
-                <div className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center font-bold shadow-sm ${isToday ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 border border-gray-200'}`}>
+              <div className={`px-6 py-4 border-b border-gray-100 flex items-center gap-3 ${isToday ? 'bg-primary-light' : 'bg-gray-50'}`}>
+                <div className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center font-bold shadow-sm ${isToday ? 'bg-primary text-white' : 'bg-white text-gray-700 border border-gray-200'}`}>
                   <span className="text-[10px] font-semibold uppercase tracking-wide opacity-70">{DAYS_SHORT[current.getDay()]}</span>
                   <span className="text-xl leading-none">{current.getDate()}</span>
                 </div>
@@ -333,7 +333,7 @@ export default function InterviewCalendar() {
                         <div className="flex items-start gap-4">
                           {/* Time column */}
                           <div className="w-16 flex-shrink-0 text-right">
-                            <p className="text-sm font-bold text-indigo-600">{iv.time}</p>
+                            <p className="text-sm font-bold text-primary">{iv.time}</p>
                             <p className="text-[10px] text-gray-400">{iv.duration}m</p>
                           </div>
                           {/* Accent line */}
@@ -347,7 +347,7 @@ export default function InterviewCalendar() {
                             <div className="flex items-start justify-between gap-2">
                               <div>
                                 <p className="text-sm font-bold text-gray-900">{cand?.firstName} {cand?.lastName}</p>
-                                <p className="text-xs text-indigo-600 font-medium">{cand?.appliedPosition}</p>
+                                <p className="text-xs text-primary font-medium">{cand?.appliedPosition}</p>
                               </div>
                               <StatusBadge status={iv.status} />
                             </div>

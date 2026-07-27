@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { getStore, STORAGE_KEYS } from '../../utils/store';
 import * as pdfjsLib from 'pdfjs-dist/build/pdf';
 import { Clipboard, FileText } from 'lucide-react';
+import Pagination, { PAGE_SIZE } from '../../components/shared/Pagination';
 
 // Simple extraction helpers (mirroring the logic in ResumeExtractorModal)
 function extractInfoFromText(text) {
@@ -25,6 +26,7 @@ export default function ResumeInfo() {
   const [candidates, setCandidates] = useState([]);
   const [selected, setSelected] = useState(null); // candidate id
   const [extracted, setExtracted] = useState({});
+  const [page, setPage] = useState(1);
   const [manual, setManual] = useState({
     currentCTC: '',
     expectedCTC: '',
@@ -107,40 +109,47 @@ export default function ResumeInfo() {
   };
 
   return (
-    <div className="max-w-4xl space-y-6">
+    <div className="space-y-6">
       <div className="pb-6 border-b border-gray-100">
         <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
         <h1 className="text-xl font-semibold text-gray-900">Resume Information</h1>
         <p className="text-sm text-gray-400 mt-0.5">Extract and review candidate resume details.</p>
       </div>
-      <div className="card p-4">
-        <h2 className="section-title mb-4">Candidates</h2>
-        <table className="w-full border">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="p-2 text-left">Name</th>
-              <th className="p-2 text-left">Resume File</th>
-              <th className="p-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {candidates.map((c) => (
-              <tr key={c.id} className="border-t">
-                <td className="p-2">{c.firstName} {c.lastName}</td>
-                <td className="p-2">{c.resumeName || '—'}</td>
-                <td className="p-2 text-center">
-                  <button
-                    className="btn btn-sm btn-primary"
-                    onClick={() => handleExtract(c)}
-                    disabled={loading}
-                  >
-                    {loading ? 'Extracting...' : <><FileText className="inline mr-1" /> Extract</>}
-                  </button>
-                </td>
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-card overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="border-b border-gray-100">
+              <tr>
+                <th className="table-th">Name</th>
+                <th className="table-th">Resume File</th>
+                <th className="table-th">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {candidates.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((c) => (
+                <tr key={c.id} className="hover:bg-gray-50 transition-colors">
+                  <td className="table-td font-medium text-gray-800">{c.firstName} {c.lastName}</td>
+                  <td className="table-td text-gray-500">{c.resumeName || '—'}</td>
+                  <td className="table-td">
+                    <button
+                      className="btn btn-sm btn-secondary"
+                      onClick={() => handleExtract(c)}
+                      disabled={loading}
+                    >
+                      {loading ? 'Extracting…' : <><FileText size={12} className="inline" /> Extract</>}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {candidates.length === 0 && (
+                <tr><td colSpan={3} className="table-td text-center text-gray-400 py-10">No candidates found.</td></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div className="px-5 pb-4">
+          <Pagination total={candidates.length} page={page} onPage={setPage} />
+        </div>
       </div>
 
       {selected && (
