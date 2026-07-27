@@ -200,19 +200,15 @@ export default function TelephonyInterview() {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-violet-100 flex items-center justify-center">
-            <Phone size={18} className="text-violet-600" />
-          </div>
-          <div>
-            <h1 className="page-title mb-0">Telephonic Interviews</h1>
-            <p className="text-xs text-gray-400 mt-0.5">{records.length} record{records.length !== 1 ? 's' : ''} total</p>
-          </div>
+      <div className="flex items-end justify-between pb-6 border-b border-gray-100">
+        <div>
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
+          <h1 className="text-xl font-semibold text-gray-900">Telephonic Interviews</h1>
+          <p className="text-sm text-gray-400 mt-0.5">{records.length} record{records.length !== 1 ? 's' : ''} total</p>
         </div>
         {isHR && (
-          <button className="btn btn-primary flex items-center gap-2" onClick={openNew}>
-            <Plus size={15} /> Add Record
+          <button className="btn btn-primary btn-sm" onClick={openNew}>
+            <Plus size={13} /> Add Record
           </button>
         )}
       </div>

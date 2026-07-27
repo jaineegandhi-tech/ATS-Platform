@@ -168,11 +168,12 @@ export default function Reports() {
   }
 
   return (
-    <div className="space-y-5">
-      <div className="page-header">
+    <div className="space-y-6">
+      <div className="flex items-end justify-between pb-6 border-b border-gray-100">
         <div>
-          <h1 className="page-title">Reports</h1>
-          <p className="text-xs text-gray-400 mt-1">{user.role === ROLES.HR ? 'Your recruitment performance' : 'Organization-wide recruitment performance'}</p>
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Analytics</p>
+          <h1 className="text-xl font-semibold text-gray-900">Reports</h1>
+          <p className="text-sm text-gray-400 mt-0.5">{user.role === ROLES.HR ? 'Your recruitment performance' : 'Organisation-wide recruitment performance'}</p>
         </div>
         <div className="relative">
           <button className="btn btn-primary btn-sm flex items-center gap-1" onClick={() => setExportOpen(o => !o)}>
@@ -191,51 +192,60 @@ export default function Reports() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {/* Pie Chart — Candidates by HR */}
-        <div className="card">
-          <div className="flex items-center gap-2 mb-4"><Users size={16} className="text-primary" /><h2 className="section-title mb-0">Candidates by HR</h2></div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {/* Pie Chart */}
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-6">
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Distribution</p>
+          <h2 className="text-sm font-semibold text-gray-800 mb-5">Candidates by HR</h2>
           <PieChart data={pieData} />
         </div>
 
-        <div className="card">
-          <div className="flex items-center gap-2 mb-4"><BarChart3 size={16} className="text-primary" /><h2 className="section-title mb-0">HR-wise Candidates Offered</h2></div>
-          <div className="space-y-3">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-6">
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Performance</p>
+          <h2 className="text-sm font-semibold text-gray-800 mb-5">Candidates Offered by HR</h2>
+          <div className="space-y-4">
             {rows.map(r => (
               <div key={r.hr.id}>
-                <div className="flex justify-between text-xs mb-1"><span className="font-semibold text-gray-600">{fullName(r.hr)}</span><span>{r.offered}</span></div>
-                <div className="h-2 bg-gray-100 rounded-full overflow-hidden"><div className="h-full bg-emerald-500" style={{ width: `${(r.offered / maxOffered) * 100}%` }} /></div>
+                <div className="flex justify-between text-xs mb-1.5">
+                  <span className="font-medium text-gray-600">{fullName(r.hr)}</span>
+                  <span className="text-gray-400">{r.offered}</span>
+                </div>
+                <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-blue-300 rounded-full" style={{ width: `${(r.offered / maxOffered) * 100}%` }} />
+                </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="card">
-          <div className="flex items-center gap-2 mb-4"><Funnel size={16} className="text-primary" /><h2 className="section-title mb-0">Recruitment Funnel</h2></div>
+
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-6">
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Funnel</p>
+          <h2 className="text-sm font-semibold text-gray-800 mb-5">Recruitment Funnel</h2>
           <div className="grid grid-cols-2 gap-2">
             {stages.map(stage => (
-              <div key={stage} className="rounded-lg bg-gray-50 p-3">
-                <p className="text-xs text-gray-400">{stage}</p>
-                <p className="text-xl font-bold text-gray-900">{candidates.filter(c => c.status === stage).length}</p>
+              <div key={stage} className="bg-gray-50 rounded-xl p-3">
+                <p className="text-[10px] text-gray-400 uppercase tracking-wide">{stage}</p>
+                <p className="text-xl font-semibold text-gray-800 mt-1">{candidates.filter(c => c.status === stage).length}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="card p-0 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-card overflow-hidden">
         <table className="w-full">
-          <thead><tr>{['HR Name', 'Candidates Added', 'Interviews Scheduled', 'Candidates Selected', 'Candidates Offered', 'Candidates Joined', 'Conversion Rate', 'Avg. Time-to-Hire'].map(h => <th key={h} className="table-th">{h}</th>)}</tr></thead>
+          <thead><tr>{['HR Name', 'Added', 'Scheduled', 'Selected', 'Offered', 'Joined', 'Conversion', 'Avg. Time-to-Hire'].map(h => <th key={h} className="table-th">{h}</th>)}</tr></thead>
           <tbody>
             {rows.map(r => (
-              <tr key={r.hr.id}>
-                <td className="table-td font-medium">{fullName(r.hr)}</td>
+              <tr key={r.hr.id} className="hover:bg-gray-50 transition-colors">
+                <td className="table-td font-medium text-gray-800">{fullName(r.hr)}</td>
                 <td className="table-td">{r.added}</td>
                 <td className="table-td">{r.scheduled}</td>
                 <td className="table-td">{r.selected}</td>
                 <td className="table-td">{r.offered}</td>
                 <td className="table-td">{r.joined}</td>
-                <td className="table-td"><span className="badge badge-blue"><TrendingUp size={12} /> {r.conversion}%</span></td>
-                <td className="table-td">{r.tth || '-'} days</td>
+                <td className="table-td"><span className="badge badge-blue">{r.conversion}%</span></td>
+                <td className="table-td">{r.tth || '—'} {r.tth ? 'days' : ''}</td>
               </tr>
             ))}
           </tbody>

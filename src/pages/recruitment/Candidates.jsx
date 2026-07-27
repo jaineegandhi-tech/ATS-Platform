@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { getStore, setStore, STORAGE_KEYS, addLog, syncCandidateStatuses } from '../../utils/store';
 import { useStorageSync } from '../../utils/useStorageSync';
 import StatusBadge from '../../components/shared/StatusBadge';
-import { Plus, Search, Eye, Pencil, CalendarDays, Download, Archive, Users2, UserCheck, MoreVertical } from 'lucide-react';
+import { Plus, Search, Eye, Pencil, CalendarDays, Download, Archive, Users2, UserCheck, MoreVertical, Users } from 'lucide-react';
 import { ROLES, isRecruiter, isHeadHR } from '../../utils/roles';
 
 const ROUNDS = ['HR Round', 'Technical Round', 'Managerial Round', 'Final Round'];
@@ -12,9 +12,8 @@ const STATUSES = ['New Candidate', 'Interview Scheduled', 'Interview Completed',
 
 export default function Candidates() {
   useStorageSync();
-  // Sync candidate statuses with their actual interviews
   syncCandidateStatuses();
-  
+
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,15 +32,11 @@ export default function Candidates() {
   const departments = [...new Set(candidates.map(c => c.department).filter(Boolean))];
 
   const visibleCandidates = candidates.filter(c => {
-    if (user?.role === ROLES.INTERVIEWER) {
-      return interviews.some(i => i.candidateId === c.id && i.interviewerIds?.includes(user.id));
-    }
-    if (user?.role === ROLES.IT) {
-      return ['Selected', 'Offered', 'Offer Sent', 'Offer Accepted', 'Joined', 'Rejected', 'Failed', 'Not Joined'].includes(c.status);
-    }
+    if (user?.role === ROLES.INTERVIEWER) return interviews.some(i => i.candidateId === c.id && i.interviewerIds?.includes(user.id));
+    if (user?.role === ROLES.IT) return ['Selected', 'Offered', 'Offer Sent', 'Offer Accepted', 'Joined', 'Rejected', 'Failed', 'Not Joined'].includes(c.status);
     if (user?.role === ROLES.HR) {
       if (myView) return c.assignedTo === user.id || c.createdBy === user.id;
-      return true; // All Candidates view
+      return true;
     }
     return true;
   });
@@ -78,62 +73,75 @@ export default function Candidates() {
   }
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-center justify-between">
-        <h1 className="page-title">Candidates</h1>
+    <div className="space-y-6">
+
+      {/* Page header */}
+      <div className="flex items-end justify-between pb-6 border-b border-gray-100">
+        <div>
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
+          <h1 className="text-xl font-semibold text-gray-900">Candidates</h1>
+          <p className="text-sm text-gray-400 mt-0.5">{filtered.length} candidate{filtered.length !== 1 ? 's' : ''} found</p>
+        </div>
         <div className="flex items-center gap-2">
           {isOnlyHR && (
-            <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
+            <div className="flex gap-0.5 bg-gray-100 rounded-lg p-1">
               <button
                 onClick={() => setMyView(true)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${myView ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${myView ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
               >
-                <UserCheck size={14} /> My Candidates
+                <UserCheck size={13} /> Mine
               </button>
               <button
                 onClick={() => setMyView(false)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${!myView ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${!myView ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
               >
-                <Users2 size={14} /> All Candidates
+                <Users2 size={13} /> All
               </button>
             </div>
           )}
           {isHR && (
-            <button className="btn-primary btn" onClick={() => navigate('/candidates/add')}>
-              <Plus size={16} /> Add Candidate
+            <button className="btn btn-primary btn-sm" onClick={() => navigate('/candidates/add')}>
+              <Plus size={13} /> Add Candidate
             </button>
           )}
         </div>
       </div>
 
       {/* Filters */}
-      <div className="card p-4">
-        <div className="flex flex-wrap gap-3">
-          <div className="relative flex-1 min-w-48">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <input className="input pl-9" placeholder="Search by name, position, email..." value={search} onChange={e => setSearch(e.target.value)} />
-          </div>
-          <select className="input w-auto" value={filterDept} onChange={e => setFilterDept(e.target.value)}>
-            <option value="">All Departments</option>
-            {departments.map(d => <option key={d}>{d}</option>)}
-          </select>
-          <select className="input w-auto" value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
-            <option value="">All Statuses</option>
-            {STATUSES.map(s => <option key={s}>{s}</option>)}
-          </select>
-          <select className="input w-auto" value={filterRound} onChange={e => setFilterRound(e.target.value)}>
-            <option value="">All Rounds</option>
-            {ROUNDS.map(r => <option key={r}>{r}</option>)}
-          </select>
-          <button className={`btn btn-sm ${showArchived ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setShowArchived(v => !v)}>
-            <Archive size={13} /> {showArchived ? 'Active' : 'Archived'}
-          </button>
+      <div className="flex flex-wrap gap-2">
+        <div className="relative flex-1 min-w-48">
+          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input className="input pl-9 h-9 text-xs" placeholder="Search by name, position, email..." value={search} onChange={e => setSearch(e.target.value)} />
         </div>
+        <select className="input w-auto h-9 text-xs" value={filterDept} onChange={e => setFilterDept(e.target.value)}>
+          <option value="">All Departments</option>
+          {departments.map(d => <option key={d}>{d}</option>)}
+        </select>
+        <select className="input w-auto h-9 text-xs" value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
+          <option value="">All Statuses</option>
+          {STATUSES.map(s => <option key={s}>{s}</option>)}
+        </select>
+        <select className="input w-auto h-9 text-xs" value={filterRound} onChange={e => setFilterRound(e.target.value)}>
+          <option value="">All Rounds</option>
+          {ROUNDS.map(r => <option key={r}>{r}</option>)}
+        </select>
+        <button
+          className={`btn btn-sm ${showArchived ? 'btn-primary' : 'btn-secondary'}`}
+          onClick={() => setShowArchived(v => !v)}
+        >
+          <Archive size={12} /> {showArchived ? 'Active' : 'Archived'}
+        </button>
       </div>
 
       {/* Cards */}
       {filtered.length === 0 ? (
-        <div className="card text-center py-16 text-gray-400">No candidates found.</div>
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-card py-20 flex flex-col items-center text-center">
+          <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center mb-4">
+            <Users size={18} className="text-gray-300" />
+          </div>
+          <p className="text-sm font-medium text-gray-500">No candidates found</p>
+          <p className="text-xs text-gray-400 mt-1">Try adjusting your filters.</p>
+        </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {filtered.map(c => {
@@ -179,73 +187,61 @@ function CandidateCard({ c, initials, ownerName, hasScheduledInterview, isHR, is
   }, []);
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-card hover:shadow-card-hover transition-shadow duration-200 flex flex-col">
-      {/* Top: initials + status badge */}
-      <div className="flex flex-col items-center pt-6 pb-3 px-4">
-        <div className="w-12 h-12 rounded-full bg-primary-light flex items-center justify-center text-primary font-bold text-base mb-3">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-card hover:shadow-card-hover hover:border-gray-200 transition-all duration-200 flex flex-col">
+      {/* Avatar + name */}
+      <div className="flex flex-col items-center pt-6 pb-4 px-4">
+        <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 font-semibold text-sm mb-3 select-none">
           {initials}
         </div>
-        <p className="text-sm font-semibold text-heading text-center leading-tight">{c.firstName} {c.lastName}</p>
-        <p className="text-xs text-body text-center mt-0.5 truncate w-full">{c.appliedPosition || '—'}</p>
-        <div className="mt-2">
+        <p className="text-sm font-medium text-gray-800 text-center leading-tight">{c.firstName} {c.lastName}</p>
+        <p className="text-xs text-gray-400 text-center mt-0.5 truncate w-full">{c.appliedPosition || '—'}</p>
+        <div className="mt-2.5">
           <StatusBadge status={c.status} />
         </div>
       </div>
 
-      {/* Divider */}
-      <div className="border-t border-gray-100 mx-4" />
+      <div className="border-t border-gray-50 mx-4" />
 
-      {/* Details */}
+      {/* Meta */}
       <div className="px-4 py-3 space-y-1.5 flex-1">
         {c.department && (
-          <p className="text-xs text-body truncate"><span className="text-gray-400">Dept:</span> {c.department}</p>
+          <p className="text-xs text-gray-400 truncate">{c.department}</p>
         )}
-        {showOwner && ownerName && (
-          <p className="text-xs text-body truncate"><span className="text-gray-400">HR:</span> {ownerName}</p>
-        )}
-        {!showOwner && ownerName && (
-          <p className="text-xs text-body truncate"><span className="text-gray-400">HR:</span> {ownerName}</p>
+        {ownerName && (
+          <p className="text-xs text-gray-400 truncate">HR: {ownerName}</p>
         )}
         {isOnlyHR && c.assignedTo === user.id && c.createdBy !== user.id && (
-          <span className="text-[10px] font-semibold text-violet-600 bg-violet-50 px-1.5 py-0.5 rounded inline-block">Assigned to you</span>
+          <span className="text-[10px] font-medium text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded inline-block">Assigned to you</span>
         )}
       </div>
 
       {/* Actions */}
-      <div className="px-4 pb-4 flex items-center gap-2">
-        <button
-          className="btn btn-primary btn-sm flex-1"
-          onClick={onView}
-        >
+      <div className="px-4 pb-4 flex items-center gap-1.5">
+        <button className="btn btn-secondary btn-sm flex-1" onClick={onView}>
           <Eye size={12} /> View
         </button>
-
-        {/* Dropdown */}
         <div className="relative" ref={ref}>
-          <button
-            className="btn btn-secondary btn-sm px-2"
-            onClick={() => setOpen(o => !o)}
-          >
-            <MoreVertical size={13} />
+          <button className="btn btn-secondary btn-sm px-2" onClick={() => setOpen(o => !o)}>
+            <MoreVertical size={12} />
           </button>
           {open && (
-            <div className="absolute right-0 bottom-full mb-1 w-48 bg-white border border-gray-100 rounded-xl shadow-modal z-50 py-1">
+            <div className="absolute right-0 bottom-full mb-1 w-48 bg-white border border-gray-100 rounded-xl shadow-modal z-50 py-1.5">
               {isHR && (
-                <button className="w-full text-left px-4 py-2 text-sm text-body hover:bg-surface flex items-center gap-2" onClick={() => { setOpen(false); onEdit(); }}>
-                  <Pencil size={13} /> Edit
+                <button className="w-full text-left px-4 py-2 text-xs text-gray-600 hover:bg-gray-50 flex items-center gap-2" onClick={() => { setOpen(false); onEdit(); }}>
+                  <Pencil size={12} /> Edit
                 </button>
               )}
               {isHR && (
-                <button className="w-full text-left px-4 py-2 text-sm text-body hover:bg-surface flex items-center gap-2" onClick={() => { setOpen(false); onSchedule(); }}>
-                  <CalendarDays size={13} /> {hasScheduledInterview ? 'Reschedule Interview' : 'Schedule Interview'}
+                <button className="w-full text-left px-4 py-2 text-xs text-gray-600 hover:bg-gray-50 flex items-center gap-2" onClick={() => { setOpen(false); onSchedule(); }}>
+                  <CalendarDays size={12} /> {hasScheduledInterview ? 'Reschedule' : 'Schedule Interview'}
                 </button>
               )}
-              <button className="w-full text-left px-4 py-2 text-sm text-body hover:bg-surface flex items-center gap-2" onClick={() => { setOpen(false); onDownload(); }}>
-                <Download size={13} /> Download Resume
+              <button className="w-full text-left px-4 py-2 text-xs text-gray-600 hover:bg-gray-50 flex items-center gap-2" onClick={() => { setOpen(false); onDownload(); }}>
+                <Download size={12} /> Download Resume
               </button>
               {isHR && c.status !== 'archived' && (
-                <button className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2" onClick={() => { setOpen(false); onArchive(); }}>
-                  <Archive size={13} /> Archive
+                <button className="w-full text-left px-4 py-2 text-xs text-red-500 hover:bg-red-50 flex items-center gap-2" onClick={() => { setOpen(false); onArchive(); }}>
+                  <Archive size={12} /> Archive
                 </button>
               )}
             </div>

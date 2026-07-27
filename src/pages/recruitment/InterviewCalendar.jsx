@@ -150,14 +150,19 @@ export default function InterviewCalendar() {
     <div className="space-y-4">
 
       {/* ── Top bar ── */}
-      <div className="flex items-center justify-between">
-        <h1 className="page-title">Interview Calendar</h1>
+      <div className="flex items-end justify-between pb-6 border-b border-gray-100">
+        <div>
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
+          <h1 className="text-xl font-semibold text-gray-900">Interview Calendar</h1>
+        </div>
         <div className="flex items-center gap-2">
-          <button onClick={goToday} className="btn btn-sm btn-secondary">Today</button>
-          <div className="flex rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+          <button onClick={goToday} className="btn btn-secondary btn-sm">Today</button>
+          <div className="flex rounded-lg border border-gray-200 overflow-hidden">
             {['month','week','day'].map(v => (
               <button key={v} onClick={() => setView(v)}
-                className={`px-4 py-1.5 text-xs font-semibold capitalize transition-colors ${view === v ? 'bg-indigo-600 text-white' : 'bg-white text-gray-500 hover:bg-gray-50'}`}>
+                className={`px-3 py-1.5 text-xs font-medium capitalize transition-colors ${
+                  view === v ? 'bg-gray-900 text-white' : 'bg-white text-gray-500 hover:bg-gray-50'
+                }`}>
                 {v}
               </button>
             ))}

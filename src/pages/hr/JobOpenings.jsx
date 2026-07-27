@@ -10,48 +10,28 @@ import ConfirmDialog from '../../components/shared/ConfirmDialog';
 const DEPARTMENTS = ['Human Resources', 'Engineering', 'Marketing', 'Sales', 'Finance', 'Operations', 'Design', 'Product'];
 
 function OpeningModal({ opening, user, onClose, onSaved }) {
-  const [form, setForm] = useState(() => opening || {
-    positionName: '',
-    department: '',
-    openings: 1,
-    filled: 0,
-    status: 'open',
-  });
+  const [form, setForm] = useState(() => opening || { positionName: '', department: '', openings: 1, filled: 0, status: 'open' });
   const [error, setError] = useState('');
 
-  function set(field, value) {
-    setForm(current => ({ ...current, [field]: value }));
-  }
+  function set(field, value) { setForm(current => ({ ...current, [field]: value })); }
 
   function handleSubmit(e) {
     e.preventDefault();
     const positionName = form.positionName.trim();
     const openings = Number(form.openings);
     const filled = Number(form.filled);
-
     if (!positionName) return setError('Please enter a position name.');
     if (!form.department) return setError('Please select a department.');
     if (!Number.isInteger(openings) || openings < 0) return setError('Openings must be 0 or more.');
     if (!Number.isInteger(filled) || filled < 0) return setError('Filled positions must be 0 or more.');
     if (filled > openings) return setError('Filled positions cannot be greater than total openings.');
-
     const all = getStore(STORAGE_KEYS.JOB_OPENINGS);
     const updatedAt = new Date().toISOString();
     const updatedBy = `${user.firstName} ${user.lastName}`;
-    const payload = {
-      ...form,
-      positionName,
-      openings,
-      filled,
-      status: filled >= openings ? 'filled' : 'open',
-      updatedAt,
-      updatedBy,
-    };
-
+    const payload = { ...form, positionName, openings, filled, status: filled >= openings ? 'filled' : 'open', updatedAt, updatedBy };
     const updated = opening
       ? all.map(item => item.id === opening.id ? { ...item, ...payload } : item)
       : [{ id: `JOB${Date.now()}`, ...payload }, ...all];
-
     setStore(STORAGE_KEYS.JOB_OPENINGS, updated);
     addLog(opening ? 'Job Opening Updated' : 'Job Opening Added', user.id, `${updatedBy} ${opening ? 'updated' : 'added'} ${positionName}`);
     onSaved();
@@ -59,12 +39,11 @@ function OpeningModal({ opening, user, onClose, onSaved }) {
 
   return (
     <Modal title={opening ? 'Update Job Opening' : 'Add Job Opening'} onClose={onClose} size="lg">
-      <form className="space-y-4" onSubmit={handleSubmit}>
+      <form className="space-y-5" onSubmit={handleSubmit}>
         <div>
           <label className="label">Position Name</label>
-          <input className="input" value={form.positionName} onChange={e => set('positionName', e.target.value)} placeholder="Example: React Developer" />
+          <input className="input" value={form.positionName} onChange={e => set('positionName', e.target.value)} placeholder="e.g. Senior React Developer" />
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="label">Department</label>
@@ -82,12 +61,10 @@ function OpeningModal({ opening, user, onClose, onSaved }) {
             <input className="input" type="number" min="0" value={form.filled} onChange={e => set('filled', e.target.value)} />
           </div>
         </div>
-
-        {error && <div className="bg-red-50 border border-red-100 text-red-600 rounded-lg px-3 py-2 text-sm">{error}</div>}
-
-        <div className="flex justify-end gap-2.5">
-          <button type="button" className="btn-secondary btn" onClick={onClose}>Cancel</button>
-          <button type="submit" className="btn-primary btn">Save</button>
+        {error && <p className="text-xs text-red-500 bg-red-50 border border-red-100 rounded-lg px-3 py-2">{error}</p>}
+        <div className="flex justify-end gap-2 pt-2 border-t border-gray-50">
+          <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
+          <button type="submit" className="btn btn-primary">Save Opening</button>
         </div>
       </form>
     </Modal>
@@ -109,12 +86,7 @@ export default function JobOpenings() {
     return openings.filter(item => !q || `${item.positionName} ${item.department} ${item.status}`.toLowerCase().includes(q));
   }, [openings, search]);
 
-  function refresh() {
-    setEditing(null);
-    setShowCreate(false);
-    setDeleteTarget(null);
-    forceUpdate(n => n + 1);
-  }
+  function refresh() { setEditing(null); setShowCreate(false); setDeleteTarget(null); forceUpdate(n => n + 1); }
 
   function updateFilled(opening, delta) {
     const nextFilled = Math.min(opening.openings, Math.max(0, opening.filled + delta));
@@ -135,89 +107,109 @@ export default function JobOpenings() {
   }
 
   return (
-    <div className="space-y-5">
-      <div className="page-header">
+    <div className="space-y-6">
+
+      {/* Page header */}
+      <div className="flex items-end justify-between pb-6 border-b border-gray-100">
         <div>
-          <h1 className="page-title">Job Openings</h1>
-          <p className="text-xs text-gray-400 mt-0.5">Head HR creates and publishes openings; HR views published roles.</p>
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
+          <h1 className="text-xl font-semibold text-gray-900">Job Openings</h1>
+          <p className="text-sm text-gray-400 mt-0.5">
+            {canManage ? 'Manage open positions and track hiring progress.' : 'View active positions across the organisation.'}
+          </p>
         </div>
         {canManage && (
-          <button className="btn-primary btn" onClick={() => setShowCreate(true)}>
-            <Plus size={15} /> Add Opening
+          <button className="btn btn-primary btn-sm" onClick={() => setShowCreate(true)}>
+            <Plus size={13} /> Add Opening
           </button>
         )}
       </div>
 
-      <div className="card p-4">
-        <div className="flex flex-wrap gap-3 items-center justify-between">
-          <div className="relative flex-1 min-w-56">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <input className="input input-sm pl-9" placeholder="Search by position or department..." value={search} onChange={e => setSearch(e.target.value)} />
-          </div>
-          <span className={`badge ${canManage ? 'badge-purple' : 'badge-gray'}`}>
-            {canManage ? 'Head HR controls enabled' : 'View only'}
-          </span>
+      {/* Search + badge */}
+      <div className="flex items-center gap-3">
+        <div className="relative flex-1 max-w-sm">
+          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input className="input pl-9 h-9 text-xs" placeholder="Search by position or department..." value={search} onChange={e => setSearch(e.target.value)} />
         </div>
+        <span className={`badge ${canManage ? 'badge-blue' : 'badge-gray'} text-[10px]`}>
+          {canManage ? 'Head HR' : 'View only'}
+        </span>
       </div>
 
+      {/* Cards */}
       {filtered.length === 0 ? (
-        <div className="card text-center py-12 text-gray-400">
-          <Briefcase size={30} className="mx-auto mb-2 text-gray-200" />
-          No job openings found.
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-card py-20 flex flex-col items-center text-center">
+          <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center mb-4">
+            <Briefcase size={18} className="text-gray-300" />
+          </div>
+          <p className="text-sm font-medium text-gray-500">No job openings found</p>
+          <p className="text-xs text-gray-400 mt-1">Try a different search term.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {filtered.map(opening => {
             const remaining = Math.max(0, opening.openings - opening.filled);
             const isFilled = remaining === 0;
+            const fillPct = opening.openings > 0 ? Math.round((opening.filled / opening.openings) * 100) : 0;
             return (
-              <div key={opening.id} className="card space-y-4">
+              <div key={opening.id} className="bg-white rounded-2xl border border-gray-100 shadow-card hover:shadow-card-hover hover:border-gray-200 transition-all duration-200 p-5 flex flex-col gap-4">
+
+                {/* Header */}
                 <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-start gap-3 min-w-0">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${isFilled ? 'bg-emerald-50' : 'bg-primary-light'}`}>
-                      {isFilled ? <CheckCircle size={18} className="text-emerald-600" /> : <Briefcase size={18} className="text-primary-700" />}
-                    </div>
-                    <div className="min-w-0">
-                      <h2 className="font-bold text-gray-900 truncate">{opening.positionName}</h2>
-                      <p className="text-xs text-gray-400">{opening.department}</p>
-                    </div>
+                  <div className="min-w-0">
+                    <h2 className="text-sm font-semibold text-gray-900 truncate">{opening.positionName}</h2>
+                    <p className="text-xs text-gray-400 mt-0.5">{opening.department}</p>
                   </div>
-                  <span className={isFilled ? 'badge-green' : 'badge-blue'}>{isFilled ? 'Filled' : 'Open'}</span>
+                  <span className={`badge flex-shrink-0 ${isFilled ? 'badge-green' : 'badge-blue'}`}>
+                    {isFilled ? 'Filled' : 'Open'}
+                  </span>
                 </div>
 
+                {/* Progress bar */}
+                <div>
+                  <div className="flex justify-between text-xs text-gray-400 mb-1.5">
+                    <span>{opening.filled} filled</span>
+                    <span>{remaining} remaining</span>
+                  </div>
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-500 ${isFilled ? 'bg-emerald-400' : 'bg-blue-400'}`}
+                      style={{ width: `${fillPct}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Stats row */}
                 <div className="grid grid-cols-3 gap-2">
-                  <div className="rounded-lg bg-gray-50 p-3">
-                    <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400">Openings</p>
-                    <p className="text-lg font-bold text-gray-900">{remaining}</p>
-                  </div>
-                  <div className="rounded-lg bg-gray-50 p-3">
-                    <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400">Filled</p>
-                    <p className="text-lg font-bold text-gray-900">{opening.filled}</p>
-                  </div>
-                  <div className="rounded-lg bg-gray-50 p-3">
-                    <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400">Total</p>
-                    <p className="text-lg font-bold text-gray-900">{opening.openings}</p>
-                  </div>
+                  {[['Remaining', remaining], ['Filled', opening.filled], ['Total', opening.openings]].map(([label, val]) => (
+                    <div key={label} className="bg-gray-50 rounded-xl p-3 text-center">
+                      <p className="text-lg font-semibold text-gray-800 leading-none">{val}</p>
+                      <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-wide">{label}</p>
+                    </div>
+                  ))}
                 </div>
 
-                <div className="flex items-center gap-2 text-xs text-gray-400">
-                  <Users size={13} />
-                  <span>Updated by {opening.updatedBy || 'Head HR'} on {formatDate(opening.updatedAt)}</span>
+                {/* Footer */}
+                <div className="flex items-center gap-1.5 text-xs text-gray-400 pt-1 border-t border-gray-50">
+                  <Users size={11} />
+                  <span className="truncate">Updated by {opening.updatedBy || 'Head HR'} · {formatDate(opening.updatedAt)}</span>
                 </div>
 
+                {/* Actions */}
                 {canManage && (
-                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-gray-100">
+                  <div className="flex items-center gap-1.5">
                     <button className="btn btn-xs btn-secondary" onClick={() => updateFilled(opening, -1)} disabled={opening.filled <= 0}>
-                      <Minus size={12} /> Filled
+                      <Minus size={11} />
                     </button>
                     <button className="btn btn-xs btn-secondary" onClick={() => updateFilled(opening, 1)} disabled={opening.filled >= opening.openings}>
-                      <Plus size={12} /> Filled
+                      <Plus size={11} />
                     </button>
-                    <button className="btn btn-xs btn-secondary ml-auto" onClick={() => setEditing(opening)}>
-                      <Pencil size={12} /> Edit
+                    <span className="text-xs text-gray-400 flex-1 text-center">adjust filled</span>
+                    <button className="btn btn-xs btn-secondary" onClick={() => setEditing(opening)}>
+                      <Pencil size={11} /> Edit
                     </button>
                     <button className="btn btn-xs btn-danger" onClick={() => setDeleteTarget(opening)}>
-                      <Trash2 size={12} /> Delete
+                      <Trash2 size={11} />
                     </button>
                   </div>
                 )}
@@ -232,7 +224,7 @@ export default function JobOpenings() {
       {deleteTarget && (
         <ConfirmDialog
           title="Delete Job Opening"
-          message={`Delete ${deleteTarget.positionName}? Other HR team members will no longer see this opening.`}
+          message={`Delete "${deleteTarget.positionName}"? This cannot be undone.`}
           confirmLabel="Delete"
           confirmClass="btn-danger"
           onConfirm={handleDelete}

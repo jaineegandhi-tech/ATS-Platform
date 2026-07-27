@@ -107,23 +107,26 @@ export default function Approvals() {
   }[d] || 'text-gray-600 bg-gray-50 border-gray-100');
 
   return (
-    <div className="space-y-5">
-      <div>
-        <h1 className="page-title">Interview Activity</h1>
-        <p className="text-xs text-gray-400 mt-1">Live view of all interview stages, feedback, and candidate status — visible to everyone.</p>
+    <div className="space-y-6">
+      <div className="pb-6 border-b border-gray-100">
+        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
+        <h1 className="text-xl font-semibold text-gray-900">Interview Activity</h1>
+        <p className="text-sm text-gray-400 mt-0.5">Live view of all interview stages, feedback, and candidate status.</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 rounded-xl p-1 w-fit">
+      <div className="flex gap-0.5 bg-gray-100 rounded-lg p-1 w-fit">
         {TABS.map(t => (
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${tab === t ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+            className={`px-4 py-1.5 rounded-md text-xs font-medium transition-colors ${
+              tab === t ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+            }`}
           >
             {t}
             {t === 'Scheduled' && todayInterviews.length > 0 && (
-              <span className="ml-1.5 bg-violet-500 text-white text-xs rounded-full px-1.5 py-0.5">{todayInterviews.length}</span>
+              <span className="ml-1.5 bg-gray-800 text-white text-[10px] rounded-full px-1.5 py-0.5">{todayInterviews.length}</span>
             )}
           </button>
         ))}
@@ -140,7 +143,9 @@ export default function Approvals() {
               <span className="text-xs text-gray-400">{today}</span>
             </div>
             {todayInterviews.length === 0 ? (
-              <div className="card text-center py-6 text-gray-400 text-sm">No interviews scheduled for today.</div>
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-card py-10 text-center">
+                <p className="text-sm text-gray-400">No interviews scheduled for today.</p>
+              </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {todayInterviews.map(iv => {
@@ -148,33 +153,33 @@ export default function Approvals() {
                   const isCompleted = iv.status === 'completed';
                   const fb = iv.feedback && !iv.feedback.isDraft ? iv.feedback : null;
                   return (
-                    <div key={iv.id} className={`card space-y-2 border-l-4 ${isCompleted ? 'border-l-green-400' : 'border-l-violet-400'}`}>
+                    <div key={iv.id} className={`bg-white rounded-2xl border shadow-card p-5 space-y-3 border-l-4 ${isCompleted ? 'border-l-emerald-300 border-gray-100' : 'border-l-blue-300 border-gray-100'}`}>
                       <div className="flex items-start justify-between">
                         <div>
                           <p className="font-semibold text-gray-900">{cand?.firstName} {cand?.lastName}</p>
                           <p className="text-xs text-gray-400">{cand?.appliedPosition} · {cand?.department}</p>
                         </div>
                         <div className="flex items-center gap-2 flex-shrink-0">
-                          <span className="text-xs font-bold text-violet-600 bg-violet-50 px-2 py-1 rounded-lg">{iv.time}</span>
+                          <span className="text-xs font-medium text-gray-500 bg-gray-50 border border-gray-100 px-2 py-1 rounded-lg tabular-nums">{iv.time}</span>
                           {isCompleted
-                            ? <span className="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-lg">Done</span>
-                            : <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg">Ongoing</span>
+                            ? <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">Done</span>
+                            : <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-1 rounded-lg">Ongoing</span>
                           }
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap gap-2 text-xs text-gray-500">
-                        <span className="bg-gray-100 px-2 py-0.5 rounded">{iv.round}</span>
-                        <span className="bg-gray-100 px-2 py-0.5 rounded">{iv.mode}</span>
-                        {iv.mode === 'Offline' && iv.location && <span className="bg-gray-100 px-2 py-0.5 rounded">📍 {iv.location}</span>}
-                        {iv.mode === 'Online' && iv.meetingLink && <a href={iv.meetingLink} target="_blank" rel="noreferrer" className="bg-blue-50 text-blue-600 px-2 py-0.5 rounded">🔗 Join</a>}
+                      <div className="flex flex-wrap gap-1.5 text-xs text-gray-500">
+                        <span className="bg-gray-50 border border-gray-100 px-2 py-0.5 rounded-lg">{iv.round}</span>
+                        <span className="bg-gray-50 border border-gray-100 px-2 py-0.5 rounded-lg">{iv.mode}</span>
+                        {iv.mode === 'Offline' && iv.location && <span className="bg-gray-50 border border-gray-100 px-2 py-0.5 rounded-lg">📍 {iv.location}</span>}
+                        {iv.mode === 'Online' && iv.meetingLink && <a href={iv.meetingLink} target="_blank" rel="noreferrer" className="bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded-lg">Join</a>}
                       </div>
 
                       <p className="text-xs text-gray-500">Interviewer(s): <strong>{names(iv.interviewerIds)}</strong></p>
 
                       {/* Feedback inline once completed */}
                       {fb && (
-                        <div className="bg-gray-50 rounded-lg p-3 space-y-2 border border-gray-100">
+                        <div className="bg-gray-50 rounded-xl p-3 space-y-2 border border-gray-100">
                           <div className="flex items-center justify-between">
                             <p className="text-xs font-semibold text-gray-600">Interviewer Feedback</p>
                             <span className={`text-xs font-semibold px-2 py-0.5 rounded border ${decisionColor(fb.decision)}`}>{fb.decision}</span>
@@ -216,7 +221,9 @@ export default function Approvals() {
               <h2 className="text-sm font-semibold text-gray-700">Upcoming Interviews</h2>
             </div>
             {upcomingInterviews.length === 0 ? (
-              <div className="card text-center py-6 text-gray-400 text-sm">No upcoming interviews.</div>
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-card py-10 text-center">
+                <p className="text-sm text-gray-400">No upcoming interviews.</p>
+              </div>
             ) : (
               <div className="card p-0 overflow-hidden">
                 <table className="w-full">
@@ -253,16 +260,18 @@ export default function Approvals() {
       {tab === 'Completed' && (
         <div className="space-y-3">
           {completed.length === 0 ? (
-            <div className="card text-center py-10 text-gray-400 text-sm">No completed interviews with feedback yet.</div>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-card py-12 text-center">
+              <p className="text-sm text-gray-400">No completed interviews with feedback yet.</p>
+            </div>
           ) : completed.map(iv => {
             const cand = candOf(iv);
             const fb = iv.feedback;
             return (
-              <div key={iv.id} className="card space-y-3">
+              <div key={iv.id} className="bg-white rounded-2xl border border-gray-100 shadow-card p-5 space-y-3">
                 {/* Header row */}
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-full bg-violet-100 flex items-center justify-center text-violet-700 font-bold text-sm flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 font-semibold text-xs flex-shrink-0">
                       {cand?.firstName?.[0]}{cand?.lastName?.[0]}
                     </div>
                     <div>
@@ -277,15 +286,15 @@ export default function Approvals() {
                 </div>
 
                 {/* Meta row */}
-                <div className="flex flex-wrap gap-2 text-xs">
-                  <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded">{iv.round}</span>
-                  <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded">{formatDate(iv.date)} at {iv.time}</span>
-                  <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded">{iv.mode}</span>
-                  <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded">By: {names(iv.interviewerIds)}</span>
+                <div className="flex flex-wrap gap-1.5 text-xs">
+                  <span className="bg-gray-50 border border-gray-100 text-gray-500 px-2 py-0.5 rounded-lg">{iv.round}</span>
+                  <span className="bg-gray-50 border border-gray-100 text-gray-500 px-2 py-0.5 rounded-lg">{formatDate(iv.date)} at {iv.time}</span>
+                  <span className="bg-gray-50 border border-gray-100 text-gray-500 px-2 py-0.5 rounded-lg">{iv.mode}</span>
+                  <span className="bg-gray-50 border border-gray-100 text-gray-500 px-2 py-0.5 rounded-lg">By: {names(iv.interviewerIds)}</span>
                 </div>
 
                 {/* Ratings strip */}
-                <div className="grid grid-cols-3 gap-3 bg-gray-50 rounded-lg px-4 py-2">
+                <div className="grid grid-cols-3 gap-3 bg-gray-50 rounded-xl px-4 py-3">
                   {[['Technical', fb.technicalSkills], ['Communication', fb.communicationSkills], ['Problem Solving', fb.problemSolving]].map(([l, v]) => (
                     <StarRow key={l} label={l} value={v} />
                   ))}
@@ -369,7 +378,7 @@ export default function Approvals() {
           <Modal title="Interview Details" onClose={() => setSelected(null)} size="lg">
             <div className="space-y-4">
               {/* Candidate + Interview info */}
-              <div className="grid grid-cols-2 gap-3 bg-gray-50 rounded-lg p-4 text-sm">
+              <div className="grid grid-cols-2 gap-3 bg-gray-50 rounded-xl p-4 text-sm">
                 {[
                   ['Candidate', `${cand?.firstName} ${cand?.lastName}`],
                   ['Position', cand?.appliedPosition],
@@ -387,7 +396,7 @@ export default function Approvals() {
               {/* Feedback */}
               <div className="space-y-3">
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Feedback</p>
-                <div className="grid grid-cols-3 gap-3 bg-gray-50 rounded-lg px-4 py-3">
+                <div className="grid grid-cols-3 gap-3 bg-gray-50 rounded-xl px-4 py-3">
                   {[['Technical Skills', fb.technicalSkills], ['Communication', fb.communicationSkills], ['Problem Solving', fb.problemSolving]].map(([l, v]) => (
                     <StarRow key={l} label={l} value={v} />
                   ))}

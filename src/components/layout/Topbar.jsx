@@ -30,29 +30,34 @@ export default function Topbar() {
 
   return (
     <>
-      <header className="h-16 bg-white border-b border-gray-100 flex items-center justify-between px-6 flex-shrink-0 sticky top-0 z-20">
+      <header className="h-14 bg-white border-b border-gray-100 flex items-center justify-between px-6 flex-shrink-0 sticky top-0 z-20">
         <div />
-        <div className="flex items-center gap-2">
+
+        <div className="flex items-center gap-1">
+
+          {/* Notification bell */}
           <div className="relative">
             <button
               onClick={() => setShowNotifs(v => !v)}
-              className="relative flex items-center justify-center w-9 h-9 rounded-lg hover:bg-gray-50 transition-colors"
+              className="relative flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <Bell size={17} className="text-gray-500" />
+              <Bell size={15} className="text-gray-400" />
               {notifCount > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-                  {notifCount > 9 ? '9+' : notifCount}
-                </span>
+                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full" />
               )}
             </button>
 
             {showNotifs && (
               <>
                 <div className="fixed inset-0 z-30" onClick={() => setShowNotifs(false)} />
-                <div className="absolute right-0 top-full mt-1.5 w-80 bg-white rounded-xl shadow-modal border border-gray-100 z-40 overflow-hidden">
+                <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-modal border border-gray-100 z-40 overflow-hidden">
                   <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
                     <p className="text-sm font-semibold text-gray-800">Notifications</p>
-                    {notifCount > 0 && <span className="text-xs bg-red-50 text-red-600 font-semibold px-2 py-0.5 rounded-full">{notifCount} pending</span>}
+                    {notifCount > 0 && (
+                      <span className="text-xs bg-red-50 text-red-600 font-semibold px-2 py-0.5 rounded-full">
+                        {notifCount} new
+                      </span>
+                    )}
                   </div>
                   <div className="max-h-80 overflow-y-auto">
                     {recruitmentNotifs.length > 0 && (
@@ -69,11 +74,11 @@ export default function Topbar() {
                                 if (n.type === 'candidate_reassigned' && n.relatedId) navigate(`/candidates/${n.relatedId}`);
                                 else navigate('/approvals');
                               }}
-                              className={`w-full text-left px-4 py-2.5 transition-colors border-b border-gray-50 last:border-0 ${isNewest ? 'bg-violet-50 border-violet-100' : 'hover:bg-violet-50'}`}
+                              className={`w-full text-left px-4 py-2.5 transition-colors border-b border-gray-50 last:border-0 ${isNewest ? 'bg-blue-50' : 'hover:bg-gray-50'}`}
                             >
                               <div className="flex items-center gap-2">
-                                <p className={`text-sm ${isNewest ? 'text-violet-800 font-semibold' : 'text-gray-700'}`}>{n.message}</p>
-                                {isNewest && <span className="inline-flex items-center rounded-full bg-violet-100 text-violet-700 text-[10px] px-2 py-0.5">NEW</span>}
+                                <p className={`text-sm ${isNewest ? 'text-blue-800 font-semibold' : 'text-gray-700'}`}>{n.message}</p>
+                                {isNewest && <span className="inline-flex items-center rounded-full bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5">NEW</span>}
                               </div>
                               <p className="text-xs text-gray-400">{new Date(n.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                             </button>
@@ -101,15 +106,22 @@ export default function Topbar() {
             )}
           </div>
 
+          <div className="w-px h-4 bg-gray-100 mx-1" />
+
+          {/* User menu */}
           <div className="relative">
             <button
               onClick={() => setShowMenu(v => !v)}
               className="flex items-center gap-2 hover:bg-gray-50 rounded-lg px-2 py-1.5 transition-colors"
             >
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+              <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white text-[10px] font-semibold flex-shrink-0">
                 {user?.firstName?.[0]}{user?.lastName?.[0]}
               </div>
-              <ChevronDown size={13} className="text-gray-400" />
+              <div className="hidden sm:block text-left">
+                <p className="text-xs font-medium text-gray-700 leading-tight">{user?.firstName} {user?.lastName}</p>
+                <p className="text-[10px] text-gray-400 leading-tight">{ROLE_LABELS[user?.role] || user?.role}</p>
+              </div>
+              <ChevronDown size={11} className="text-gray-300" />
             </button>
 
             {showMenu && (

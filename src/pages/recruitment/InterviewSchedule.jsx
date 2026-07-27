@@ -96,44 +96,45 @@ export default function InterviewSchedule() {
   }
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-center justify-between">
-        <h1 className="page-title">Interview Schedule</h1>
+    <div className="space-y-6">
+      <div className="flex items-end justify-between pb-6 border-b border-gray-100">
+        <div>
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
+          <h1 className="text-xl font-semibold text-gray-900">Interview Schedule</h1>
+        </div>
         {isHR && (
-          <button className="btn-primary btn" onClick={() => { setScheduleModal(true); setCandidateSearch(''); setSelectedCandidateId(''); }}>
-            <Plus size={16} /> Schedule Interview
+          <button className="btn btn-primary btn-sm" onClick={() => { setScheduleModal(true); setCandidateSearch(''); setSelectedCandidateId(''); }}>
+            <Plus size={13} /> Schedule Interview
           </button>
         )}
       </div>
 
-      <div className="card p-4">
-        <div className="flex flex-wrap gap-3">
-          <input type="date" className="input w-auto" value={filterDate} onChange={e => setFilterDate(e.target.value)} />
-          <select className="input w-auto" value={filterRound} onChange={e => setFilterRound(e.target.value)}>
+      <div className="flex flex-wrap gap-2">
+          <input type="date" className="input h-9 text-xs w-auto" value={filterDate} onChange={e => setFilterDate(e.target.value)} />
+          <select className="input h-9 text-xs w-auto" value={filterRound} onChange={e => setFilterRound(e.target.value)}>
             <option value="">All Rounds</option>
             {ROUNDS.map(r => <option key={r}>{r}</option>)}
           </select>
-          <select className="input w-auto" value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
+          <select className="input h-9 text-xs w-auto" value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
             <option value="">All Statuses</option>
             {['scheduled', 'completed', 'cancelled'].map(s => <option key={s} className="capitalize">{s}</option>)}
           </select>
         </div>
-      </div>
 
-      <div className="card p-0 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="border-b border-gray-100">
               <tr>{['Candidate', 'Position', 'Round', 'Date', 'Time', 'Mode', 'Interviewer(s)', 'Status', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {filtered.length === 0 ? (
-                <tr><td colSpan={9} className="table-td text-center text-gray-400 py-8">No interviews found.</td></tr>
+                <tr><td colSpan={9} className="table-td text-center py-12 text-gray-400">No interviews found.</td></tr>
               ) : filtered.map(iv => {
                 const cand = getCandidate(iv.candidateId);
                 return (
-                  <tr key={iv.id} className="hover:bg-gray-50">
-                    <td className="table-td font-medium">{cand?.firstName} {cand?.lastName}</td>
+                  <tr key={iv.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="table-td font-medium text-gray-800">{cand?.firstName} {cand?.lastName}</td>
                     <td className="table-td">{cand?.appliedPosition}</td>
                     <td className="table-td">{iv.round}</td>
                     <td className="table-td">{formatDate(iv.date)}</td>

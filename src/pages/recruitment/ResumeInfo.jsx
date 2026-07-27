@@ -107,8 +107,12 @@ export default function ResumeInfo() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <h1 className="page-title">Resume Information</h1>
+    <div className="max-w-4xl space-y-6">
+      <div className="pb-6 border-b border-gray-100">
+        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
+        <h1 className="text-xl font-semibold text-gray-900">Resume Information</h1>
+        <p className="text-sm text-gray-400 mt-0.5">Extract and review candidate resume details.</p>
+      </div>
       <div className="card p-4">
         <h2 className="section-title mb-4">Candidates</h2>
         <table className="w-full border">

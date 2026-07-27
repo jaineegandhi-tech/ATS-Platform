@@ -168,14 +168,15 @@ export default function RolesPermissions() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-end justify-between pb-6 border-b border-gray-100">
         <div>
-          <h1 className="page-title">Roles & Permissions</h1>
-          <p className="text-xs text-body mt-1">Head HR manages roles, module access, and user accounts.</p>
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Administration</p>
+          <h1 className="text-xl font-semibold text-gray-900">Roles & Permissions</h1>
+          <p className="text-sm text-gray-400 mt-0.5">Manage roles, module access, and user accounts.</p>
         </div>
         {headHR && (
-          <button className="btn btn-primary" onClick={() => { setShowAddUser(v => !v); setShowNewRole(false); }}>
-            <UserPlus size={15} /> {showAddUser ? 'Cancel' : 'Add User'}
+          <button className="btn btn-primary btn-sm" onClick={() => { setShowAddUser(v => !v); setShowNewRole(false); }}>
+            <UserPlus size={13} /> {showAddUser ? 'Cancel' : 'Add User'}
           </button>
         )}
       </div>
