@@ -17,12 +17,13 @@ const HOUR_SLOTS  = Array.from({ length: 13 }, (_, i) => i + 7); // 7 AM – 7 P
 /* ── colour scheme per status ── */
 function eventStyle(ivStatus, candStatus) {
   const s = candStatus?.toLowerCase();
-  if (ivStatus === 'cancelled')                              return { bar: 'bg-gray-400',    chip: 'bg-gray-50  border-gray-200  text-gray-600',  dot: 'bg-gray-400'    };
-  if (s === 'passed'  || s === 'selected')                  return { bar: 'bg-emerald-500', chip: 'bg-emerald-50 border-emerald-200 text-emerald-800', dot: 'bg-emerald-500' };
-  if (s === 'failed'  || s === 'rejected')                  return { bar: 'bg-red-500',     chip: 'bg-red-50   border-red-200   text-red-800',    dot: 'bg-red-500'     };
-  if (s === 'next round scheduled')                         return { bar: 'bg-orange-500',  chip: 'bg-orange-50 border-orange-200 text-orange-800', dot: 'bg-orange-500'  };
-  if (ivStatus === 'completed')                             return { bar: 'bg-slate-400',   chip: 'bg-slate-50 border-slate-200 text-slate-700',   dot: 'bg-slate-400'   };
-  return                                                           { bar: 'bg-primary',    chip: 'bg-primary-light border-primary/20 text-primary',  dot: 'bg-primary'    };
+  if (ivStatus === 'cancelled')       return { bar: '#a8a29e', chip: { bg: '#faf7f2', border: '#e8e2d9', color: '#78716c' } };
+  if (s === 'passed' || s === 'selected') return { bar: '#16a34a', chip: { bg: '#dcfce7', border: '#bbf7d0', color: '#15803d' } };
+  if (s === 'failed' || s === 'rejected') return { bar: '#dc2626', chip: { bg: '#fee2e2', border: '#fecaca', color: '#b91c1c' } };
+  if (s === 'next round scheduled')   return { bar: '#d97706', chip: { bg: '#fef3c7', border: '#fde68a', color: '#92400e' } };
+  if (ivStatus === 'completed')       return { bar: '#78716c', chip: { bg: '#faf7f2', border: '#e8e2d9', color: '#78716c' } };
+  // default — scheduled
+  return                                     { bar: '#d97706', chip: { bg: '#fef3c7', border: '#fde68a', color: '#92400e' } };
 }
 
 function initials(c) {
@@ -30,7 +31,7 @@ function initials(c) {
 }
 
 function avatarColor(id) {
-  const colors = ['bg-violet-500','bg-primary','bg-emerald-500','bg-orange-500','bg-pink-500','bg-teal-500'];
+  const colors = ['#d97706','#b45309','#92400e','#78716c','#a8a29e','#3c2a21'];
   return colors[(id?.charCodeAt(4) ?? 0) % colors.length];
 }
 
@@ -40,11 +41,14 @@ function EventChip({ iv, cand, interviewers, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left rounded-lg border overflow-hidden hover:shadow-md transition-all duration-150 group ${style.chip}`}
+      className="w-full text-left rounded-lg overflow-hidden transition-all duration-150"
+      style={{ backgroundColor: style.chip.bg, border: `1px solid ${style.chip.border}`, color: style.chip.color }}
+      onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 2px 8px rgba(60,42,33,0.10)'; }}
+      onMouseLeave={e => { e.currentTarget.style.boxShadow = 'none'; }}
     >
       <div className="flex">
         {/* accent bar */}
-        <div className={`w-1 flex-shrink-0 rounded-l-lg ${style.bar}`} />
+        <div className="w-1 flex-shrink-0 rounded-l-lg" style={{ backgroundColor: style.bar }} />
         <div className="px-2 py-1.5 min-w-0 flex-1">
           <div className="flex items-center gap-1.5 mb-0.5">
             <Clock size={9} className="flex-shrink-0 opacity-60" />
@@ -71,7 +75,8 @@ export default function InterviewCalendar() {
   const [view, setView]       = useState('month');
   const [current, setCurrent] = useState(new Date());
   const [selected, setSelected] = useState(null);
-  const [overflow, setOverflow] = useState(null); // { ds, ivs } for "+N more"
+  const [overflow, setOverflow] = useState(null);
+  const [showToday, setShowToday] = useState(false);
 
   const allInterviews = getStore(STORAGE_KEYS.INTERVIEWS);
   const interviews = isRecruiter(user) ? allInterviews : allInterviews.filter(i => i.interviewerIds?.includes(user?.id));
@@ -103,7 +108,7 @@ export default function InterviewCalendar() {
       return new Date(c.getFullYear(), c.getMonth(), c.getDate() + 1);
     });
   }
-  function goToday() { setCurrent(new Date()); }
+  function goToday() { setCurrent(new Date()); setShowToday(true); }
 
   /* header label */
   function headerLabel() {
@@ -138,31 +143,38 @@ export default function InterviewCalendar() {
   }
 
   const LEGEND = [
-    { color: 'bg-primary',     label: 'Scheduled'   },
-    { color: 'bg-emerald-500', label: 'Passed'       },
-    { color: 'bg-red-500',     label: 'Rejected'     },
-    { color: 'bg-orange-500',  label: 'Next Round'   },
-    { color: 'bg-slate-400',   label: 'Completed'    },
-    { color: 'bg-gray-400',    label: 'Cancelled'    },
+    { color: '#d97706', label: 'Scheduled'  },
+    { color: '#16a34a', label: 'Passed'     },
+    { color: '#dc2626', label: 'Rejected'   },
+    { color: '#d97706', label: 'Next Round' },
+    { color: '#78716c', label: 'Completed'  },
+    { color: '#a8a29e', label: 'Cancelled'  },
   ];
 
   return (
     <div className="space-y-4">
 
       {/* ── Top bar ── */}
-      <div className="flex items-end justify-between pb-6 border-b border-gray-100">
+      <div className="flex items-end justify-between pb-6 border-b border-[#e8e2d9]">
         <div>
-          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
-          <h1 className="text-xl font-semibold text-gray-900">Interview Calendar</h1>
+          <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
+          <h1 className="text-xl font-semibold text-[#3c2a21]">Interview Calendar</h1>
         </div>
         <div className="flex items-center gap-2">
           <button onClick={goToday} className="btn btn-secondary btn-sm">Today</button>
-          <div className="flex rounded-lg border border-gray-200 overflow-hidden">
+          <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid #e8e2d9' }}>
             {['month','week','day'].map(v => (
               <button key={v} onClick={() => setView(v)}
-                className={`px-3 py-1.5 text-xs font-medium capitalize transition-colors ${
-                  view === v ? 'bg-gray-900 text-white' : 'bg-white text-gray-500 hover:bg-gray-50'
-                }`}>
+                style={{
+                  padding: '6px 12px', fontSize: '12px', fontWeight: 500,
+                  textTransform: 'capitalize', transition: 'all 150ms',
+                  backgroundColor: view === v ? '#d97706' : '#ffffff',
+                  color: view === v ? '#ffffff' : '#78716c',
+                  borderRight: v !== 'day' ? '1px solid #e8e2d9' : 'none',
+                }}
+                onMouseEnter={e => { if (view !== v) e.currentTarget.style.backgroundColor = '#faf7f2'; }}
+                onMouseLeave={e => { if (view !== v) e.currentTarget.style.backgroundColor = '#ffffff'; }}
+              >
                 {v}
               </button>
             ))}
@@ -174,25 +186,35 @@ export default function InterviewCalendar() {
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
         {LEGEND.map(({ color, label }) => (
           <div key={label} className="flex items-center gap-1.5">
-            <div className={`w-2.5 h-2.5 rounded-full ${color}`} />
-            <span className="text-xs text-gray-500 font-medium">{label}</span>
+            <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: color }} />
+            <span className="text-xs font-medium" style={{ color: '#78716c' }}>{label}</span>
           </div>
         ))}
       </div>
 
       {/* ── Calendar card ── */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-card overflow-hidden">
+      <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-hidden">
 
         {/* Navigation header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-primary to-primary-hover">
-          <button onClick={prev} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors">
+        <div className="flex items-center justify-between px-6 py-4" style={{ borderBottom: '1px solid #e8e2d9', backgroundColor: '#faf7f2' }}>
+          <button onClick={prev} className="w-8 h-8 flex items-center justify-center transition-colors"
+            style={{ borderRadius: '8px', border: '1px solid #e8e2d9', backgroundColor: '#ffffff', color: '#78716c' }}
+            onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#f5f1eb'; e.currentTarget.style.borderColor = '#d97706'; }}
+            onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.borderColor = '#e8e2d9'; }}
+          >
             <ChevronLeft size={16} />
           </button>
-          <div className="flex items-center gap-2 text-white">
-            <CalendarDays size={16} className="opacity-80" />
-            <h2 className="text-sm font-bold tracking-tight">{headerLabel()}</h2>
+          <div className="flex items-center gap-2">
+            <CalendarDays size={16} style={{ color: '#d97706' }} />
+            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '15px', fontWeight: 700, letterSpacing: '0.45px', color: '#3c2a21' }}>
+              {headerLabel()}
+            </h2>
           </div>
-          <button onClick={next} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors">
+          <button onClick={next} className="w-8 h-8 flex items-center justify-center transition-colors"
+            style={{ borderRadius: '8px', border: '1px solid #e8e2d9', backgroundColor: '#ffffff', color: '#78716c' }}
+            onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#f5f1eb'; e.currentTarget.style.borderColor = '#d97706'; }}
+            onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.borderColor = '#e8e2d9'; }}
+          >
             <ChevronRight size={16} />
           </button>
         </div>
@@ -201,9 +223,9 @@ export default function InterviewCalendar() {
         {view === 'month' && (
           <>
             {/* Day headers */}
-            <div className="grid grid-cols-7 border-b border-gray-100">
+            <div className="grid grid-cols-7 border-b border-[#e8e2d9]">
               {DAYS_SHORT.map(d => (
-                <div key={d} className="py-2.5 text-center text-xs font-bold text-gray-400 uppercase tracking-widest bg-gray-50/80">
+                <div key={d} className="py-2.5 text-center text-xs font-bold text-[#a8a29e] uppercase tracking-widest bg-[#faf7f2]/80">
                   {d}
                 </div>
               ))}
@@ -217,17 +239,26 @@ export default function InterviewCalendar() {
                 const isWeekend = i % 7 === 0 || i % 7 === 6;
                 return (
                   <div key={i}
-                    className={`min-h-[130px] p-2 border-b border-r border-gray-100 transition-colors
-                      ${!d ? 'bg-gray-50/60' : isWeekend ? 'bg-slate-50/40' : 'bg-white hover:bg-primary-light/30'}`}>
+                    className={`min-h-[130px] p-2 border-b border-r border-[#e8e2d9] transition-colors`}
+                    style={{ backgroundColor: !d ? '#faf7f2' : isWeekend ? '#fdfbf7' : '#ffffff' }}
+                    onMouseEnter={e => { if (d && !isWeekend) e.currentTarget.style.backgroundColor = '#fef3c7'; }}
+                    onMouseLeave={e => { if (d && !isWeekend) e.currentTarget.style.backgroundColor = '#ffffff'; }}
+                  >
                     {d && (
                       <>
                         <div className="flex items-center justify-between mb-1.5">
-                          <span className={`text-xs font-bold w-7 h-7 flex items-center justify-center rounded-full transition-colors
-                            ${isToday ? 'bg-primary text-white shadow-sm' : 'text-gray-500 hover:bg-gray-100'}`}>
+                          <span
+                            className="text-xs font-bold w-7 h-7 flex items-center justify-center rounded-full transition-colors"
+                            style={isToday
+                              ? { backgroundColor: '#d97706', color: '#ffffff', boxShadow: '0 1px 4px rgba(217,119,6,0.35)' }
+                              : { color: '#78716c' }
+                            }
+                          >
                             {d}
                           </span>
                           {ivs.length > 0 && (
-                            <span className="text-[9px] font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded-full">
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                              style={{ backgroundColor: '#fef3c7', color: '#92400e' }}>
                               {ivs.length}
                             </span>
                           )}
@@ -243,7 +274,8 @@ export default function InterviewCalendar() {
                           {ivs.length > 2 && (
                             <button
                               onClick={() => setOverflow({ ds, ivs })}
-                              className="text-[10px] text-primary font-semibold pl-1 hover:underline w-full text-left">
+                              className="text-[10px] font-semibold pl-1 hover:underline w-full text-left"
+                              style={{ color: '#d97706' }}>
                               +{ivs.length - 2} more
                             </button>
                           )}
@@ -261,14 +293,15 @@ export default function InterviewCalendar() {
         {view === 'week' && (
           <>
             {/* Day headers */}
-            <div className="grid grid-cols-7 border-b border-gray-100">
+            <div className="grid grid-cols-7 border-b border-[#e8e2d9]">
               {buildWeekDays().map((d, i) => {
                 const ds = toDateStr(d.getFullYear(), d.getMonth(), d.getDate());
                 const isToday = ds === today;
                 return (
-                  <div key={i} className={`py-3 text-center border-r border-gray-100 last:border-0 ${isToday ? 'bg-primary-light' : 'bg-gray-50/80'}`}>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{DAYS_SHORT[d.getDay()]}</p>
-                    <p className={`text-lg font-bold mt-0.5 ${isToday ? 'text-primary' : 'text-gray-700'}`}>{d.getDate()}</p>
+                  <div key={i} className="py-3 text-center border-r border-[#e8e2d9] last:border-0"
+                    style={{ backgroundColor: isToday ? '#fef3c7' : '#faf7f2' }}>
+                    <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#a8a29e' }}>{DAYS_SHORT[d.getDay()]}</p>
+                    <p className="text-lg font-bold mt-0.5" style={{ color: isToday ? '#d97706' : '#3c2a21' }}>{d.getDate()}</p>
                   </div>
                 );
               })}
@@ -280,10 +313,11 @@ export default function InterviewCalendar() {
                 const ivs = getIvsForDate(ds);
                 const isToday = ds === today;
                 return (
-                  <div key={i} className={`p-2 border-r border-gray-100 last:border-0 space-y-1.5 ${isToday ? 'bg-primary-light/50' : ''}`}>
+                  <div key={i} className="p-2 border-r border-[#e8e2d9] last:border-0 space-y-1.5"
+                    style={{ backgroundColor: isToday ? 'rgba(254,243,199,0.4)' : 'transparent' }}>
                     {ivs.length === 0 ? (
                       <div className="h-full flex items-center justify-center">
-                        <p className="text-[10px] text-gray-300 font-medium">—</p>
+                        <p className="text-[10px] text-[#d4cdc4] font-medium">—</p>
                       </div>
                     ) : ivs.map(iv => {
                       const cand = getCandidate(iv.candidateId);
@@ -305,36 +339,36 @@ export default function InterviewCalendar() {
           return (
             <div>
               {/* Day banner */}
-              <div className={`px-6 py-4 border-b border-gray-100 flex items-center gap-3 ${isToday ? 'bg-primary-light' : 'bg-gray-50'}`}>
-                <div className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center font-bold shadow-sm ${isToday ? 'bg-primary text-white' : 'bg-white text-gray-700 border border-gray-200'}`}>
+              <div className={`px-6 py-4 border-b border-[#e8e2d9] flex items-center gap-3 ${isToday ? 'bg-[#fef3c7]' : 'bg-[#faf7f2]'}`}>
+                <div className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center font-bold shadow-sm ${isToday ? 'bg-[#d97706] text-white' : 'bg-[#ffffff] text-[#3c2a21] border border-[#e8e2d9]'}`}>
                   <span className="text-[10px] font-semibold uppercase tracking-wide opacity-70">{DAYS_SHORT[current.getDay()]}</span>
                   <span className="text-xl leading-none">{current.getDate()}</span>
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-gray-800">{DAYS_FULL[current.getDay()]}, {MONTHS[current.getMonth()]} {current.getDate()}</p>
-                  <p className="text-xs text-gray-400">{ivs.length} interview{ivs.length !== 1 ? 's' : ''} scheduled</p>
+                  <p className="text-sm font-bold text-[#3c2a21]">{DAYS_FULL[current.getDay()]}, {MONTHS[current.getMonth()]} {current.getDate()}</p>
+                  <p className="text-xs text-[#a8a29e]">{ivs.length} interview{ivs.length !== 1 ? 's' : ''} scheduled</p>
                 </div>
               </div>
 
               {ivs.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-20 text-gray-300">
+                <div className="flex flex-col items-center justify-center py-20 text-[#d4cdc4]">
                   <CalendarDays size={40} className="mb-3" />
                   <p className="text-sm font-medium">No interviews scheduled</p>
                 </div>
               ) : (
-                <div className="divide-y divide-gray-50">
+                <div className="divide-y divide-[#f5f1eb]">
                   {ivs.map(iv => {
                     const cand = getCandidate(iv.candidateId);
                     const interviewers = iv.interviewerIds?.map(getEmpName).join(', ') || '—';
                     const style = eventStyle(iv.status, cand?.status);
                     return (
                       <button key={iv.id} onClick={() => setSelected(iv)}
-                        className="w-full text-left px-6 py-4 hover:bg-gray-50 transition-colors group">
+                        className="w-full text-left px-6 py-4 hover:bg-[#faf7f2] transition-colors group">
                         <div className="flex items-start gap-4">
                           {/* Time column */}
                           <div className="w-16 flex-shrink-0 text-right">
                             <p className="text-sm font-bold text-primary">{iv.time}</p>
-                            <p className="text-[10px] text-gray-400">{iv.duration}m</p>
+                            <p className="text-[10px] text-[#a8a29e]">{iv.duration}m</p>
                           </div>
                           {/* Accent line */}
                           <div className={`w-1 self-stretch rounded-full flex-shrink-0 ${style.bar}`} />
@@ -346,20 +380,20 @@ export default function InterviewCalendar() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between gap-2">
                               <div>
-                                <p className="text-sm font-bold text-gray-900">{cand?.firstName} {cand?.lastName}</p>
+                                <p className="text-sm font-bold text-[#3c2a21]">{cand?.firstName} {cand?.lastName}</p>
                                 <p className="text-xs text-primary font-medium">{cand?.appliedPosition}</p>
                               </div>
                               <StatusBadge status={iv.status} />
                             </div>
                             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2">
-                              <span className="flex items-center gap-1 text-xs text-gray-500">
+                              <span className="flex items-center gap-1 text-xs text-[#78716c]">
                                 <User size={11} />{interviewers}
                               </span>
-                              <span className="flex items-center gap-1 text-xs text-gray-500">
+                              <span className="flex items-center gap-1 text-xs text-[#78716c]">
                                 {iv.mode === 'Online' ? <Video size={11} /> : <MapPin size={11} />}
                                 {iv.mode}{iv.mode === 'Offline' && iv.location ? ` · ${iv.location}` : ''}
                               </span>
-                              <span className="text-xs font-semibold text-gray-600 bg-gray-100 px-2 py-0.5 rounded-full">{iv.round}</span>
+                              <span className="text-xs font-semibold text-[#78716c] bg-[#f0ebe2] px-2 py-0.5 rounded-full">{iv.round}</span>
                             </div>
                           </div>
                         </div>
@@ -412,7 +446,7 @@ export default function InterviewCalendar() {
                   {initials(cand)}
                 </div>
                 <div>
-                  <p className="font-bold text-gray-900">{cand?.firstName} {cand?.lastName}</p>
+                  <p className="font-bold text-[#3c2a21]">{cand?.firstName} {cand?.lastName}</p>
                   <p className="text-xs font-medium opacity-80">{cand?.appliedPosition}</p>
                   <div className="mt-1"><StatusBadge status={selected.status} /></div>
                 </div>
@@ -430,10 +464,10 @@ export default function InterviewCalendar() {
                       ? selected.meetingLink ? `Online · ${selected.meetingLink}` : 'Online'
                       : selected.location   ? `Offline · ${selected.location}`   : 'Offline'],
                 ].map(([icon, label, value]) => (
-                  <div key={label} className="flex items-start gap-3 py-2 border-b border-gray-50 last:border-0">
-                    <span className="text-gray-400 mt-0.5 flex-shrink-0">{icon}</span>
-                    <span className="text-xs text-gray-400 w-24 flex-shrink-0">{label}</span>
-                    <span className="text-xs font-semibold text-gray-800 flex-1">{value}</span>
+                  <div key={label} className="flex items-start gap-3 py-2 border-b border-[#f5f1eb] last:border-0">
+                    <span className="text-[#a8a29e] mt-0.5 flex-shrink-0">{icon}</span>
+                    <span className="text-xs text-[#a8a29e] w-24 flex-shrink-0">{label}</span>
+                    <span className="text-xs font-semibold text-[#3c2a21] flex-1">{value}</span>
                   </div>
                 ))}
               </div>

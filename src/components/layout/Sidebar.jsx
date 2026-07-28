@@ -26,14 +26,24 @@ export default function Sidebar() {
   const roleLabel = ROLE_LABELS[user?.role] || user?.role || '';
 
   return (
-    <aside className="w-[220px] bg-sidebar flex flex-col flex-shrink-0 min-h-screen">
+    <aside
+      className="w-[240px] flex flex-col flex-shrink-0 min-h-screen"
+      style={{
+        backgroundColor: '#faf7f2',
+        borderRight: '1px solid #e8e2d9',
+      }}
+    >
 
       {/* Logo */}
       <div className="px-5 h-14 flex items-center gap-3 border-b border-sidebar-border flex-shrink-0">
-        <div className="w-6 h-6 bg-primary rounded-md flex items-center justify-center flex-shrink-0">
-          <Building2 size={13} className="text-white" />
+        <div className="w-6 h-6 rounded flex items-center justify-center flex-shrink-0"
+          style={{ backgroundColor: 'var(--theme-mustard)', borderRadius: '6px' }}>
+          <Building2 size={13} color="#ffffff" />
         </div>
-        <span className="text-white font-semibold text-sm tracking-tight">ATS</span>
+        <span className="font-serif font-bold text-sm tracking-heading"
+          style={{ color: 'var(--theme-aubergine)', fontFamily: "'Playfair Display', Georgia, serif" }}>
+          ATS
+        </span>
       </div>
 
       {/* Nav */}
@@ -54,14 +64,19 @@ export default function Sidebar() {
       {/* User footer */}
       <div className="px-4 py-4 border-t border-sidebar-border flex-shrink-0">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="w-7 h-7 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 text-[10px] font-semibold flex-shrink-0 select-none">
+          <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-semibold flex-shrink-0 select-none"
+            style={{ backgroundColor: 'var(--theme-linen)', color: 'var(--theme-taupe)' }}>
             {user?.firstName?.[0]}{user?.lastName?.[0]}
           </div>
           <div className="min-w-0">
-            <p className="text-gray-300 text-xs font-medium truncate leading-tight">
+            <p className="text-xs font-medium truncate leading-tight"
+              style={{ color: 'var(--theme-aubergine)' }}>
               {user?.firstName} {user?.lastName}
             </p>
-            <p className="text-gray-500 text-[10px] truncate mt-0.5">{roleLabel}</p>
+            <p className="text-[10px] truncate mt-0.5"
+              style={{ color: 'var(--theme-taupe)' }}>
+              {roleLabel}
+            </p>
           </div>
         </div>
       </div>

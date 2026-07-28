@@ -64,7 +64,7 @@ export default function InterviewerPicker({ employees, selectedIds, onChange, la
 
       <div className="flex flex-wrap gap-2">
         {selected.length === 0 ? (
-          <span className="text-xs text-gray-400">No interviewers assigned yet.</span>
+          <span className="text-xs text-[#a8a29e]">No interviewers assigned yet.</span>
         ) : selected.map(employee => (
           <span key={employee.id} className="badge-blue">
             {displayName(employee)}

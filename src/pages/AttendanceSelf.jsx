@@ -53,35 +53,35 @@ export default function AttendanceSelf() {
             ['Days Absent', monthRecords.filter(a => !a.checkIn).length, 'This Month'],
           ].map(([label, val, sub]) => (
             <div key={label} className="card text-center">
-              <p className="text-2xl font-bold text-gray-900">{val}</p>
-              <p className="text-xs font-semibold text-gray-700 mt-1">{label}</p>
-              <p className="text-[11px] text-gray-400">{sub}</p>
+              <p className="text-2xl font-bold text-[#3c2a21]">{val}</p>
+              <p className="text-xs font-semibold text-[#3c2a21] mt-1">{label}</p>
+              <p className="text-[11px] text-[#a8a29e]">{sub}</p>
             </div>
           ))}
         </div>
       </div>
 
       <div className="card p-0 overflow-hidden">
-        <div className="px-5 py-4 border-b border-gray-100">
+        <div className="px-5 py-4 border-b border-[#e8e2d9]">
           <h2 className="section-title mb-0">Attendance History</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
               <tr>
                 {['Date', 'Check In', 'Check Out', 'Break', 'Working Hours', 'Status'].map(h => (
                   <th key={h} className="table-th">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f5f1eb]">
               {history.length === 0 ? (
-                <tr><td colSpan={6} className="table-td text-center text-gray-400 py-10">No attendance records yet.</td></tr>
+                <tr><td colSpan={6} className="table-td text-center text-[#a8a29e] py-10">No attendance records yet.</td></tr>
               ) : history.map(r => {
                 const status = getStatus(r);
                 return (
-                  <tr key={r.date} className="hover:bg-gray-50/60 transition-colors">
-                    <td className="table-td font-medium text-gray-900">{r.date}</td>
+                  <tr key={r.date} className="hover:bg-[#faf7f2]/60 transition-colors">
+                    <td className="table-td font-medium text-[#3c2a21]">{r.date}</td>
                     <td className="table-td">{r.checkIn  ? formatTime(r.checkIn)  : '—'}</td>
                     <td className="table-td">{r.checkOut ? formatTime(r.checkOut) : '—'}</td>
                     <td className="table-td">{minutesToHHMM(calcBreakMins(r.breaks))}</td>

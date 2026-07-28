@@ -4,52 +4,65 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans:  ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
       },
       colors: {
+        // ── eSparkOS Design System tokens ──────────────────────
         primary: {
-          50:  '#EFF6FF',
-          100: '#DBEAFE',
-          200: '#BFDBFE',
-          500: '#3B82F6',
-          600: '#2563EB',
-          700: '#1D4ED8',
-          DEFAULT: '#2563EB',
-          hover:   '#1D4ED8',
-          light:   '#EFF6FF',
+          DEFAULT: '#d97706',   // --theme-mustard
+          hover:   '#b45309',   // --theme-terracotta
+          light:   '#fef3c7',   // warm tint for icon bg
         },
         sidebar: {
-          DEFAULT: '#111827',
-          hover:   '#1F2937',
-          border:  '#1F2937',
-          text:    '#9CA3AF',
-          active:  '#2563EB',
+          DEFAULT: '#faf7f2',   // --theme-sidebar-bg
+          hover:   '#f5f1eb',   // --theme-sidebar-hover
+          border:  '#e8e2d9',   // --theme-linen
+          text:    '#78716c',   // --theme-taupe
+          active:  '#d97706',   // --theme-mustard
         },
-        surface: '#F9FAFB',
-        heading: '#111827',
-        body:    '#6B7280',
-        border:  '#F3F4F6',
+        ds: {
+          parchment: '#fdfbf7', // --theme-parchment  (page bg)
+          cream:     '#ffffff', // --theme-cream
+          linen:     '#faf7f2', // --theme-sidebar-bg (card surface)
+          border:    '#e8e2d9', // --theme-linen      (borders)
+          aubergine: '#3c2a21', // --theme-aubergine  (primary text)
+          taupe:     '#78716c', // --theme-taupe      (muted text)
+          claret:    '#92400e', // --theme-claret
+          mustard:   '#d97706', // --theme-mustard
+          terracotta:'#b45309', // --theme-terracotta
+        },
+        // keep semantic aliases used across the app
+        surface: '#fdfbf7',
+        heading: '#3c2a21',
+        body:    '#78716c',
+        border:  '#e8e2d9',
         success: '#22C55E',
-        warning: '#F59E0B',
+        warning: '#d97706',
         danger:  '#EF4444',
       },
       boxShadow: {
-        card:        '0 1px 2px 0 rgb(0 0 0 / 0.04)',
-        'card-hover':'0 4px 16px 0 rgb(0 0 0 / 0.08)',
-        modal:       '0 20px 60px -10px rgb(0 0 0 / 0.18)',
-        topbar:      '0 1px 0 0 #F3F4F6',
+        // DS: tinted low-elevation shadows
+        card:        '0 1px 3px 0 rgba(60,42,33,0.06), 0 1px 2px -1px rgba(60,42,33,0.04)',
+        'card-hover':'0 6px 20px 0 rgba(60,42,33,0.10)',
+        modal:       '0 20px 60px -10px rgba(60,42,33,0.20)',
+        topbar:      '0 1px 0 0 #e8e2d9',
       },
       borderRadius: {
-        DEFAULT: '8px',
-        lg: '10px',
-        xl: '12px',
-        '2xl': '16px',
+        DEFAULT: '8px',    // radius-button
+        sm:  '4px',        // radius-subtle
+        md:  '6px',        // radius-button-sm
+        lg:  '8px',
+        xl:  '12px',
+        '2xl': '24px',     // radius-card (pill / large card)
+        '3xl': '32px',     // radius-card-lg
+        full: '9999px',
       },
       maxWidth: {
         container: '1280px',
       },
       letterSpacing: {
-        tightest: '-0.03em',
+        heading: '0.45px',  // DS heading letter-spacing
       },
     },
   },

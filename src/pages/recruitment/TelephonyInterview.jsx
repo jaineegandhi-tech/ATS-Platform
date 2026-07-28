@@ -200,11 +200,11 @@ export default function TelephonyInterview() {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="flex items-end justify-between pb-6 border-b border-gray-100">
+      <div className="flex items-end justify-between pb-6 border-b border-[#e8e2d9]">
         <div>
-          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
-          <h1 className="text-xl font-semibold text-gray-900">Telephonic Interviews</h1>
-          <p className="text-sm text-gray-400 mt-0.5">{records.length} record{records.length !== 1 ? 's' : ''} total</p>
+          <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
+          <h1 className="text-xl font-semibold text-[#3c2a21]">Telephonic Interviews</h1>
+          <p className="text-sm text-[#a8a29e] mt-0.5">{records.length} record{records.length !== 1 ? 's' : ''} total</p>
         </div>
         {isHR && (
           <button className="btn btn-primary btn-sm" onClick={openNew}>
@@ -217,7 +217,7 @@ export default function TelephonyInterview() {
       <div className="card p-4">
         <div className="flex flex-wrap gap-3 items-center">
           <div className="relative flex-1 min-w-[200px]">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a8a29e]" />
             <input
               className="input pl-8 w-full"
               placeholder="Search by name, position, phone…"
@@ -225,7 +225,7 @@ export default function TelephonyInterview() {
               onChange={e => setSearch(e.target.value)}
             />
             {search && (
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" onClick={() => setSearch('')}>
+              <button className="absolute right-2 top-1/2 -translate-y-1/2 text-[#a8a29e] hover:text-[#78716c]" onClick={() => setSearch('')}>
                 <X size={13} />
               </button>
             )}
@@ -250,31 +250,31 @@ export default function TelephonyInterview() {
       <div className="card p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
               <tr>
                 {['#', 'Candidate', 'Contact', 'Position', 'Department', 'Call Date', 'Time', 'Duration', 'Called By', 'Outcome', 'Current CTC', 'Expected CTC', 'Notice Period', 'Imm. Joiner', 'Notes', isHR ? 'Actions' : null].filter(Boolean).map(h => (
                   <th key={h} className="table-th whitespace-nowrap">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f5f1eb]">
               {sorted.length === 0 ? (
                 <tr>
-                  <td colSpan={isHR ? 16 : 15} className="table-td text-center text-gray-400 py-12">
+                  <td colSpan={isHR ? 16 : 15} className="table-td text-center text-[#a8a29e] py-12">
                     <div className="flex flex-col items-center gap-2">
-                      <Phone size={28} className="text-gray-300" />
+                      <Phone size={28} className="text-[#d4cdc4]" />
                       <p className="text-sm">No telephonic interview records found.</p>
                       {isHR && <button className="btn btn-sm btn-primary mt-1" onClick={openNew}>Add First Record</button>}
                     </div>
                   </td>
                 </tr>
               ) : sorted.map((r, idx) => (
-                <tr key={r.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="table-td text-gray-400 text-xs font-mono">{sorted.length - idx}</td>
-                  <td className="table-td font-semibold text-gray-800 whitespace-nowrap">{r.candidateName}</td>
-                  <td className="table-td font-mono text-sm text-gray-600 whitespace-nowrap">{r.contactNumber}</td>
+                <tr key={r.id} className="hover:bg-[#faf7f2] transition-colors">
+                  <td className="table-td text-[#a8a29e] text-xs font-mono">{sorted.length - idx}</td>
+                  <td className="table-td font-semibold text-[#3c2a21] whitespace-nowrap">{r.candidateName}</td>
+                  <td className="table-td font-mono text-sm text-[#78716c] whitespace-nowrap">{r.contactNumber}</td>
                   <td className="table-td whitespace-nowrap">{r.position}</td>
-                  <td className="table-td text-gray-500 whitespace-nowrap">{r.department || '—'}</td>
+                  <td className="table-td text-[#78716c] whitespace-nowrap">{r.department || '—'}</td>
                   <td className="table-td whitespace-nowrap">{r.callDate ? formatDate(r.callDate) : '—'}</td>
                   <td className="table-td whitespace-nowrap">{r.callTime || '—'}</td>
                   <td className="table-td whitespace-nowrap">{r.duration ? `${r.duration} min` : '—'}</td>
@@ -289,8 +289,8 @@ export default function TelephonyInterview() {
                       {r.outcome}
                     </span>
                   </td>
-                  <td className="table-td text-sm text-gray-600">{r.currentCTC || '—'}</td>
-                  <td className="table-td text-sm text-gray-600">{r.expectedCTC || '—'}</td>
+                  <td className="table-td text-sm text-[#78716c]">{r.currentCTC || '—'}</td>
+                  <td className="table-td text-sm text-[#78716c]">{r.expectedCTC || '—'}</td>
                   <td className="table-td whitespace-nowrap">{r.noticePeriod || '—'}</td>
                   <td className="table-td text-center">
                     {r.immediateJoiner ? (
@@ -299,7 +299,7 @@ export default function TelephonyInterview() {
                       <span className="badge badge-gray"><span className="w-1.5 h-1.5 rounded-full bg-gray-400" />No</span>
                     )}
                   </td>
-                  <td className="table-td max-w-[160px] truncate text-gray-500 text-xs" title={r.notes}>{r.notes || '—'}</td>
+                  <td className="table-td max-w-[160px] truncate text-[#78716c] text-xs" title={r.notes}>{r.notes || '—'}</td>
                   {isHR && (
                     <td className="table-td">
                       <div className="flex items-center gap-1">
@@ -335,8 +335,8 @@ export default function TelephonyInterview() {
 
         {/* Footer count */}
         {sorted.length > 0 && (
-          <div className="px-4 py-2.5 border-t border-gray-50 bg-gray-50/50">
-            <p className="text-xs text-gray-400">Showing {sorted.length} of {records.length} records</p>
+          <div className="px-4 py-2.5 border-t border-[#f5f1eb] bg-[#faf7f2]/50">
+            <p className="text-xs text-[#a8a29e]">Showing {sorted.length} of {records.length} records</p>
           </div>
         )}
       </div>
@@ -351,7 +351,7 @@ export default function TelephonyInterview() {
           <div className="space-y-5">
             {/* Section: Candidate Info */}
             <div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Candidate Information</p>
+              <p className="text-xs font-semibold text-[#78716c] uppercase tracking-wider mb-3">Candidate Information</p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="label">Candidate Name <span className="text-red-500">*</span></label>
@@ -377,7 +377,7 @@ export default function TelephonyInterview() {
 
             {/* Section: Call Details */}
             <div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Call Details</p>
+              <p className="text-xs font-semibold text-[#78716c] uppercase tracking-wider mb-3">Call Details</p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="label">Call Date <span className="text-red-500">*</span></label>
@@ -402,7 +402,7 @@ export default function TelephonyInterview() {
                     <select className={`input appearance-none pr-8 ${errors.outcome ? 'border-red-400' : ''}`} value={form.outcome} onChange={e => set('outcome', e.target.value)}>
                       {OUTCOMES.map(o => <option key={o}>{o}</option>)}
                     </select>
-                    <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                    <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#a8a29e] pointer-events-none" />
                   </div>
                   {errors.outcome && <p className="text-xs text-red-500 mt-1">{errors.outcome}</p>}
                 </div>
@@ -411,7 +411,7 @@ export default function TelephonyInterview() {
 
             {/* Section: CTC & Availability */}
             <div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">CTC & Availability</p>
+              <p className="text-xs font-semibold text-[#78716c] uppercase tracking-wider mb-3">CTC & Availability</p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="label">Current CTC</label>
@@ -462,7 +462,7 @@ export default function TelephonyInterview() {
       {/* Delete Confirm */}
       {deleteId && (
         <Modal title="Delete Record" onClose={() => setDeleteId(null)} size="sm">
-          <p className="text-sm text-gray-600 mb-5">
+          <p className="text-sm text-[#78716c] mb-5">
             Are you sure you want to delete this telephonic interview record? This action cannot be undone.
           </p>
           <div className="flex justify-end gap-3">

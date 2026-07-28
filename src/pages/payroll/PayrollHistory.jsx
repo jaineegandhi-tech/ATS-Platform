@@ -48,7 +48,7 @@ export default function PayrollHistory() {
       <div className="card p-4">
         <div className="flex flex-wrap gap-3">
           <div className="relative flex-1 min-w-48">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a8a29e]" />
             <input className="input pl-9" placeholder="Search by name or ID..." value={search} onChange={e => setSearch(e.target.value)} />
           </div>
           <select className="input w-auto" value={filterDept} onChange={e => setFilterDept(e.target.value)}>
@@ -70,18 +70,18 @@ export default function PayrollHistory() {
       <div className="card p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
               <tr>{['Employee','ID','Department','Month','Gross','Deductions','Net','Status','Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f5f1eb]">
               {filtered.length === 0 ? (
-                <tr><td colSpan={9} className="table-td text-center text-gray-400 py-8">No payroll records found.</td></tr>
+                <tr><td colSpan={9} className="table-td text-center text-[#a8a29e] py-8">No payroll records found.</td></tr>
               ) : filtered.map(p => {
                 const emp = employees.find(e => e.id === p.employeeId);
                 return (
-                  <tr key={p.id} className="hover:bg-gray-50">
+                  <tr key={p.id} className="hover:bg-[#faf7f2]">
                     <td className="table-td font-medium">{emp ? `${emp.firstName} ${emp.lastName}` : p.employeeId}</td>
-                    <td className="table-td text-xs text-gray-400">{p.employeeId}</td>
+                    <td className="table-td text-xs text-[#a8a29e]">{p.employeeId}</td>
                     <td className="table-td">{emp?.department || '—'}</td>
                     <td className="table-td">{monthLabel(p.month)}</td>
                     <td className="table-td">{fmt(p.grossSalary)}</td>

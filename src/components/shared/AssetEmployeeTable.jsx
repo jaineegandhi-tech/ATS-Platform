@@ -5,8 +5,8 @@ import StatusBadge from './StatusBadge';
 export default function AssetEmployeeTable({ assets }) {
   if (assets.length === 0) {
     return (
-      <div className="text-center py-12 text-gray-400">
-        <Search size={28} className="mx-auto mb-2 text-gray-200" />
+      <div className="text-center py-12 text-[#a8a29e]">
+        <Search size={28} className="mx-auto mb-2 text-[#e8e2d9]" />
         No assets assigned to you.
       </div>
     );
@@ -27,16 +27,16 @@ export default function AssetEmployeeTable({ assets }) {
             <tr key={asset.id} className="table-row">
               <td className="table-td">
                 <div className="flex items-start gap-2">
-                  <Package size={15} className="text-gray-400 mt-0.5 flex-shrink-0" />
-                  <p className="font-semibold text-gray-900 text-sm">{asset.name}</p>
+                  <Package size={15} className="text-[#a8a29e] mt-0.5 flex-shrink-0" />
+                  <p className="font-semibold text-[#3c2a21] text-sm">{asset.name}</p>
                 </div>
               </td>
               <td className="table-td">
                 <span className="badge-blue">{asset.category}</span>
               </td>
-              <td className="table-td text-gray-500 font-mono text-xs">{asset.serialNumber || '—'}</td>
-              <td className="table-td text-gray-500">{formatDate(asset.assignedDate)}</td>
-              <td className="table-td text-gray-500">{formatDate(asset.expectedReturnDate)}</td>
+              <td className="table-td text-[#78716c] font-mono text-xs">{asset.serialNumber || '—'}</td>
+              <td className="table-td text-[#78716c]">{formatDate(asset.assignedDate)}</td>
+              <td className="table-td text-[#78716c]">{formatDate(asset.expectedReturnDate)}</td>
               <td className="table-td"><StatusBadge status={asset.status} /></td>
             </tr>
           ))}

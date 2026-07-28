@@ -46,7 +46,7 @@ export default function EmployeeList() {
       <div className="page-header">
         <div>
           <h1 className="page-title">Employees</h1>
-          <p className="text-xs text-gray-400 mt-0.5">{filtered.length} of {allEmployees.length} employees</p>
+          <p className="text-xs text-[#a8a29e] mt-0.5">{filtered.length} of {allEmployees.length} employees</p>
         </div>
         <button className="btn-primary btn" onClick={() => navigate('/employees/add')}>
           <Plus size={15} /> Add Employee
@@ -57,11 +57,11 @@ export default function EmployeeList() {
       <div className="card p-4">
         <div className="flex flex-wrap gap-3 items-center">
           <div className="relative flex-1 min-w-52">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a8a29e]" />
             <input className="input pl-9 input-sm" placeholder="Search by name, username, department…" value={search} onChange={e => setSearch(e.target.value)} />
           </div>
           <div className="flex items-center gap-2">
-            <SlidersHorizontal size={14} className="text-gray-400" />
+            <SlidersHorizontal size={14} className="text-[#a8a29e]" />
             <select className="input w-auto input-sm" value={filterDept} onChange={e => setFilterDept(e.target.value)}>
               <option value="">All Departments</option>
               {departments.map(d => <option key={d}>{d}</option>)}
@@ -89,8 +89,8 @@ export default function EmployeeList() {
             <tbody>
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="table-td text-center text-gray-400 py-12">
-                    <Search size={28} className="mx-auto mb-2 text-gray-200" />
+                  <td colSpan={8} className="table-td text-center text-[#a8a29e] py-12">
+                    <Search size={28} className="mx-auto mb-2 text-[#e8e2d9]" />
                     No employees found.
                   </td>
                 </tr>
@@ -100,19 +100,19 @@ export default function EmployeeList() {
                     <div className="flex items-center gap-3">
                       <Avatar employee={emp} size="sm" />
                       <div>
-                        <p className="font-semibold text-gray-900 text-sm">{emp.firstName} {emp.lastName}</p>
-                        <p className="text-xs text-gray-400">{emp.id}</p>
+                        <p className="font-semibold text-[#3c2a21] text-sm">{emp.firstName} {emp.lastName}</p>
+                        <p className="text-xs text-[#a8a29e]">{emp.id}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="table-td text-gray-500">{emp.username}</td>
+                  <td className="table-td text-[#78716c]">{emp.username}</td>
                   <td className="table-td">{emp.department || '—'}</td>
                   <td className="table-td">{emp.designation || '—'}</td>
                   <td className="table-td">
                     <span className="badge badge-purple capitalize">{emp.role}</span>
                   </td>
                   <td className="table-td"><StatusBadge status={emp.status} /></td>
-                  <td className="table-td text-gray-500">{formatDate(emp.joiningDate)}</td>
+                  <td className="table-td text-[#78716c]">{formatDate(emp.joiningDate)}</td>
                   <td className="table-td">
                     <div className="flex items-center gap-1.5">
                       <button className="btn btn-xs btn-secondary" title="View" onClick={() => navigate(`/employees/${emp.id}`)}>

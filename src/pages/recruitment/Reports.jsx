@@ -169,18 +169,18 @@ export default function Reports() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-end justify-between pb-6 border-b border-gray-100">
+      <div className="flex items-end justify-between pb-6 border-b border-[#e8e2d9]">
         <div>
-          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Analytics</p>
-          <h1 className="text-xl font-semibold text-gray-900">Reports</h1>
-          <p className="text-sm text-gray-400 mt-0.5">{user.role === ROLES.HR ? 'Your recruitment performance' : 'Organisation-wide recruitment performance'}</p>
+          <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Analytics</p>
+          <h1 className="text-xl font-semibold text-[#3c2a21]">Reports</h1>
+          <p className="text-sm text-[#a8a29e] mt-0.5">{user.role === ROLES.HR ? 'Your recruitment performance' : 'Organisation-wide recruitment performance'}</p>
         </div>
         <div className="relative">
           <button className="btn btn-primary btn-sm flex items-center gap-1" onClick={() => setExportOpen(o => !o)}>
             <Download size={13} /> Export <ChevronDown size={12} />
           </button>
           {exportOpen && (
-            <div className="absolute right-0 top-full mt-1 w-40 bg-white border border-gray-100 rounded-xl shadow-modal z-50 py-1" onMouseLeave={() => setExportOpen(false)}>
+            <div className="absolute right-0 top-full mt-1 w-40 bg-[#ffffff] border border-[#e8e2d9] rounded-xl shadow-modal z-50 py-1" onMouseLeave={() => setExportOpen(false)}>
               <button className="w-full text-left px-4 py-2 text-sm text-body hover:bg-surface flex items-center gap-2" onClick={() => { exportExcel(); setExportOpen(false); }}>
                 <Download size={13} /> Excel (.csv)
               </button>
@@ -194,23 +194,23 @@ export default function Reports() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Pie Chart */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-6">
-          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Distribution</p>
-          <h2 className="text-sm font-semibold text-gray-800 mb-5">Candidates by HR</h2>
+        <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card p-6">
+          <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Distribution</p>
+          <h2 className="text-sm font-semibold text-[#3c2a21] mb-5">Candidates by HR</h2>
           <PieChart data={pieData} />
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-6">
-          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Performance</p>
-          <h2 className="text-sm font-semibold text-gray-800 mb-5">Candidates Offered by HR</h2>
+        <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card p-6">
+          <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Performance</p>
+          <h2 className="text-sm font-semibold text-[#3c2a21] mb-5">Candidates Offered by HR</h2>
           <div className="space-y-4">
             {rows.map(r => (
               <div key={r.hr.id}>
                 <div className="flex justify-between text-xs mb-1.5">
-                  <span className="font-medium text-gray-600">{fullName(r.hr)}</span>
-                  <span className="text-gray-400">{r.offered}</span>
+                  <span className="font-medium text-[#78716c]">{fullName(r.hr)}</span>
+                  <span className="text-[#a8a29e]">{r.offered}</span>
                 </div>
-                <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-1.5 bg-[#f0ebe2] rounded-full overflow-hidden">
                   <div className="h-full bg-blue-300 rounded-full" style={{ width: `${(r.offered / maxOffered) * 100}%` }} />
                 </div>
               </div>
@@ -218,27 +218,27 @@ export default function Reports() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-6">
-          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Funnel</p>
-          <h2 className="text-sm font-semibold text-gray-800 mb-5">Recruitment Funnel</h2>
+        <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card p-6">
+          <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Funnel</p>
+          <h2 className="text-sm font-semibold text-[#3c2a21] mb-5">Recruitment Funnel</h2>
           <div className="grid grid-cols-2 gap-2">
             {stages.map(stage => (
-              <div key={stage} className="bg-gray-50 rounded-xl p-3">
-                <p className="text-[10px] text-gray-400 uppercase tracking-wide">{stage}</p>
-                <p className="text-xl font-semibold text-gray-800 mt-1">{candidates.filter(c => c.status === stage).length}</p>
+              <div key={stage} className="bg-[#faf7f2] rounded-xl p-3">
+                <p className="text-[10px] text-[#a8a29e] uppercase tracking-wide">{stage}</p>
+                <p className="text-xl font-semibold text-[#3c2a21] mt-1">{candidates.filter(c => c.status === stage).length}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-card overflow-hidden">
+      <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-hidden">
         <table className="w-full">
           <thead><tr>{['HR Name', 'Added', 'Scheduled', 'Selected', 'Offered', 'Joined', 'Conversion', 'Avg. Time-to-Hire'].map(h => <th key={h} className="table-th">{h}</th>)}</tr></thead>
           <tbody>
             {rows.map(r => (
-              <tr key={r.hr.id} className="hover:bg-gray-50 transition-colors">
-                <td className="table-td font-medium text-gray-800">{fullName(r.hr)}</td>
+              <tr key={r.hr.id} className="hover:bg-[#faf7f2] transition-colors">
+                <td className="table-td font-medium text-[#3c2a21]">{fullName(r.hr)}</td>
                 <td className="table-td">{r.added}</td>
                 <td className="table-td">{r.scheduled}</td>
                 <td className="table-td">{r.selected}</td>

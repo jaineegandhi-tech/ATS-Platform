@@ -16,11 +16,11 @@ function RatingStars({ value, onChange, max = 5 }) {
     <div className="flex items-center gap-1">
       {Array.from({ length: max }, (_, i) => i + 1).map(n => (
         <button key={n} type="button" onClick={() => onChange(n)}
-          className={`transition-colors ${n <= value ? 'text-amber-400' : 'text-gray-200'}`}>
+          className={`transition-colors ${n <= value ? 'text-amber-400' : 'text-[#e8e2d9]'}`}>
           <Star size={18} fill={n <= value ? 'currentColor' : 'none'} />
         </button>
       ))}
-      <span className="text-xs text-gray-400 ml-1">{value}/5</span>
+      <span className="text-xs text-[#a8a29e] ml-1">{value}/5</span>
     </div>
   );
 }
@@ -44,10 +44,10 @@ export default function InterviewFeedback() {
   });
   const [saved, setSaved] = useState(false);
 
-  if (!interview || !candidate) return <div className="card text-center py-10 text-gray-400">Interview not found.</div>;
+  if (!interview || !candidate) return <div className="card text-center py-10 text-[#a8a29e]">Interview not found.</div>;
 
   const isAssigned = interview.interviewerIds?.includes(user.id) || isRecruiter(user);
-  if (!isAssigned) return <div className="card text-center py-10 text-gray-400">You are not assigned to this interview.</div>;
+  if (!isAssigned) return <div className="card text-center py-10 text-[#a8a29e]">You are not assigned to this interview.</div>;
 
   function getEmpName(eid) { const e = employees.find(x => x.id === eid); return e ? `${e.firstName} ${e.lastName}` : eid; }
 
@@ -121,17 +121,17 @@ export default function InterviewFeedback() {
   return (
     <div className="max-w-2xl mx-auto space-y-5">
       <div className="flex items-center gap-3">
-        <button className="text-gray-400 hover:text-gray-600 text-sm" onClick={() => navigate(`/candidates/${candidate.id}`)}>← Back</button>
+        <button className="text-[#a8a29e] hover:text-[#78716c] text-sm" onClick={() => navigate(`/candidates/${candidate.id}`)}>← Back</button>
         <h1 className="page-title">Interview Feedback</h1>
       </div>
 
       {saved && <div className="bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-sm">Feedback saved successfully!</div>}
 
       {/* Interview Summary */}
-      <div className="card bg-gray-50">
+      <div className="card bg-[#faf7f2]">
         <div className="grid grid-cols-2 gap-3 text-sm">
           {[['Candidate', `${candidate.firstName} ${candidate.lastName}`], ['Position', candidate.appliedPosition], ['Round', interview.round], ['Date', formatDate(interview.date)], ['Time', interview.time], ['Interviewer(s)', interview.interviewerIds?.map(getEmpName).join(', ') || '—']].map(([k, v]) => (
-            <div key={k}><p className="text-xs text-gray-400">{k}</p><p className="font-medium text-gray-800">{v}</p></div>
+            <div key={k}><p className="text-xs text-[#a8a29e]">{k}</p><p className="font-medium text-[#3c2a21]">{v}</p></div>
           ))}
         </div>
       </div>
@@ -158,7 +158,7 @@ export default function InterviewFeedback() {
 
         <div>
           <label className="label">Interview Remark</label>
-          <p className="text-xs text-gray-400 mb-2">This is your assessment remark only. Final decision on the candidate is taken by HR.</p>
+          <p className="text-xs text-[#a8a29e] mb-2">This is your assessment remark only. Final decision on the candidate is taken by HR.</p>
           <select className="input" value={form.decision} onChange={e => set('decision', e.target.value)}>
             {DECISIONS.map(d => <option key={d}>{d}</option>)}
           </select>

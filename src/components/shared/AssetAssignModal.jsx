@@ -64,20 +64,20 @@ export default function AssetAssignModal({
               ))}
             </select>
             {availableAssets.length === 0 && (
-              <p className="text-xs text-gray-400 mt-1">No available assets. Add assets in Asset Management first.</p>
+              <p className="text-xs text-[#a8a29e] mt-1">No available assets. Add assets in Asset Management first.</p>
             )}
           </div>
         ) : (
           <div>
             <label className="label">Asset</label>
-            <p className="text-sm text-gray-800 py-2 font-semibold">{asset.name} <span className="text-gray-400 font-normal">({asset.id})</span></p>
+            <p className="text-sm text-[#3c2a21] py-2 font-semibold">{asset.name} <span className="text-[#a8a29e] font-normal">({asset.id})</span></p>
           </div>
         )}
 
         <div>
           <label className="label">Employee</label>
           {preselectedEmployeeId ? (
-            <p className="text-sm text-gray-800 py-2 font-semibold">
+            <p className="text-sm text-[#3c2a21] py-2 font-semibold">
               {selectedEmployee ? `${selectedEmployee.firstName} ${selectedEmployee.lastName}` : '—'}
             </p>
           ) : (

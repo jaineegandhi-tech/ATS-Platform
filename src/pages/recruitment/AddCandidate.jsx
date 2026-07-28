@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { getStore, setStore, STORAGE_KEYS, addLog, addRecruitmentNotification, getInterviewConflict } from '../../utils/store';
-import { Upload, X, FileText, Phone } from 'lucide-react';
+import { Upload, X, FileText, Phone, Mail, CheckCircle } from 'lucide-react';
 import InterviewerPicker from '../../components/shared/InterviewerPicker';
 import ResumeExtractorModal from '../../components/shared/ResumeExtractorModal';
 import { ROLES, isRecruiter } from '../../utils/roles';
@@ -68,6 +68,8 @@ export default function AddCandidate() {
     location: '', meetingLink: '', round: 'HR Round', interviewerIds: [],
   });
   const [errors, setErrors] = useState({});
+  const [emailSent, setEmailSent] = useState(existing?.status === 'Email Sent' || false);
+  const [emailToast, setEmailToast] = useState(false);
 
   const employees = getStore(STORAGE_KEYS.EMPLOYEES);
 
@@ -95,6 +97,31 @@ export default function AddCandidate() {
     } else {
       setForm(f => ({ ...f, ...extractedData }));
     }
+  }
+
+  function sendAcknowledgementEmail() {
+    if (!form.email) return alert('Please enter the candidate email address first.');
+    const subject = encodeURIComponent('Your CV is Under Review — Thank You for Applying');
+    const body = encodeURIComponent(
+      `Dear ${form.firstName || 'Candidate'},\n\nThank you for applying for the ${form.appliedPosition || 'position'} role at our organisation.\n\nWe have received your CV and it is currently under review. Our recruitment team will be in touch with you shortly regarding the next steps.\n\nBest regards,\nRecruitment Team`
+    );
+    window.open(`mailto:${form.email}?subject=${subject}&body=${body}`);
+
+    // Update status to Email Sent if candidate already saved
+    if (isEdit && id) {
+      const now = new Date().toISOString();
+      setStore(STORAGE_KEYS.CANDIDATES, getStore(STORAGE_KEYS.CANDIDATES).map(c =>
+        c.id === id ? {
+          ...c,
+          status: 'Email Sent',
+          timeline: [...(c.timeline || []), { action: 'Acknowledgement email sent', by: user.id, at: now }],
+        } : c
+      ));
+      addLog('Email Sent', user.id, `Acknowledgement email sent to ${form.firstName} ${form.lastName}`);
+    }
+    setEmailSent(true);
+    setEmailToast(true);
+    setTimeout(() => setEmailToast(false), 3000);
   }
 
   function validate() {
@@ -126,19 +153,22 @@ export default function AddCandidate() {
     const now = new Date().toISOString();
 
     if (isEdit) {
-      setStore(STORAGE_KEYS.CANDIDATES, all.map(c => c.id === id ? { ...c, ...form } : c));
+      setStore(STORAGE_KEYS.CANDIDATES, all.map(c => c.id === id ? { ...c, ...form, timeline: [...(c.timeline || []), { action: 'Candidate profile updated', by: user.id, at: now }] } : c));
       addLog('Candidate Updated', user.id, `${form.firstName} ${form.lastName} profile updated`);
     } else {
       const newCand = {
         ...form,
         id: generateCandidateId(),
-        status: andSchedule ? 'Interview Scheduled' : 'New Candidate',
+        status: andSchedule ? 'Interview Scheduled' : (emailSent ? 'Email Sent' : 'New Candidate'),
         currentRound: andSchedule ? ivForm.round : null,
         telephonicId: telephonicState?.telephonicId || null,
         timeline: [{ action: 'Candidate Created', by: user.id, at: now }],
         createdAt: now,
         createdBy: user.id,
       };
+      if (emailSent) {
+        newCand.timeline.push({ action: 'Acknowledgement email sent', by: user.id, at: now });
+      }
       all.push(newCand);
       setStore(STORAGE_KEYS.CANDIDATES, all);
       addLog('Candidate Created', user.id, `${form.firstName} ${form.lastName} added`);
@@ -184,12 +214,22 @@ export default function AddCandidate() {
   const set = (f, v) => setForm(p => ({ ...p, [f]: v }));
   const setIv = (f, v) => setIvForm(p => ({ ...p, [f]: v }));
 
+  const showEmailButton = !isEdit || existing?.status === 'New Candidate' || existing?.status === 'Email Sent';
+
   return (
     <div className="max-w-3xl mx-auto space-y-5">
       <div className="flex items-center gap-3">
-        <button className="text-gray-400 hover:text-gray-600 text-sm" onClick={() => navigate('/candidates')}>← Back</button>
+        <button className="text-[#a8a29e] hover:text-[#78716c] text-sm" onClick={() => navigate('/candidates')}>← Back</button>
         <h1 className="page-title">{isEdit ? 'Edit Candidate' : 'Add Candidate'}</h1>
       </div>
+
+      {/* Email toast */}
+      {emailToast && (
+        <div className="flex items-center gap-3 px-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
+          <CheckCircle size={15} className="text-emerald-500 flex-shrink-0" />
+          <p className="text-emerald-800 font-medium">Acknowledgement email opened — candidate status will be set to <strong>Email Sent</strong>.</p>
+        </div>
+      )}
 
       {/* Telephonic source banner */}
       {telephonicState && (
@@ -272,9 +312,9 @@ export default function AddCandidate() {
           </div>
         ) : (
           <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-xl p-8 cursor-pointer hover:border-primary hover:bg-blue-50/30 transition-colors">
-            <Upload size={22} className="text-gray-300 mb-2" />
-            <p className="text-sm text-gray-500">Click to upload resume</p>
-            <p className="text-xs text-gray-400 mt-1">PDF, DOC, DOCX · Max 10MB</p>
+            <Upload size={22} className="text-[#d4cdc4] mb-2" />
+            <p className="text-sm text-[#78716c]">Click to upload resume</p>
+            <p className="text-xs text-[#a8a29e] mt-1">PDF, DOC, DOCX · Max 10MB</p>
             <input type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleResume} />
           </label>
         )}
@@ -297,7 +337,7 @@ export default function AddCandidate() {
         <div className="flex items-center justify-between">
           <p className="form-section-title mb-0">Interview Information</p>
           {!isEdit && (
-            <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+            <label className="flex items-center gap-2 text-sm text-[#78716c] cursor-pointer">
               <input type="checkbox" checked={scheduleInterview} onChange={e => setScheduleInterview(e.target.checked)} className="rounded" />
               Schedule Interview
             </label>
@@ -340,6 +380,17 @@ export default function AddCandidate() {
       {/* Actions */}
       <div className="flex justify-end gap-3 pb-6">
         <button className="btn-secondary btn" onClick={() => navigate('/candidates')}>Cancel</button>
+        {showEmailButton && (
+          <button
+            type="button"
+            onClick={sendAcknowledgementEmail}
+            className={`btn ${
+              emailSent ? 'btn-secondary text-emerald-600 border-emerald-200' : 'btn-secondary'
+            }`}
+          >
+            {emailSent ? 'Email Sent' : 'Send Email'}
+          </button>
+        )}
         {!isEdit && (
           <button className="btn-secondary btn" onClick={() => save(false)}>Save Candidate</button>
         )}

@@ -110,26 +110,26 @@ export default function ResumeInfo() {
 
   return (
     <div className="space-y-6">
-      <div className="pb-6 border-b border-gray-100">
-        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
-        <h1 className="text-xl font-semibold text-gray-900">Resume Information</h1>
-        <p className="text-sm text-gray-400 mt-0.5">Extract and review candidate resume details.</p>
+      <div className="pb-6 border-b border-[#e8e2d9]">
+        <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
+        <h1 className="text-xl font-semibold text-[#3c2a21]">Resume Information</h1>
+        <p className="text-sm text-[#a8a29e] mt-0.5">Extract and review candidate resume details.</p>
       </div>
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-card overflow-hidden">
+      <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="border-b border-gray-100">
+            <thead className="border-b border-[#e8e2d9]">
               <tr>
                 <th className="table-th">Name</th>
                 <th className="table-th">Resume File</th>
                 <th className="table-th">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f5f1eb]">
               {candidates.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((c) => (
-                <tr key={c.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="table-td font-medium text-gray-800">{c.firstName} {c.lastName}</td>
-                  <td className="table-td text-gray-500">{c.resumeName || '—'}</td>
+                <tr key={c.id} className="hover:bg-[#faf7f2] transition-colors">
+                  <td className="table-td font-medium text-[#3c2a21]">{c.firstName} {c.lastName}</td>
+                  <td className="table-td text-[#78716c]">{c.resumeName || '—'}</td>
                   <td className="table-td">
                     <button
                       className="btn btn-sm btn-secondary"
@@ -142,7 +142,7 @@ export default function ResumeInfo() {
                 </tr>
               ))}
               {candidates.length === 0 && (
-                <tr><td colSpan={3} className="table-td text-center text-gray-400 py-10">No candidates found.</td></tr>
+                <tr><td colSpan={3} className="table-td text-center text-[#a8a29e] py-10">No candidates found.</td></tr>
               )}
             </tbody>
           </table>

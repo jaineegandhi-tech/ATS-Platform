@@ -1,4 +1,4 @@
-import { useLocation, useParams, Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { getStore, STORAGE_KEYS } from '../../utils/store';
 import { ChevronRight, Home } from 'lucide-react';
 
@@ -21,13 +21,11 @@ const ROUTE_LABELS = {
 };
 
 function resolveLabel(segment, index, segments) {
-  // Check if previous segment is 'candidates' — this might be a candidate ID
   if (index > 0 && segments[index - 1] === 'candidates' && !ROUTE_LABELS[segment]) {
     const candidates = getStore(STORAGE_KEYS.CANDIDATES);
     const c = candidates.find(x => x.id === segment);
     return c ? `${c.firstName} ${c.lastName}` : segment;
   }
-  // Check if previous segment is 'interview-feedback' — this is an interview ID
   if (index > 0 && segments[index - 1] === 'interview-feedback' && !ROUTE_LABELS[segment]) {
     const interviews = getStore(STORAGE_KEYS.INTERVIEWS);
     const iv = interviews.find(x => x.id === segment);
@@ -55,17 +53,23 @@ export default function Breadcrumb() {
   ];
 
   return (
-    <nav className="flex items-center gap-1 text-xs text-body mb-4">
+    <nav className="flex items-center gap-1 text-xs mb-4" style={{ color: '#78716c' }}>
       {crumbs.map((crumb, i) => {
         const isLast = i === crumbs.length - 1;
         return (
           <span key={crumb.to} className="flex items-center gap-1">
-            {i > 0 && <ChevronRight size={12} className="text-gray-300 flex-shrink-0" />}
-            {i === 0 && <Home size={11} className="text-gray-400 flex-shrink-0" />}
+            {i > 0 && <ChevronRight size={12} style={{ color: '#e8e2d9' }} className="flex-shrink-0" />}
+            {i === 0 && <Home size={11} style={{ color: '#78716c' }} className="flex-shrink-0" />}
             {isLast ? (
-              <span className="text-heading font-medium capitalize">{crumb.label}</span>
+              <span className="font-medium capitalize" style={{ color: '#3c2a21' }}>{crumb.label}</span>
             ) : (
-              <Link to={crumb.to} className="text-body hover:text-primary transition-colors capitalize">
+              <Link
+                to={crumb.to}
+                className="capitalize transition-colors"
+                style={{ color: '#78716c' }}
+                onMouseEnter={e => e.currentTarget.style.color = '#d97706'}
+                onMouseLeave={e => e.currentTarget.style.color = '#78716c'}
+              >
                 {crumb.label}
               </Link>
             )}

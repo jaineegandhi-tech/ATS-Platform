@@ -6,14 +6,29 @@ import { useStorageSync } from '../../utils/useStorageSync';
 import { ROLE_LABELS } from '../../utils/roles';
 import Avatar from '../shared/Avatar';
 import ConfirmDialog from '../shared/ConfirmDialog';
-import { Bell, ChevronDown, LogOut, Search, User, Users, Briefcase, CalendarDays, X } from 'lucide-react';
+import { Bell, ChevronDown, LogOut, Search, User, Users, Briefcase, CalendarDays, X, Moon, Sun } from 'lucide-react';
 
 export default function Topbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu]     = useState(false);
   const [showLogout, setShowLogout] = useState(false);
   const [showNotifs, setShowNotifs] = useState(false);
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
+
+  function toggleTheme() {
+    setIsDark(prev => {
+      const next = !prev;
+      if (next) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+      return next;
+    });
+  }
   useStorageSync();
 
   const recentLogs = getStore(STORAGE_KEYS.ACTIVITY_LOGS).slice(0, 5);
@@ -21,20 +36,19 @@ export default function Topbar() {
     .filter(n => n.toUserId === user?.id && !n.read)
     .slice(0, 10);
   const latestNotifId = recruitmentNotifs[0]?.id;
-  const notifCount = recruitmentNotifs.length;
+  const notifCount    = recruitmentNotifs.length;
 
   async function handleLogout() {
     await logout();
     navigate('/login');
   }
 
-  // Global search
-  const [query, setQuery] = useState('');
+  const [query, setQuery]           = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const searchRef = useRef(null);
 
   const candidates = getStore(STORAGE_KEYS.CANDIDATES);
-  const openings = getStore(STORAGE_KEYS.JOB_OPENINGS);
+  const openings   = getStore(STORAGE_KEYS.JOB_OPENINGS);
   const interviews = getStore(STORAGE_KEYS.INTERVIEWS);
 
   const searchResults = query.trim().length < 2 ? [] : [
@@ -58,47 +72,90 @@ export default function Topbar() {
     return () => document.removeEventListener('keydown', onKey);
   }, []);
 
+  /* ── shared inline styles ── */
+  const dropdownStyle = {
+    backgroundColor: 'var(--theme-cream)',
+    border: '1px solid var(--theme-linen)',
+    borderRadius: '12px',
+    boxShadow: '0 20px 60px -10px rgba(60,42,33,0.20)',
+  };
+
   return (
     <>
-      <header className="h-14 bg-white border-b border-gray-100 flex items-center justify-between px-6 flex-shrink-0 sticky top-0 z-20">
+      <header
+        className="h-14 flex items-center justify-between px-6 flex-shrink-0 sticky top-0 z-20"
+        style={{ backgroundColor: 'var(--theme-parchment)', borderBottom: '1px solid var(--theme-linen)' }}
+      >
         {/* Global Search */}
         <div className="relative w-64" ref={searchRef}>
-          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+            style={{ color: 'var(--theme-taupe)' }} />
           <input
             type="text"
             value={query}
             onChange={e => { setQuery(e.target.value); setShowSearch(true); }}
             onFocus={() => setShowSearch(true)}
             placeholder="Search candidates, jobs…"
-            className="w-full h-8 pl-8 pr-8 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary focus:bg-white transition-all"
+            style={{
+              width: '100%', height: '32px',
+              paddingLeft: '32px', paddingRight: '32px',
+              backgroundColor: 'var(--theme-sidebar-bg)',
+              border: '1px solid var(--theme-linen)',
+              borderRadius: '9999px',
+              fontSize: '12px',
+              color: 'var(--theme-aubergine)',
+              outline: 'none',
+              transition: 'border-color 150ms, box-shadow 150ms',
+            }}
+            onFocus={e => {
+              setShowSearch(true);
+              e.target.style.borderColor = 'var(--theme-mustard)';
+              e.target.style.boxShadow = '0 0 0 3px rgba(217,119,6,0.12)';
+              e.target.style.backgroundColor = 'var(--theme-cream)';
+            }}
+            onBlur={e => {
+              e.target.style.borderColor = 'var(--theme-linen)';
+              e.target.style.boxShadow = 'none';
+              e.target.style.backgroundColor = 'var(--theme-sidebar-bg)';
+            }}
           />
           {query && (
-            <button onClick={() => { setQuery(''); setShowSearch(false); }} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+            <button
+              onClick={() => { setQuery(''); setShowSearch(false); }}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 transition-colors"
+              style={{ color: 'var(--theme-taupe)' }}
+            >
               <X size={11} />
             </button>
           )}
           {showSearch && query.trim().length >= 2 && (
             <>
               <div className="fixed inset-0 z-30" onClick={() => setShowSearch(false)} />
-              <div className="absolute left-0 top-full mt-1.5 w-80 bg-white rounded-xl shadow-modal border border-gray-100 z-40 overflow-hidden">
+              <div className="absolute left-0 top-full mt-1.5 w-80 z-40 overflow-hidden" style={dropdownStyle}>
                 {searchResults.length === 0 ? (
-                  <p className="text-xs text-gray-400 text-center py-6">No results for &ldquo;{query}&rdquo;</p>
+                  <p className="text-xs text-center py-6" style={{ color: 'var(--theme-taupe)' }}>
+                    No results for "{query}"
+                  </p>
                 ) : (
                   <div className="py-1">
                     {searchResults.map((r, i) => (
                       <button
                         key={i}
                         onClick={() => { navigate(r.path); setShowSearch(false); setQuery(''); }}
-                        className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors text-left"
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors"
+                        style={{ color: 'var(--theme-aubergine)' }}
+                        onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--theme-sidebar-hover)'}
+                        onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
-                        <div className="w-6 h-6 rounded-md bg-primary-light flex items-center justify-center flex-shrink-0">
-                          <r.icon size={11} className="text-primary" />
+                        <div className="w-6 h-6 rounded flex items-center justify-center flex-shrink-0"
+                          style={{ backgroundColor: 'var(--theme-parchment)', borderRadius: '6px' }}>
+                          <r.icon size={11} style={{ color: 'var(--theme-mustard)' }} />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-xs font-medium text-gray-800 truncate">{r.label}</p>
-                          {r.sub && <p className="text-[10px] text-gray-400 truncate">{r.sub}</p>}
+                          <p className="text-xs font-medium truncate" style={{ color: 'var(--theme-aubergine)' }}>{r.label}</p>
+                          {r.sub && <p className="text-[10px] truncate" style={{ color: 'var(--theme-taupe)' }}>{r.sub}</p>}
                         </div>
-                        <span className="text-[10px] text-gray-400 flex-shrink-0">{r.type}</span>
+                        <span className="text-[10px] flex-shrink-0" style={{ color: 'var(--theme-taupe)' }}>{r.type}</span>
                       </button>
                     ))}
                   </div>
@@ -110,15 +167,30 @@ export default function Topbar() {
 
         <div className="flex items-center gap-1">
 
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            className="relative flex items-center justify-center w-8 h-8 transition-colors mr-1"
+            style={{ borderRadius: '8px' }}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--theme-sidebar-hover)'}
+            onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
+          >
+            {isDark ? <Sun size={15} style={{ color: 'var(--theme-taupe)' }} /> : <Moon size={15} style={{ color: 'var(--theme-taupe)' }} />}
+          </button>
+
           {/* Notification bell */}
           <div className="relative">
             <button
               onClick={() => setShowNotifs(v => !v)}
-              className="relative flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-50 transition-colors"
+              className="relative flex items-center justify-center w-8 h-8 transition-colors"
+              style={{ borderRadius: '8px' }}
+              onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--theme-sidebar-hover)'}
+              onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
             >
-              <Bell size={15} className="text-gray-400" />
+              <Bell size={15} style={{ color: 'var(--theme-taupe)' }} />
               {notifCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center tabular-nums">
+                <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 text-[9px] font-bold rounded-full flex items-center justify-center tabular-nums"
+                  style={{ backgroundColor: '#dc2626', color: '#ffffff' }}>
                   {notifCount > 9 ? '9+' : notifCount}
                 </span>
               )}
@@ -127,11 +199,15 @@ export default function Topbar() {
             {showNotifs && (
               <>
                 <div className="fixed inset-0 z-30" onClick={() => setShowNotifs(false)} />
-                <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-modal border border-gray-100 z-40 overflow-hidden">
-                  <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
-                    <p className="text-sm font-semibold text-gray-800">Notifications</p>
+                <div className="absolute right-0 top-full mt-2 w-80 z-40 overflow-hidden" style={dropdownStyle}>
+                  <div className="px-4 py-3 flex items-center justify-between"
+                    style={{ borderBottom: '1px solid var(--theme-linen)' }}>
+                    <p className="text-sm font-semibold" style={{ color: 'var(--theme-aubergine)', fontFamily: "'Playfair Display', serif" }}>
+                      Notifications
+                    </p>
                     {notifCount > 0 && (
-                      <span className="text-xs bg-red-50 text-red-600 font-semibold px-2 py-0.5 rounded-full">
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                        style={{ backgroundColor: '#fef3c7', color: 'var(--theme-claret)' }}>
                         {notifCount} new
                       </span>
                     )}
@@ -139,7 +215,8 @@ export default function Topbar() {
                   <div className="max-h-80 overflow-y-auto">
                     {recruitmentNotifs.length > 0 && (
                       <div>
-                        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide px-4 pt-3 pb-1">Recruitment</p>
+                        <p className="text-[10px] font-semibold uppercase tracking-wide px-4 pt-3 pb-1"
+                          style={{ color: 'var(--theme-taupe)' }}>Recruitment</p>
                         {recruitmentNotifs.map(n => {
                           const isNewest = n.id === latestNotifId;
                           return (
@@ -151,13 +228,20 @@ export default function Topbar() {
                                 if (n.type === 'candidate_reassigned' && n.relatedId) navigate(`/candidates/${n.relatedId}`);
                                 else navigate('/approvals');
                               }}
-                              className={`w-full text-left px-4 py-2.5 transition-colors border-b border-gray-50 last:border-0 ${isNewest ? 'bg-blue-50' : 'hover:bg-gray-50'}`}
+                              className="w-full text-left px-4 py-2.5 transition-colors last:border-0"
+                              style={{
+                                borderBottom: '1px solid var(--theme-linen)',
+                                backgroundColor: isNewest ? '#fef3c7' : 'transparent',
+                              }}
+                              onMouseEnter={e => { if (!isNewest) e.currentTarget.style.backgroundColor = 'var(--theme-sidebar-hover)'; }}
+                              onMouseLeave={e => { e.currentTarget.style.backgroundColor = isNewest ? '#fef3c7' : 'transparent'; }}
                             >
-                              <div className="flex items-center gap-2">
-                                <p className={`text-sm ${isNewest ? 'text-blue-800 font-semibold' : 'text-gray-700'}`}>{n.message}</p>
-                                {isNewest && <span className="inline-flex items-center rounded-full bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5">NEW</span>}
-                              </div>
-                              <p className="text-xs text-gray-400">{new Date(n.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                              <p className="text-sm" style={{ color: isNewest ? 'var(--theme-claret)' : 'var(--theme-aubergine)', fontWeight: isNewest ? 600 : 400 }}>
+                                {n.message}
+                              </p>
+                              <p className="text-xs mt-0.5" style={{ color: 'var(--theme-taupe)' }}>
+                                {new Date(n.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              </p>
                             </button>
                           );
                         })}
@@ -165,17 +249,21 @@ export default function Topbar() {
                     )}
                     {recentLogs.length > 0 && (
                       <div>
-                        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide px-4 pt-3 pb-1">Recent Activity</p>
+                        <p className="text-[10px] font-semibold uppercase tracking-wide px-4 pt-3 pb-1"
+                          style={{ color: 'var(--theme-taupe)' }}>Recent Activity</p>
                         {recentLogs.map(log => (
-                          <div key={log.id} className="px-4 py-2.5 border-b border-gray-50 last:border-0">
-                            <p className="text-sm text-gray-700">{log.action}</p>
-                            <p className="text-xs text-gray-400">{log.details} · {new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                          <div key={log.id} className="px-4 py-2.5"
+                            style={{ borderBottom: '1px solid var(--theme-sidebar-bg)' }}>
+                            <p className="text-sm" style={{ color: 'var(--theme-aubergine)' }}>{log.action}</p>
+                            <p className="text-xs mt-0.5" style={{ color: 'var(--theme-taupe)' }}>
+                              {log.details} · {new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </p>
                           </div>
                         ))}
                       </div>
                     )}
                     {recruitmentNotifs.length === 0 && recentLogs.length === 0 && (
-                      <p className="text-sm text-gray-400 text-center py-8">No activity yet.</p>
+                      <p className="text-sm text-center py-8" style={{ color: 'var(--theme-taupe)' }}>No activity yet.</p>
                     )}
                   </div>
                 </div>
@@ -183,42 +271,59 @@ export default function Topbar() {
             )}
           </div>
 
-          <div className="w-px h-4 bg-gray-100 mx-1" />
+          {/* Divider */}
+          <div className="w-px h-4 mx-1" style={{ backgroundColor: 'var(--theme-linen)' }} />
 
           {/* User menu */}
           <div className="relative">
             <button
               onClick={() => setShowMenu(v => !v)}
-              className="flex items-center gap-2 hover:bg-gray-50 rounded-lg px-2 py-1.5 transition-colors"
+              className="flex items-center gap-2 px-2 py-1.5 transition-colors"
+              style={{ borderRadius: '9999px' }}
+              onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--theme-sidebar-hover)'}
+              onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
             >
-              <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white text-[10px] font-semibold flex-shrink-0">
+              <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-semibold flex-shrink-0"
+                style={{ backgroundColor: 'var(--theme-mustard)', color: '#ffffff' }}>
                 {user?.firstName?.[0]}{user?.lastName?.[0]}
               </div>
               <div className="hidden sm:block text-left">
-                <p className="text-xs font-medium text-gray-700 leading-tight">{user?.firstName} {user?.lastName}</p>
-                <p className="text-[10px] text-gray-400 leading-tight">{ROLE_LABELS[user?.role] || user?.role}</p>
+                <p className="text-xs font-medium leading-tight" style={{ color: 'var(--theme-aubergine)' }}>
+                  {user?.firstName} {user?.lastName}
+                </p>
+                <p className="text-[10px] leading-tight" style={{ color: 'var(--theme-taupe)' }}>
+                  {ROLE_LABELS[user?.role] || user?.role}
+                </p>
               </div>
-              <ChevronDown size={11} className="text-gray-300" />
+              <ChevronDown size={11} style={{ color: 'var(--theme-taupe)' }} />
             </button>
 
             {showMenu && (
               <>
                 <div className="fixed inset-0 z-30" onClick={() => setShowMenu(false)} />
-                <div className="absolute right-0 top-full mt-1.5 w-48 bg-white rounded-xl shadow-modal border border-gray-100 py-1.5 z-40">
-                  <div className="px-4 py-2.5 border-b border-gray-50 mb-1">
-                    <p className="text-xs font-semibold text-gray-800">{user?.firstName} {user?.lastName}</p>
-                    <p className="text-[11px] text-gray-400">{user?.email}</p>
+                <div className="absolute right-0 top-full mt-1.5 w-48 py-1.5 z-40" style={dropdownStyle}>
+                  <div className="px-4 py-2.5 mb-1" style={{ borderBottom: '1px solid var(--theme-linen)' }}>
+                    <p className="text-xs font-semibold" style={{ color: 'var(--theme-aubergine)' }}>
+                      {user?.firstName} {user?.lastName}
+                    </p>
+                    <p className="text-[11px] mt-0.5" style={{ color: 'var(--theme-taupe)' }}>{user?.email}</p>
                   </div>
                   <button
                     onClick={() => { setShowMenu(false); navigate('/dashboard'); }}
-                    className="flex items-center gap-2.5 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                    className="flex items-center gap-2.5 w-full px-4 py-2 text-sm transition-colors"
+                    style={{ color: 'var(--theme-aubergine)' }}
+                    onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--theme-sidebar-hover)'}
+                    onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
                   >
-                    <User size={13} className="text-gray-400" /> Dashboard
+                    <User size={13} style={{ color: 'var(--theme-taupe)' }} /> Dashboard
                   </button>
-                  <div className="border-t border-gray-50 mt-1 pt-1">
+                  <div className="mt-1 pt-1" style={{ borderTop: '1px solid var(--theme-linen)' }}>
                     <button
                       onClick={() => { setShowMenu(false); setShowLogout(true); }}
-                      className="flex items-center gap-2.5 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                      className="flex items-center gap-2.5 w-full px-4 py-2 text-sm transition-colors"
+                      style={{ color: '#dc2626' }}
+                      onMouseEnter={e => e.currentTarget.style.backgroundColor = '#fee2e2'}
+                      onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
                     >
                       <LogOut size={13} /> Logout
                     </button>

@@ -35,7 +35,7 @@ export default function ScheduleInterview() {
   });
   const [errors, setErrors] = useState({});
 
-  if (!candidate) return <div className="card text-center py-10 text-gray-400">Candidate not found.</div>;
+  if (!candidate) return <div className="card text-center py-10 text-[#a8a29e]">Candidate not found.</div>;
 
   function save() {
     const errs = {};
@@ -110,13 +110,10 @@ export default function ScheduleInterview() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-5">
-      <div className="flex items-center gap-3">
-        <button className="text-gray-400 hover:text-gray-600 text-sm" onClick={() => navigate(`/candidates/${id}`)}>← Back</button>
-        <h1 className="page-title">{isRescheduling ? 'Reschedule Interview' : 'Schedule Interview'}</h1>
-      </div>
+      <h1 className="page-title">{isRescheduling ? 'Reschedule Interview' : 'Schedule Interview'}</h1>
 
       <div className="card">
-        <p className="text-sm text-gray-600 mb-4">{isRescheduling ? 'Rescheduling interview for' : 'Scheduling interview for'} <strong>{candidate.firstName} {candidate.lastName}</strong> — {candidate.appliedPosition}</p>
+        <p className="text-sm text-[#78716c] mb-4">{isRescheduling ? 'Rescheduling interview for' : 'Scheduling interview for'} <strong>{candidate.firstName} {candidate.lastName}</strong> — {candidate.appliedPosition}</p>
         <div className="grid grid-cols-2 gap-4">
           <div><label className="label">Interview Date *</label><input type="date" className="input" value={form.date} min={today} onChange={e => set('date', e.target.value)} />{err('date')}</div>
           <div><label className="label">Interview Time *</label><input type="time" className="input" value={form.time} min={minTime} onChange={e => set('time', e.target.value)} />{err('time')}</div>

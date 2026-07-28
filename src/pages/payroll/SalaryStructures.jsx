@@ -68,7 +68,7 @@ export default function SalaryStructures() {
 
       {structures.length === 0 ? (
         <div className="card text-center py-12">
-          <p className="text-gray-400 text-sm mb-3">No salary structures yet.</p>
+          <p className="text-[#a8a29e] text-sm mb-3">No salary structures yet.</p>
           <button className="btn-primary btn" onClick={openAdd}><Plus size={15} /> Create First Structure</button>
         </div>
       ) : (
@@ -77,8 +77,8 @@ export default function SalaryStructures() {
             <div key={s.id} className="card hover:shadow-card-hover transition-shadow">
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h3 className="font-bold text-gray-900">{s.name}</h3>
-                  {s.description && <p className="text-xs text-gray-400 mt-0.5">{s.description}</p>}
+                  <h3 className="font-bold text-[#3c2a21]">{s.name}</h3>
+                  {s.description && <p className="text-xs text-[#a8a29e] mt-0.5">{s.description}</p>}
                 </div>
                 <div className="flex gap-1">
                   <button className="btn btn-sm btn-secondary" onClick={() => openEdit(s)}><Pencil size={13} /></button>
@@ -87,23 +87,23 @@ export default function SalaryStructures() {
               </div>
               <div className="grid grid-cols-3 gap-3 text-center">
                 <div className="bg-emerald-50 rounded-lg p-3">
-                  <p className="text-xs text-gray-500">Gross</p>
+                  <p className="text-xs text-[#78716c]">Gross</p>
                   <p className="text-sm font-bold text-emerald-700">{fmt(s.grossSalary)}</p>
                 </div>
                 <div className="bg-red-50 rounded-lg p-3">
-                  <p className="text-xs text-gray-500">Deductions</p>
+                  <p className="text-xs text-[#78716c]">Deductions</p>
                   <p className="text-sm font-bold text-red-600">{fmt(s.totalDeductions)}</p>
                 </div>
                 <div className="bg-blue-50 rounded-lg p-3">
-                  <p className="text-xs text-gray-500">Net</p>
+                  <p className="text-xs text-[#78716c]">Net</p>
                   <p className="text-sm font-bold text-blue-700">{fmt(s.netSalary)}</p>
                 </div>
               </div>
-              <div className="mt-3 pt-3 border-t border-gray-50 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-500">
-                <span>Basic: <strong className="text-gray-700">{fmt(s.basicSalary)}</strong></span>
-                <span>HRA: <strong className="text-gray-700">{fmt(s.hra)}</strong></span>
-                <span>PF: <strong className="text-gray-700">{fmt(s.pf)}</strong></span>
-                <span>Tax: <strong className="text-gray-700">{fmt(s.incomeTax)}</strong></span>
+              <div className="mt-3 pt-3 border-t border-[#f5f1eb] grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-[#78716c]">
+                <span>Basic: <strong className="text-[#3c2a21]">{fmt(s.basicSalary)}</strong></span>
+                <span>HRA: <strong className="text-[#3c2a21]">{fmt(s.hra)}</strong></span>
+                <span>PF: <strong className="text-[#3c2a21]">{fmt(s.pf)}</strong></span>
+                <span>Tax: <strong className="text-[#3c2a21]">{fmt(s.incomeTax)}</strong></span>
               </div>
             </div>
           ))}
@@ -143,14 +143,14 @@ export default function SalaryStructures() {
             </div>
 
             {/* Live preview */}
-            <div className="bg-gray-50 rounded-xl p-4 grid grid-cols-3 gap-3 text-center">
+            <div className="bg-[#faf7f2] rounded-xl p-4 grid grid-cols-3 gap-3 text-center">
               {[
                 ['Gross Salary', num(form.basicSalary)+num(form.hra)+num(form.medicalAllowance)+num(form.travelAllowance)+num(form.specialAllowance)+num(form.otherAllowances), 'text-emerald-700'],
                 ['Total Deductions', num(form.pf)+num(form.professionalTax)+num(form.incomeTax)+num(form.esi)+num(form.loanDeduction)+num(form.otherDeductions), 'text-red-600'],
                 ['Net Salary', (num(form.basicSalary)+num(form.hra)+num(form.medicalAllowance)+num(form.travelAllowance)+num(form.specialAllowance)+num(form.otherAllowances))-(num(form.pf)+num(form.professionalTax)+num(form.incomeTax)+num(form.esi)+num(form.loanDeduction)+num(form.otherDeductions)), 'text-blue-700'],
               ].map(([label, val, cls]) => (
                 <div key={label}>
-                  <p className="text-xs text-gray-500">{label}</p>
+                  <p className="text-xs text-[#78716c]">{label}</p>
                   <p className={`text-lg font-bold ${cls}`}>{fmt(val)}</p>
                 </div>
               ))}

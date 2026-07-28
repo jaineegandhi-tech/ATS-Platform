@@ -79,7 +79,7 @@ export default function DocumentFormModal({ title, employees = [], currentUser, 
         <div>
           <label className="label">Upload File</label>
           <input className="input" type="file" accept={ACCEPTED_DOCUMENT_EXTENSIONS} onChange={e => setFile(e.target.files?.[0] || null)} />
-          <p className="text-xs text-gray-400 mt-1">PDF, DOC, DOCX, JPG, or PNG. Maximum size 20 MB.</p>
+          <p className="text-xs text-[#a8a29e] mt-1">PDF, DOC, DOCX, JPG, or PNG. Maximum size 20 MB.</p>
         </div>
 
         {error && <div className="bg-red-50 border border-red-100 text-red-600 rounded-lg px-3 py-2 text-sm">{error}</div>}

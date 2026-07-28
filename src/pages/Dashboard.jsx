@@ -27,11 +27,11 @@ function StatCard({ icon: Icon, label, value, iconBg, iconColor, onClick }) {
         <div className={`stat-icon ${iconBg}`}>
           <Icon size={18} className={iconColor} />
         </div>
-        {onClick && <ArrowUpRight size={15} className="text-gray-300 group-hover:text-primary transition-colors" />}
+        {onClick && <ArrowUpRight size={15} className="text-[#d4cdc4] group-hover:text-primary transition-colors" />}
       </div>
       <div className="mt-4">
-        <p className="text-2xl font-bold text-gray-900">{value}</p>
-        <p className="text-xs text-gray-500 mt-0.5 font-medium">{label}</p>
+        <p className="text-2xl font-bold text-[#3c2a21]">{value}</p>
+        <p className="text-xs text-[#78716c] mt-0.5 font-medium">{label}</p>
       </div>
     </div>
   );
@@ -47,7 +47,7 @@ function UpcomingHolidays({ upcomingHolidays, today, navigate }) {
         </button>
       </div>
       {upcomingHolidays.length === 0 ? (
-        <p className="text-sm text-gray-400 py-4 text-center">No upcoming holidays.</p>
+        <p className="text-sm text-[#a8a29e] py-4 text-center">No upcoming holidays.</p>
       ) : (
         <div className="space-y-2">
           {upcomingHolidays.map(h => {
@@ -59,11 +59,11 @@ function UpcomingHolidays({ upcomingHolidays, today, navigate }) {
                   <Palmtree size={16} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-900 truncate">{h.name}</p>
+                  <p className="text-sm font-semibold text-[#3c2a21] truncate">{h.name}</p>
                   <p className="text-xs opacity-70">{h.date} · {dayName(h.date)} · {h.type}</p>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <p className="text-sm font-bold text-gray-800">{dl === 0 ? 'Today' : `${dl}d`}</p>
+                  <p className="text-sm font-bold text-[#3c2a21]">{dl === 0 ? 'Today' : `${dl}d`}</p>
                   <p className="text-[10px] opacity-60">{dl > 0 ? 'away' : ''}</p>
                 </div>
               </div>
@@ -108,7 +108,7 @@ export default function Dashboard() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="page-title">Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 17 ? 'afternoon' : 'evening'}, {user?.firstName} 👋</h1>
-          <p className="text-sm text-gray-400 mt-0.5">{formatDate(new Date().toISOString())} · {user?.role === 'hr' ? 'HR / Management' : user?.designation}</p>
+          <p className="text-sm text-[#a8a29e] mt-0.5">{formatDate(new Date().toISOString())} · {user?.role === 'hr' ? 'HR / Management' : user?.designation}</p>
         </div>
       </div>
 
@@ -125,22 +125,22 @@ export default function Dashboard() {
             <div className="card lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="section-title mb-0">Recent Activity</h2>
-                <span className="text-xs text-gray-400">{logs.length} events</span>
+                <span className="text-xs text-[#a8a29e]">{logs.length} events</span>
               </div>
               {logs.length === 0 ? (
-                <p className="text-sm text-gray-400 py-4 text-center">No activity recorded yet.</p>
+                <p className="text-sm text-[#a8a29e] py-4 text-center">No activity recorded yet.</p>
               ) : (
                 <div className="space-y-0">
                   {logs.map((log, i) => (
-                    <div key={log.id} className={`flex items-center justify-between py-3 ${i < logs.length - 1 ? 'border-b border-gray-50' : ''}`}>
+                    <div key={log.id} className={`flex items-center justify-between py-3 ${i < logs.length - 1 ? 'border-b border-[#f5f1eb]' : ''}`}>
                       <div className="flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-primary/40 flex-shrink-0" />
                         <div>
-                          <p className="text-sm font-medium text-gray-800">{log.action}</p>
-                          <p className="text-xs text-gray-400">{log.details}</p>
+                          <p className="text-sm font-medium text-[#3c2a21]">{log.action}</p>
+                          <p className="text-xs text-[#a8a29e]">{log.details}</p>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-400 flex-shrink-0 ml-4">
+                      <p className="text-xs text-[#a8a29e] flex-shrink-0 ml-4">
                         {new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </p>
                     </div>
@@ -169,13 +169,13 @@ export default function Dashboard() {
             <div className="card">
               <h2 className="section-title">Leave Balances</h2>
               {Object.keys(myBalances).length === 0 ? (
-                <p className="text-sm text-gray-400 py-2">No leave balance assigned yet.</p>
+                <p className="text-sm text-[#a8a29e] py-2">No leave balance assigned yet.</p>
               ) : (
                 <div className="space-y-0">
                   {Object.entries(myBalances).map(([type, days], i, arr) => (
-                    <div key={type} className={`flex justify-between items-center py-2.5 ${i < arr.length - 1 ? 'border-b border-gray-50' : ''}`}>
-                      <span className="text-xs text-gray-500 font-medium">{type} Leave</span>
-                      <span className="text-sm font-bold text-gray-900">{days} <span className="font-normal text-gray-400">days</span></span>
+                    <div key={type} className={`flex justify-between items-center py-2.5 ${i < arr.length - 1 ? 'border-b border-[#f5f1eb]' : ''}`}>
+                      <span className="text-xs text-[#78716c] font-medium">{type} Leave</span>
+                      <span className="text-sm font-bold text-[#3c2a21]">{days} <span className="font-normal text-[#a8a29e]">days</span></span>
                     </div>
                   ))}
                 </div>

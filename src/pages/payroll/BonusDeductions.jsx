@@ -79,11 +79,11 @@ export default function BonusDeductions() {
 
       {/* Tabs + Filter */}
       <div className="flex items-center justify-between gap-4 flex-wrap">
-        <div className="flex rounded-lg border border-gray-200 overflow-hidden">
-          <button onClick={() => setTab('bonus')} className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${tab === 'bonus' ? 'bg-emerald-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>
+        <div className="flex rounded-lg border border-[#e8e2d9] overflow-hidden">
+          <button onClick={() => setTab('bonus')} className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${tab === 'bonus' ? 'bg-emerald-600 text-white' : 'bg-[#ffffff] text-[#78716c] hover:bg-[#faf7f2]'}`}>
             <Gift size={14} /> Bonuses
           </button>
-          <button onClick={() => setTab('deduction')} className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${tab === 'deduction' ? 'bg-red-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>
+          <button onClick={() => setTab('deduction')} className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${tab === 'deduction' ? 'bg-red-600 text-white' : 'bg-[#ffffff] text-[#78716c] hover:bg-[#faf7f2]'}`}>
             <Minus size={14} /> Deductions
           </button>
         </div>
@@ -103,14 +103,14 @@ export default function BonusDeductions() {
       <div className="card p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
               <tr>{['Employee','Type','Amount','Reason','Payroll Month','Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f5f1eb]">
               {rows.length === 0 ? (
-                <tr><td colSpan={6} className="table-td text-center text-gray-400 py-8">No {tab === 'bonus' ? 'bonuses' : 'deductions'} found.</td></tr>
+                <tr><td colSpan={6} className="table-td text-center text-[#a8a29e] py-8">No {tab === 'bonus' ? 'bonuses' : 'deductions'} found.</td></tr>
               ) : rows.map(r => (
-                <tr key={r.id} className="hover:bg-gray-50">
+                <tr key={r.id} className="hover:bg-[#faf7f2]">
                   <td className="table-td font-medium">{r.employeeName}</td>
                   <td className="table-td">{r.type}</td>
                   <td className={`table-td font-semibold ${tab === 'bonus' ? 'text-emerald-700' : 'text-red-600'}`}>{fmt(r.amount)}</td>

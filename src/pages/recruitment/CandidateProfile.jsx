@@ -55,7 +55,7 @@ export default function CandidateProfile() {
     systemAccessNotes: candidate?.itSetup?.systemAccessNotes || '',
   }));
 
-  if (!candidate) return <div className="card text-center py-10 text-gray-400">Candidate not found.</div>;
+  if (!candidate) return <div className="card text-center py-10 text-[#a8a29e]">Candidate not found.</div>;
 
   const latestInterview = interviews.length > 0 ? interviews[interviews.length - 1] : null;
   const hasScheduledInterview = !!latestInterview;
@@ -185,8 +185,8 @@ export default function CandidateProfile() {
 
   function handleExtractedData(extractedData) {
     const all = getStore(STORAGE_KEYS.CANDIDATES);
-    setStore(STORAGE_KEYS.CANDIDATES, all.map(c => c.id === id ? { ...c, ...extractedData } : c));
     const now = new Date().toISOString();
+    setStore(STORAGE_KEYS.CANDIDATES, all.map(c => c.id === id ? { ...c, ...extractedData, timeline: [...(c.timeline || []), { action: 'Candidate information updated from resume', by: user.id, at: now }] } : c));
     addLog('Candidate Information Extracted', user.id, `${candidate.firstName} ${candidate.lastName} - Resume information extracted`);
     setShowExtractor(false);
     forceUpdate(n => n + 1);
@@ -234,10 +234,6 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center gap-3">
-        <button className="text-gray-400 hover:text-gray-600 text-sm" onClick={() => navigate('/candidates')}>← Back to Candidates</button>
-      </div>
-
       {/* Assigned-to-you banner */}
       {user?.role === ROLES.HR && candidate.assignedTo === user.id && candidate.createdBy !== user.id && (
         <div className="flex items-center gap-2 bg-violet-50 border border-violet-200 rounded-xl px-4 py-3">
@@ -253,12 +249,12 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
             {candidate.firstName?.[0]}{candidate.lastName?.[0]}
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">{candidate.firstName} {candidate.lastName}</h1>
-            <p className="text-sm text-gray-500">{candidate.appliedPosition} · {candidate.department}</p>
+            <h1 className="text-xl font-bold text-[#3c2a21]">{candidate.firstName} {candidate.lastName}</h1>
+            <p className="text-sm text-[#78716c]">{candidate.appliedPosition} · {candidate.department}</p>
             <div className="flex items-center gap-3 mt-2">
               <StatusBadge status={candidate.status} />
-              <span className="text-xs text-gray-400">{candidate.id}</span>
-              {candidate.currentRound && <span className="text-xs text-gray-400">{candidate.currentRound}</span>}
+              <span className="text-xs text-[#a8a29e]">{candidate.id}</span>
+              {candidate.currentRound && <span className="text-xs text-[#a8a29e]">{candidate.currentRound}</span>}
             </div>
           </div>
         </div>
@@ -278,23 +274,23 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
                 Actions <ChevronDown size={13} />
               </button>
               {actionsOpen && (
-                <div className="absolute right-0 top-full mt-1 w-52 bg-white border border-gray-200 rounded-xl shadow-lg z-50 py-1" onMouseLeave={() => setActionsOpen(false)}>
-                  <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" onClick={() => { setActionsOpen(false); navigate(`/candidates/${id}/edit`); }}>
+                <div className="absolute right-0 top-full mt-1 w-52 bg-[#ffffff] border border-[#e8e2d9] rounded-xl shadow-lg z-50 py-1" onMouseLeave={() => setActionsOpen(false)}>
+                  <button className="w-full text-left px-4 py-2 text-sm text-[#3c2a21] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setActionsOpen(false); navigate(`/candidates/${id}/edit`); }}>
                     <Pencil size={13} /> Edit Candidate
                   </button>
-                  <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" onClick={() => { setActionsOpen(false); navigate(`/candidates/${id}/schedule`); }}>
+                  <button className="w-full text-left px-4 py-2 text-sm text-[#3c2a21] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setActionsOpen(false); navigate(`/candidates/${id}/schedule`); }}>
                     <CalendarDays size={13} /> {hasScheduledInterview ? 'Reschedule Interview' : 'Schedule Interview'}
                   </button>
-                  <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" onClick={() => { setActionsOpen(false); setNewStatus(candidate.status); setStatusModal(true); }}>
+                  <button className="w-full text-left px-4 py-2 text-sm text-[#3c2a21] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setActionsOpen(false); setNewStatus(candidate.status); setStatusModal(true); }}>
                     <CheckCircle size={13} /> Update Status
                   </button>
                   {['Selected', 'Offered'].includes(candidate.status) && (
-                    <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" onClick={() => { setActionsOpen(false); setJoiningModal(true); }}>
+                    <button className="w-full text-left px-4 py-2 text-sm text-[#3c2a21] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setActionsOpen(false); setJoiningModal(true); }}>
                       <Send size={13} /> Joining Details
                     </button>
                   )}
                   {isHR && (
-                    <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" onClick={() => { setActionsOpen(false); setReassignTo(candidate.assignedTo || ''); setReassignModal(true); }}>
+                    <button className="w-full text-left px-4 py-2 text-sm text-[#3c2a21] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setActionsOpen(false); setReassignTo(candidate.assignedTo || ''); setReassignModal(true); }}>
                       <UserCheck size={13} /> Reassign HR
                     </button>
                   )}
@@ -337,9 +333,9 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
               ['CTC Negotiable', candidate.negotiable ? 'Yes' : 'No'],
               ['Can Join Immediately', candidate.immediateJoining ? 'Yes' : 'No'],
             ].map(([label, value]) => value ? (
-              <div key={label} className="rounded-lg bg-gray-50 p-3">
-                <p className="text-xs text-gray-400">{label}</p>
-                <p className="text-sm font-semibold text-gray-800">{value || '-'}</p>
+              <div key={label} className="rounded-lg bg-[#faf7f2] p-3">
+                <p className="text-xs text-[#a8a29e]">{label}</p>
+                <p className="text-sm font-semibold text-[#3c2a21]">{value || '-'}</p>
               </div>
             ) : null)}
           </div>
@@ -347,7 +343,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
             <div className="space-y-3">
               {candidate.skills && (
                 <div className="rounded-lg bg-blue-50 border border-blue-100 p-3">
-                  <p className="text-xs text-gray-400 font-semibold mb-1">Skills</p>
+                  <p className="text-xs text-[#a8a29e] font-semibold mb-1">Skills</p>
                   <div className="flex flex-wrap gap-2">
                     {candidate.skills.split(',').map((skill, idx) => (
                       <span key={idx} className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
@@ -359,7 +355,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
               )}
               {candidate.expertise && (
                 <div className="rounded-lg bg-purple-50 border border-purple-100 p-3">
-                  <p className="text-xs text-gray-400 font-semibold mb-1">Expertise</p>
+                  <p className="text-xs text-[#a8a29e] font-semibold mb-1">Expertise</p>
                   <p className="text-sm text-purple-700">{candidate.expertise}</p>
                 </div>
               )}
@@ -367,7 +363,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
           )}
           {/* Telephonic Interview Record */}
           {telephonicRecord && (
-            <div className="space-y-3 pt-2 border-t border-gray-100">
+            <div className="space-y-3 pt-2 border-t border-[#e8e2d9]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg bg-violet-100 flex items-center justify-center">
@@ -381,7 +377,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50 border-b border-gray-100">
+                  <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
                     <tr>
                       {['Call Date', 'Call Time', 'Duration', 'Called By', 'Outcome', 'Current CTC', 'Expected CTC', 'Notice Period', 'Imm. Joiner', 'Notes'].map(h => (
                         <th key={h} className="table-th whitespace-nowrap">{h}</th>
@@ -389,7 +385,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="hover:bg-gray-50/60">
+                    <tr className="hover:bg-[#faf7f2]/60">
                       <td className="table-td">{telephonicRecord.callDate || '—'}</td>
                       <td className="table-td">{telephonicRecord.callTime || '—'}</td>
                       <td className="table-td">{telephonicRecord.duration ? `${telephonicRecord.duration} min` : '—'}</td>
@@ -404,7 +400,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
                       <td className="table-td">{telephonicRecord.expectedCTC || '—'}</td>
                       <td className="table-td">{telephonicRecord.noticePeriod || '—'}</td>
                       <td className="table-td">{telephonicRecord.immediateJoiner ? 'Yes' : 'No'}</td>
-                      <td className="table-td max-w-[160px] truncate text-xs text-gray-500" title={telephonicRecord.notes}>{telephonicRecord.notes || '—'}</td>
+                      <td className="table-td max-w-[160px] truncate text-xs text-[#78716c]" title={telephonicRecord.notes}>{telephonicRecord.notes || '—'}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -419,9 +415,9 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
         <div className="card space-y-3">
           <h2 className="section-title">Contact Information</h2>
           {[['Email', candidate.email], ['Mobile', candidate.mobile], ['Location', candidate.location], ['Employment Type', candidate.employmentType]].map(([k, v]) => (
-            <div key={k} className="flex justify-between border-b border-gray-50 pb-2 last:border-0">
-              <span className="text-xs text-gray-400">{k}</span>
-              <span className="text-sm font-medium text-gray-800">{v || '—'}</span>
+            <div key={k} className="flex justify-between border-b border-[#f5f1eb] pb-2 last:border-0">
+              <span className="text-xs text-[#a8a29e]">{k}</span>
+              <span className="text-sm font-medium text-[#3c2a21]">{v || '—'}</span>
             </div>
           ))}
           {/* Recruitment Info merged here for Head HR */}
@@ -429,20 +425,20 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
             const creator = employees.find(e => e.id === candidate.createdBy);
             return (
               <>
-                <div className="border-t border-gray-100 pt-2 mt-1">
-                  <p className="text-xs font-semibold text-gray-400 mb-2">Recruitment Info</p>
+                <div className="border-t border-[#e8e2d9] pt-2 mt-1">
+                  <p className="text-xs font-semibold text-[#a8a29e] mb-2">Recruitment Info</p>
                 </div>
-                <div className="flex justify-between border-b border-gray-50 pb-2">
-                  <span className="text-xs text-gray-400">Created By</span>
-                  <span className="text-sm font-medium text-gray-800">{creator ? `${creator.firstName} ${creator.lastName}` : candidate.createdBy}</span>
+                <div className="flex justify-between border-b border-[#f5f1eb] pb-2">
+                  <span className="text-xs text-[#a8a29e]">Created By</span>
+                  <span className="text-sm font-medium text-[#3c2a21]">{creator ? `${creator.firstName} ${creator.lastName}` : candidate.createdBy}</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-50 pb-2">
-                  <span className="text-xs text-gray-400">HR Role</span>
-                  <span className="text-sm font-medium text-gray-800">{creator?.designation || 'HR'}</span>
+                <div className="flex justify-between border-b border-[#f5f1eb] pb-2">
+                  <span className="text-xs text-[#a8a29e]">HR Role</span>
+                  <span className="text-sm font-medium text-[#3c2a21]">{creator?.designation || 'HR'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-xs text-gray-400">Created On</span>
-                  <span className="text-sm font-medium text-gray-800">{candidate.createdAt ? new Date(candidate.createdAt).toLocaleDateString() : '—'}</span>
+                  <span className="text-xs text-[#a8a29e]">Created On</span>
+                  <span className="text-sm font-medium text-[#3c2a21]">{candidate.createdAt ? new Date(candidate.createdAt).toLocaleDateString() : '—'}</span>
                 </div>
               </>
             );
@@ -453,29 +449,29 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
         <div className="card lg:col-span-2">
           <h2 className="section-title">Interview History</h2>
           {interviews.length === 0 ? (
-            <p className="text-sm text-gray-400 py-4 text-center">No interviews scheduled yet.</p>
+            <p className="text-sm text-[#a8a29e] py-4 text-center">No interviews scheduled yet.</p>
           ) : (
             <div className="space-y-3">
               {interviews.map(iv => (
-                <div key={iv.id} className="border border-gray-100 rounded-xl p-4">
+                <div key={iv.id} className="border border-[#e8e2d9] rounded-xl p-4">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-sm font-semibold text-gray-800">{iv.round}</p>
-                      <p className="text-xs text-gray-400">{formatDate(iv.date)} at {iv.time} · {iv.mode}</p>
-                      <p className="text-xs text-gray-400 mt-1">
+                      <p className="text-sm font-semibold text-[#3c2a21]">{iv.round}</p>
+                      <p className="text-xs text-[#a8a29e]">{formatDate(iv.date)} at {iv.time} · {iv.mode}</p>
+                      <p className="text-xs text-[#a8a29e] mt-1">
                         Interviewer(s): {iv.interviewerIds?.map(getEmpName).join(', ') || '—'}
                       </p>
                     </div>
                     <StatusBadge status={iv.status} />
                   </div>
                   {iv.feedback && (
-                    <div className="mt-3 pt-3 border-t border-gray-50">
-                      <p className="text-xs font-semibold text-gray-500 mb-1">Feedback</p>
-                      <div className="flex items-center gap-4 text-xs text-gray-600">
+                    <div className="mt-3 pt-3 border-t border-[#f5f1eb]">
+                      <p className="text-xs font-semibold text-[#78716c] mb-1">Feedback</p>
+                      <div className="flex items-center gap-4 text-xs text-[#78716c]">
                         <span>Rating: <strong>{iv.feedback.rating}</strong></span>
                         <span>Decision: <strong>{iv.feedback.decision}</strong></span>
                       </div>
-                      {iv.feedback.remarks && <p className="text-xs text-gray-500 mt-1">{iv.feedback.remarks}</p>}
+                      {iv.feedback.remarks && <p className="text-xs text-[#78716c] mt-1">{iv.feedback.remarks}</p>}
                     </div>
                   )}
                   {!iv.feedback && iv.status !== 'cancelled' && (
@@ -508,14 +504,14 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
               ['Email', candidate.joiningDetails.email],
               ['Employee ID', candidate.itSetup?.employeeId || 'Pending IT setup'],
             ].map(([label, value]) => (
-              <div key={label} className="rounded-lg bg-gray-50 p-3">
-                <p className="text-xs text-gray-400">{label}</p>
-                <p className="text-sm font-semibold text-gray-800">{value || '-'}</p>
+              <div key={label} className="rounded-lg bg-[#faf7f2] p-3">
+                <p className="text-xs text-[#a8a29e]">{label}</p>
+                <p className="text-sm font-semibold text-[#3c2a21]">{value || '-'}</p>
               </div>
             ))}
           </div>
           {candidate.joiningDetails.onboardingNotes && (
-            <p className="text-sm text-gray-600 mt-4 bg-blue-50 border border-blue-100 rounded-lg p-3">{candidate.joiningDetails.onboardingNotes}</p>
+            <p className="text-sm text-[#78716c] mt-4 bg-blue-50 border border-blue-100 rounded-lg p-3">{candidate.joiningDetails.onboardingNotes}</p>
           )}
         </div>
       )}
@@ -524,15 +520,15 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
       <div className="card">
         <h2 className="section-title">Recruitment Timeline</h2>
         {(!candidate.timeline || candidate.timeline.length === 0) ? (
-          <p className="text-sm text-gray-400">No timeline events yet.</p>
+          <p className="text-sm text-[#a8a29e]">No timeline events yet.</p>
         ) : (
           <div className="relative pl-6">
-            <div className="absolute left-2 top-0 bottom-0 w-px bg-gray-100" />
+            <div className="absolute left-2 top-0 bottom-0 w-px bg-[#f0ebe2]" />
             {candidate.timeline.map((t, i) => (
               <div key={i} className="relative mb-4 last:mb-0">
                 <div className="absolute -left-4 top-1 w-2.5 h-2.5 rounded-full bg-primary/60 ring-2 ring-white" />
-                <p className="text-sm font-medium text-gray-800">{t.action}</p>
-                <p className="text-xs text-gray-400">{new Date(t.at).toLocaleString()} · {getEmpName(t.by)}</p>
+                <p className="text-sm font-medium text-[#3c2a21]">{t.action}</p>
+                <p className="text-xs text-[#a8a29e]">{new Date(t.at).toLocaleString()} · {getEmpName(t.by)}</p>
               </div>
             ))}
           </div>
@@ -543,10 +539,10 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
       {reassignModal && (
         <Modal title="Reassign Candidate to Another HR" onClose={() => setReassignModal(false)} size="sm">
           <div className="space-y-4">
-            <p className="text-sm text-gray-500">Select an HR to take over <strong>{candidate.firstName} {candidate.lastName}</strong>.</p>
+            <p className="text-sm text-[#78716c]">Select an HR to take over <strong>{candidate.firstName} {candidate.lastName}</strong>.</p>
             {candidate.assignedTo && (() => {
               const current = employees.find(e => e.id === candidate.assignedTo);
-              return current ? <p className="text-xs text-gray-400">Currently assigned to: <strong>{current.firstName} {current.lastName}</strong></p> : null;
+              return current ? <p className="text-xs text-[#a8a29e]">Currently assigned to: <strong>{current.firstName} {current.lastName}</strong></p> : null;
             })()}
             <div>
               <label className="label">Assign To</label>
@@ -592,7 +588,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
       {joiningModal && (
         <Modal title="Joining Details for IT Handoff" onClose={() => setJoiningModal(false)} size="lg">
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3 bg-gray-50 rounded-lg p-4">
+            <div className="grid grid-cols-2 gap-3 bg-[#faf7f2] rounded-lg p-4">
               {[
                 ['Full Name', `${candidate.firstName} ${candidate.lastName}`],
                 ['Email', candidate.email],
@@ -602,8 +598,8 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
                 ['Candidate ID', candidate.id],
               ].map(([label, value]) => (
                 <div key={label}>
-                  <p className="text-xs text-gray-400">{label}</p>
-                  <p className="text-sm font-semibold text-gray-800">{value || '-'}</p>
+                  <p className="text-xs text-[#a8a29e]">{label}</p>
+                  <p className="text-sm font-semibold text-[#3c2a21]">{value || '-'}</p>
                 </div>
               ))}
             </div>
@@ -657,7 +653,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
       {itModal && (
         <Modal title="Complete IT Setup" onClose={() => setItModal(false)} size="lg">
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3 bg-gray-50 rounded-lg p-4">
+            <div className="grid grid-cols-2 gap-3 bg-[#faf7f2] rounded-lg p-4">
               {[
                 ['Candidate', `${candidate.firstName} ${candidate.lastName}`],
                 ['Joining Date', candidate.joiningDetails?.joiningDate],
@@ -665,8 +661,8 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
                 ['Designation', candidate.joiningDetails?.designation],
               ].map(([label, value]) => (
                 <div key={label}>
-                  <p className="text-xs text-gray-400">{label}</p>
-                  <p className="text-sm font-semibold text-gray-800">{value || '-'}</p>
+                  <p className="text-xs text-[#a8a29e]">{label}</p>
+                  <p className="text-sm font-semibold text-[#3c2a21]">{value || '-'}</p>
                 </div>
               ))}
             </div>
@@ -679,11 +675,11 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
                 <label className="label">Work Email</label>
                 <input className="input" value={itSetupForm.workEmail} onChange={e => setItSetupForm(f => ({ ...f, workEmail: e.target.value }))} placeholder="name@company.com" />
               </div>
-              <label className="flex items-center gap-2 text-sm text-gray-600">
+              <label className="flex items-center gap-2 text-sm text-[#78716c]">
                 <input type="checkbox" checked={itSetupForm.laptopRequired} onChange={e => setItSetupForm(f => ({ ...f, laptopRequired: e.target.checked }))} />
                 Laptop prepared
               </label>
-              <label className="flex items-center gap-2 text-sm text-gray-600">
+              <label className="flex items-center gap-2 text-sm text-[#78716c]">
                 <input type="checkbox" checked={itSetupForm.idCardRequired} onChange={e => setItSetupForm(f => ({ ...f, idCardRequired: e.target.checked }))} />
                 ID card prepared
               </label>

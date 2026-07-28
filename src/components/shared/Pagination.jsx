@@ -6,21 +6,27 @@ export default function Pagination({ total, page, onPage }) {
   const pages = Math.ceil(total / PAGE_SIZE);
   if (pages <= 1) return null;
   const from = (page - 1) * PAGE_SIZE + 1;
-  const to = Math.min(page * PAGE_SIZE, total);
+  const to   = Math.min(page * PAGE_SIZE, total);
+
+  const btnBase = {
+    width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+    borderRadius: '8px', fontSize: '12px', fontWeight: 500, transition: 'all 150ms', cursor: 'pointer',
+  };
 
   return (
-    <div className="flex items-center justify-between px-1 pt-3 border-t border-gray-100">
-      <p className="text-xs text-gray-400 tabular-nums">
-        {from}–{to} of {total}
-      </p>
+    <div className="flex items-center justify-between px-1 pt-3" style={{ borderTop: '1px solid #e8e2d9' }}>
+      <p className="text-xs tabular-nums" style={{ color: '#78716c' }}>{from}–{to} of {total}</p>
       <div className="flex items-center gap-1">
         <button
           onClick={() => onPage(page - 1)}
           disabled={page === 1}
-          className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          style={{ ...btnBase, border: '1px solid #e8e2d9', color: '#78716c', opacity: page === 1 ? 0.3 : 1 }}
+          onMouseEnter={e => { if (page !== 1) e.currentTarget.style.backgroundColor = '#faf7f2'; }}
+          onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; }}
         >
           <ChevronLeft size={13} />
         </button>
+
         {Array.from({ length: pages }, (_, i) => i + 1)
           .filter(p => p === 1 || p === pages || Math.abs(p - page) <= 1)
           .reduce((acc, p, idx, arr) => {
@@ -30,25 +36,31 @@ export default function Pagination({ total, page, onPage }) {
           }, [])
           .map((p, i) =>
             p === '…' ? (
-              <span key={`e${i}`} className="w-7 text-center text-xs text-gray-400">…</span>
+              <span key={`e${i}`} className="w-7 text-center text-xs" style={{ color: '#78716c' }}>…</span>
             ) : (
               <button
                 key={p}
                 onClick={() => onPage(p)}
-                className={`w-7 h-7 rounded-lg text-xs font-medium transition-colors ${
-                  p === page
-                    ? 'bg-primary text-white'
-                    : 'border border-gray-200 text-gray-500 hover:bg-gray-50'
-                }`}
+                style={{
+                  ...btnBase,
+                  backgroundColor: p === page ? '#d97706' : 'transparent',
+                  color: p === page ? '#ffffff' : '#78716c',
+                  border: p === page ? 'none' : '1px solid #e8e2d9',
+                }}
+                onMouseEnter={e => { if (p !== page) e.currentTarget.style.backgroundColor = '#faf7f2'; }}
+                onMouseLeave={e => { if (p !== page) e.currentTarget.style.backgroundColor = 'transparent'; }}
               >
                 {p}
               </button>
             )
           )}
+
         <button
           onClick={() => onPage(page + 1)}
           disabled={page === pages}
-          className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          style={{ ...btnBase, border: '1px solid #e8e2d9', color: '#78716c', opacity: page === pages ? 0.3 : 1 }}
+          onMouseEnter={e => { if (page !== pages) e.currentTarget.style.backgroundColor = '#faf7f2'; }}
+          onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; }}
         >
           <ChevronRight size={13} />
         </button>

@@ -133,13 +133,13 @@ export default function PayrollProcessing() {
       {currentPayrolls.length > 0 && (
         <div className="grid grid-cols-3 gap-4">
           {[
-            ['Total Employees', currentPayrolls.length, 'text-gray-900'],
+            ['Total Employees', currentPayrolls.length, 'text-[#3c2a21]'],
             ['Total Payroll', fmt(totalNet), 'text-emerald-700'],
             ['Approved', `${currentPayrolls.filter(p => p.status === 'approved').length} / ${currentPayrolls.length}`, 'text-blue-700'],
           ].map(([label, val, cls]) => (
             <div key={label} className="card text-center py-4">
               <p className={`text-xl font-bold ${cls}`}>{val}</p>
-              <p className="text-xs text-gray-400 mt-1">{label}</p>
+              <p className="text-xs text-[#a8a29e] mt-1">{label}</p>
             </div>
           ))}
         </div>
@@ -150,16 +150,16 @@ export default function PayrollProcessing() {
         <div className="card p-0 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-100">
+              <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
                 <tr>{['Employee','Department','Structure','Gross','Bonuses','Deductions','Net','Status','Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-[#f5f1eb]">
                 {currentPayrolls.map(p => {
                   const emp = employees.find(e => e.id === p.employeeId);
                   const totalBonus = p.bonuses?.reduce((s, b) => s + Number(b.amount), 0) || 0;
                   const manualDed  = p.deductions?.reduce((s, d) => s + Number(d.amount), 0) || 0;
                   return (
-                    <tr key={p.id} className="hover:bg-gray-50">
+                    <tr key={p.id} className="hover:bg-[#faf7f2]">
                       <td className="table-td font-medium">{emp ? `${emp.firstName} ${emp.lastName}` : p.employeeId}</td>
                       <td className="table-td">{emp?.department}</td>
                       <td className="table-td text-xs">{p.structureName}</td>

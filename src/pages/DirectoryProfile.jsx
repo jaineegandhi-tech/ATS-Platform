@@ -23,17 +23,17 @@ export default function DirectoryProfile() {
     }
   }, []);
 
-  if (!emp) return <div className="card text-center py-10 text-gray-400">Employee not found.</div>;
+  if (!emp) return <div className="card text-center py-10 text-[#a8a29e]">Employee not found.</div>;
 
   return (
     <div className="max-w-2xl mx-auto space-y-5">
-      <button className="text-gray-400 hover:text-gray-600 text-sm" onClick={() => navigate('/directory')}>← Back to Directory</button>
+      <button className="text-[#a8a29e] hover:text-[#78716c] text-sm" onClick={() => navigate('/directory')}>← Back to Directory</button>
 
       <div className="card flex flex-col items-center text-center gap-4 py-8">
         <Avatar employee={emp} size="xl" />
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{emp.firstName} {emp.middleName} {emp.lastName}</h1>
-          <p className="text-gray-500">{emp.designation}</p>
+          <h1 className="text-2xl font-bold text-[#3c2a21]">{emp.firstName} {emp.middleName} {emp.lastName}</h1>
+          <p className="text-[#78716c]">{emp.designation}</p>
           <p className="text-primary font-medium">{emp.department}</p>
         </div>
       </div>
@@ -48,11 +48,11 @@ export default function DirectoryProfile() {
             { icon: Phone, label: 'Contact', value: emp.mobile },
             { icon: MapPin, label: 'Location', value: [emp.city, emp.state, emp.country].filter(Boolean).join(', ') },
           ].map(({ icon: Icon, label, value }) => value ? (
-            <div key={label} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
-              <Icon size={15} className="text-gray-400 mt-0.5 flex-shrink-0" />
+            <div key={label} className="flex items-start gap-3 p-3 bg-[#faf7f2] rounded-lg">
+              <Icon size={15} className="text-[#a8a29e] mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-xs text-gray-500">{label}</p>
-                <p className="text-sm font-medium text-gray-800">{value}</p>
+                <p className="text-xs text-[#78716c]">{label}</p>
+                <p className="text-sm font-medium text-[#3c2a21]">{value}</p>
               </div>
             </div>
           ) : null)}

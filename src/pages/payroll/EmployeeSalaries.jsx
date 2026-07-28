@@ -65,7 +65,7 @@ export default function EmployeeSalaries() {
       <div className="card p-4">
         <div className="flex flex-wrap gap-3">
           <div className="relative flex-1 min-w-48">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a8a29e]" />
             <input className="input pl-9" placeholder="Search employee..." value={search} onChange={e => setSearch(e.target.value)} />
           </div>
           <select className="input w-auto" value={filterDept} onChange={e => setFilterDept(e.target.value)}>
@@ -78,18 +78,18 @@ export default function EmployeeSalaries() {
       <div className="card p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
               <tr>{['Employee','ID','Department','Designation','Structure','Gross','Net','Effective Date','Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f5f1eb]">
               {filtered.length === 0 ? (
-                <tr><td colSpan={9} className="table-td text-center text-gray-400 py-8">No employees found.</td></tr>
+                <tr><td colSpan={9} className="table-td text-center text-[#a8a29e] py-8">No employees found.</td></tr>
               ) : filtered.map(emp => {
                 const sal = getSalary(emp.id);
                 return (
-                  <tr key={emp.id} className="hover:bg-gray-50">
+                  <tr key={emp.id} className="hover:bg-[#faf7f2]">
                     <td className="table-td font-medium">{emp.firstName} {emp.lastName}</td>
-                    <td className="table-td text-xs text-gray-400">{emp.id}</td>
+                    <td className="table-td text-xs text-[#a8a29e]">{emp.id}</td>
                     <td className="table-td">{emp.department}</td>
                     <td className="table-td">{emp.designation}</td>
                     <td className="table-td">{sal?.structureName || <span className="text-amber-500 text-xs font-medium">Not Assigned</span>}</td>
@@ -124,10 +124,10 @@ export default function EmployeeSalaries() {
             {form.structureId && (() => {
               const s = structures.find(x => x.id === form.structureId);
               return s ? (
-                <div className="bg-gray-50 rounded-xl p-3 grid grid-cols-3 gap-2 text-center text-xs">
-                  <div><p className="text-gray-400">Gross</p><p className="font-bold text-emerald-700">{fmt(s.grossSalary)}</p></div>
-                  <div><p className="text-gray-400">Deductions</p><p className="font-bold text-red-600">{fmt(s.totalDeductions)}</p></div>
-                  <div><p className="text-gray-400">Net</p><p className="font-bold text-blue-700">{fmt(s.netSalary)}</p></div>
+                <div className="bg-[#faf7f2] rounded-xl p-3 grid grid-cols-3 gap-2 text-center text-xs">
+                  <div><p className="text-[#a8a29e]">Gross</p><p className="font-bold text-emerald-700">{fmt(s.grossSalary)}</p></div>
+                  <div><p className="text-[#a8a29e]">Deductions</p><p className="font-bold text-red-600">{fmt(s.totalDeductions)}</p></div>
+                  <div><p className="text-[#a8a29e]">Net</p><p className="font-bold text-blue-700">{fmt(s.netSalary)}</p></div>
                 </div>
               ) : null;
             })()}
@@ -158,9 +158,9 @@ export default function EmployeeSalaries() {
               ['Net Salary', fmt(viewModal.sal.netSalary)],
               ['Effective Date', viewModal.sal.effectiveDate],
             ].map(([k, v]) => (
-              <div key={k} className="flex justify-between border-b border-gray-50 pb-2 last:border-0">
-                <span className="text-gray-400">{k}</span>
-                <span className="font-medium text-gray-800">{v}</span>
+              <div key={k} className="flex justify-between border-b border-[#f5f1eb] pb-2 last:border-0">
+                <span className="text-[#a8a29e]">{k}</span>
+                <span className="font-medium text-[#3c2a21]">{v}</span>
               </div>
             ))}
           </div>

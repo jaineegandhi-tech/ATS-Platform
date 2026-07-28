@@ -12,12 +12,12 @@ function StatCard({ icon: Icon, label, value, sub, iconBg, iconColor, onClick })
     <div onClick={onClick} className={`card group ${onClick ? 'cursor-pointer hover:shadow-card-hover' : ''} transition-all duration-200`}>
       <div className="flex items-start justify-between">
         <div className={`stat-icon ${iconBg}`}><Icon size={18} className={iconColor} /></div>
-        {onClick && <ArrowUpRight size={15} className="text-gray-300 group-hover:text-primary transition-colors" />}
+        {onClick && <ArrowUpRight size={15} className="text-[#d4cdc4] group-hover:text-primary transition-colors" />}
       </div>
       <div className="mt-4">
-        <p className="text-2xl font-bold text-gray-900">{value}</p>
-        <p className="text-xs text-gray-500 mt-0.5 font-medium">{label}</p>
-        {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
+        <p className="text-2xl font-bold text-[#3c2a21]">{value}</p>
+        <p className="text-xs text-[#78716c] mt-0.5 font-medium">{label}</p>
+        {sub && <p className="text-xs text-[#a8a29e] mt-0.5">{sub}</p>}
       </div>
     </div>
   );
@@ -49,7 +49,7 @@ export default function PayrollDashboard() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="page-title">Payroll Dashboard</h1>
-        <span className="text-xs text-gray-400 bg-gray-100 px-3 py-1.5 rounded-full font-medium">{monthLabel}</span>
+        <span className="text-xs text-[#a8a29e] bg-[#f0ebe2] px-3 py-1.5 rounded-full font-medium">{monthLabel}</span>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -71,16 +71,16 @@ export default function PayrollDashboard() {
           <button className="btn btn-sm btn-secondary" onClick={() => navigate('/payroll/history')}>View All</button>
         </div>
         {recentPayrolls.length === 0 ? (
-          <p className="text-sm text-gray-400 text-center py-6">No payroll records yet. <button className="text-primary hover:underline" onClick={() => navigate('/payroll/process')}>Generate payroll</button></p>
+          <p className="text-sm text-[#a8a29e] text-center py-6">No payroll records yet. <button className="text-primary hover:underline" onClick={() => navigate('/payroll/process')}>Generate payroll</button></p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead><tr className="border-b border-gray-100">{['Employee','Department','Month','Gross','Deductions','Net','Status'].map(h => <th key={h} className="table-th">{h}</th>)}</tr></thead>
-              <tbody className="divide-y divide-gray-50">
+              <thead><tr className="border-b border-[#e8e2d9]">{['Employee','Department','Month','Gross','Deductions','Net','Status'].map(h => <th key={h} className="table-th">{h}</th>)}</tr></thead>
+              <tbody className="divide-y divide-[#f5f1eb]">
                 {recentPayrolls.map(p => {
                   const emp = employees.find(e => e.id === p.employeeId);
                   return (
-                    <tr key={p.id} className="hover:bg-gray-50">
+                    <tr key={p.id} className="hover:bg-[#faf7f2]">
                       <td className="table-td font-medium">{emp ? `${emp.firstName} ${emp.lastName}` : p.employeeId}</td>
                       <td className="table-td">{emp?.department || '—'}</td>
                       <td className="table-td">{p.month}</td>

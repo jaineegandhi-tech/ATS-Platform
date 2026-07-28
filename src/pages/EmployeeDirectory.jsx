@@ -45,7 +45,7 @@ export default function EmployeeDirectory() {
       <div className="card p-4 space-y-3">
         <div className="flex flex-wrap gap-3">
           <div className="relative flex-1 min-w-48">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a8a29e]" />
             <input className="input pl-9" placeholder="Search employees..." value={search} onChange={e => setSearch(e.target.value)} />
           </div>
           <select className="input w-auto" value={filterDept} onChange={e => setFilterDept(e.target.value)}>
@@ -58,15 +58,15 @@ export default function EmployeeDirectory() {
           </select>
         </div>
         <div className="flex flex-wrap gap-1">
-          <button onClick={() => setFilterAlpha('')} className={`px-2 py-1 text-xs rounded font-medium transition-colors ${!filterAlpha ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>All</button>
+          <button onClick={() => setFilterAlpha('')} className={`px-2 py-1 text-xs rounded font-medium transition-colors ${!filterAlpha ? 'bg-primary text-white' : 'bg-[#f0ebe2] text-[#78716c] hover:bg-gray-200'}`}>All</button>
           {ALPHABET.map(l => (
             <button key={l} onClick={() => setFilterAlpha(filterAlpha === l ? '' : l)}
-              className={`px-2 py-1 text-xs rounded font-medium transition-colors ${filterAlpha === l ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>{l}</button>
+              className={`px-2 py-1 text-xs rounded font-medium transition-colors ${filterAlpha === l ? 'bg-primary text-white' : 'bg-[#f0ebe2] text-[#78716c] hover:bg-gray-200'}`}>{l}</button>
           ))}
         </div>
       </div>
 
-      <p className="text-sm text-gray-500">{filtered.length} employee{filtered.length !== 1 ? 's' : ''} found</p>
+      <p className="text-sm text-[#78716c]">{filtered.length} employee{filtered.length !== 1 ? 's' : ''} found</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {filtered.map(emp => (
@@ -74,11 +74,11 @@ export default function EmployeeDirectory() {
             <div className="flex flex-col items-center text-center gap-3">
               <Avatar employee={emp} size="lg" />
               <div>
-                <p className="font-semibold text-gray-900">{emp.firstName} {emp.lastName}</p>
-                <p className="text-xs text-gray-500">{emp.designation}</p>
+                <p className="font-semibold text-[#3c2a21]">{emp.firstName} {emp.lastName}</p>
+                <p className="text-xs text-[#78716c]">{emp.designation}</p>
                 <p className="text-xs text-blue-600 font-medium">{emp.department}</p>
               </div>
-              <div className="w-full space-y-1 text-xs text-gray-500">
+              <div className="w-full space-y-1 text-xs text-[#78716c]">
                 {emp.email && <div className="flex items-center gap-1.5 justify-center"><Mail size={11} />{emp.email}</div>}
                 {emp.mobile && <div className="flex items-center gap-1.5 justify-center"><Phone size={11} />{emp.mobile}</div>}
               </div>
@@ -89,7 +89,7 @@ export default function EmployeeDirectory() {
           </div>
         ))}
         {filtered.length === 0 && (
-          <div className="col-span-full text-center py-12 text-gray-400">No employees found.</div>
+          <div className="col-span-full text-center py-12 text-[#a8a29e]">No employees found.</div>
         )}
       </div>
     </div>

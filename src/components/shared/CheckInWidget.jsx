@@ -19,7 +19,7 @@ function getStatus(record) {
 const STATUS_STYLES = {
   'Working':        'text-emerald-700 bg-emerald-50 border-emerald-200',
   'On Break':       'text-amber-700 bg-amber-50 border-amber-200',
-  'Checked Out':    'text-gray-600 bg-gray-50 border-gray-200',
+  'Checked Out':    'text-[#78716c] bg-[#faf7f2] border-gray-200',
   'Not Checked In': 'text-red-600 bg-red-50 border-red-200',
 };
 
@@ -86,9 +86,9 @@ export default function CheckInWidget({ attendancePath = '/attendance' }) {
           ['Break',         minutesToHHMM(breakMins)],
           ['Working Hours', record?.workingHours || '—'],
         ].map(([label, val]) => (
-          <div key={label} className="bg-gray-50 rounded-xl p-3">
-            <p className="text-[11px] text-gray-400 font-medium">{label}</p>
-            <p className="text-sm font-bold text-gray-900 mt-0.5">{val}</p>
+          <div key={label} className="bg-[#faf7f2] rounded-xl p-3">
+            <p className="text-[11px] text-[#a8a29e] font-medium">{label}</p>
+            <p className="text-sm font-bold text-[#3c2a21] mt-0.5">{val}</p>
           </div>
         ))}
       </div>

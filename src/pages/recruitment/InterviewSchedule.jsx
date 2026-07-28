@@ -101,10 +101,10 @@ export default function InterviewSchedule() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-end justify-between pb-6 border-b border-gray-100">
+      <div className="flex items-end justify-between pb-6 border-b border-[#e8e2d9]">
         <div>
-          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Recruitment</p>
-          <h1 className="text-xl font-semibold text-gray-900">Interview Schedule</h1>
+          <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
+          <h1 className="text-xl font-semibold text-[#3c2a21]">Interview Schedule</h1>
         </div>
         {isHR && (
           <button className="btn btn-primary btn-sm" onClick={() => { setScheduleModal(true); setCandidateSearch(''); setSelectedCandidateId(''); }}>
@@ -125,20 +125,20 @@ export default function InterviewSchedule() {
           </select>
         </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-card overflow-hidden">
+      <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="border-b border-gray-100">
+            <thead className="border-b border-[#e8e2d9]">
               <tr>{['Candidate', 'Position', 'Round', 'Date', 'Time', 'Mode', 'Interviewer(s)', 'Status', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f5f1eb]">
               {paginated.length === 0 ? (
-                <tr><td colSpan={9} className="table-td text-center py-12 text-gray-400">No interviews found.</td></tr>
+                <tr><td colSpan={9} className="table-td text-center py-12 text-[#a8a29e]">No interviews found.</td></tr>
               ) : paginated.map(iv => {
                 const cand = getCandidate(iv.candidateId);
                 return (
-                  <tr key={iv.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="table-td font-medium text-gray-800">{cand?.firstName} {cand?.lastName}</td>
+                  <tr key={iv.id} className="hover:bg-[#faf7f2] transition-colors">
+                    <td className="table-td font-medium text-[#3c2a21]">{cand?.firstName} {cand?.lastName}</td>
                     <td className="table-td">{cand?.appliedPosition}</td>
                     <td className="table-td">{iv.round}</td>
                     <td className="table-td">{formatDate(iv.date)}</td>
@@ -209,7 +209,7 @@ export default function InterviewSchedule() {
         <Modal title="Schedule Interview" onClose={() => setScheduleModal(false)} size="sm">
           <div className="space-y-4">
             <div className="relative">
-              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a8a29e]" />
               <input
                 className="input pl-9"
                 placeholder="Search candidate by name or position..."
@@ -218,7 +218,7 @@ export default function InterviewSchedule() {
                 autoFocus
               />
             </div>
-            <div className="max-h-56 overflow-y-auto border border-gray-100 rounded-lg divide-y divide-gray-50">
+            <div className="max-h-56 overflow-y-auto border border-[#e8e2d9] rounded-lg divide-y divide-[#f5f1eb]">
               {candidates
                 .filter(c => c.status !== 'archived' && (
                   !candidateSearch ||
@@ -228,13 +228,13 @@ export default function InterviewSchedule() {
                 .map(c => (
                   <button
                     key={c.id}
-                    className={`w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors ${
-                      selectedCandidateId === c.id ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-700'
+                    className={`w-full text-left px-4 py-2.5 text-sm hover:bg-[#faf7f2] transition-colors ${
+                      selectedCandidateId === c.id ? 'bg-blue-50 text-blue-700 font-medium' : 'text-[#3c2a21]'
                     }`}
                     onClick={() => setSelectedCandidateId(c.id)}
                   >
                     <span className="font-medium">{c.firstName} {c.lastName}</span>
-                    <span className="text-xs text-gray-400 ml-2">{c.appliedPosition}</span>
+                    <span className="text-xs text-[#a8a29e] ml-2">{c.appliedPosition}</span>
                   </button>
                 ))
               }
@@ -256,7 +256,7 @@ export default function InterviewSchedule() {
       {/* Cancel Confirm */}
       {cancelId && (
         <Modal title="Cancel Interview" onClose={() => setCancelId(null)} size="sm">
-          <p className="text-sm text-gray-600 mb-4">Are you sure you want to cancel this interview? Interviewers will be notified.</p>
+          <p className="text-sm text-[#78716c] mb-4">Are you sure you want to cancel this interview? Interviewers will be notified.</p>
           <div className="flex justify-end gap-3">
             <button className="btn-secondary btn" onClick={() => setCancelId(null)}>No</button>
             <button className="btn-danger btn" onClick={cancelInterview}>Yes, Cancel</button>

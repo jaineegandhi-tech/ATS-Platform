@@ -46,7 +46,7 @@ export default function DocumentManagement() {
       <div className="page-header">
         <div>
           <h1 className="page-title">Document Management</h1>
-          <p className="text-xs text-gray-400 mt-0.5">{filtered.length} of {documents.length} documents</p>
+          <p className="text-xs text-[#a8a29e] mt-0.5">{filtered.length} of {documents.length} documents</p>
         </div>
         <button className="btn-primary btn" onClick={() => setShowUpload(true)}>
           <FileUp size={15} /> Upload Document
@@ -56,11 +56,11 @@ export default function DocumentManagement() {
       <div className="card p-4">
         <div className="flex flex-wrap gap-3 items-center">
           <div className="relative flex-1 min-w-56">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a8a29e]" />
             <input className="input pl-9 input-sm" placeholder="Search documents..." value={search} onChange={e => setSearch(e.target.value)} />
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <SlidersHorizontal size={14} className="text-gray-400" />
+            <SlidersHorizontal size={14} className="text-[#a8a29e]" />
             <select className="input w-auto input-sm" value={employeeId} onChange={e => setEmployeeId(e.target.value)}>
               <option value="">All Employees</option>
               {employees.map(emp => <option key={emp.id} value={emp.id}>{emp.firstName} {emp.lastName}</option>)}

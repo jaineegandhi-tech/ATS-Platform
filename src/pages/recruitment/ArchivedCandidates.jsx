@@ -27,18 +27,18 @@ export default function ArchivedCandidates() {
       <div className="card p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
               <tr>{['ID', 'Candidate', 'Applied Position', 'Department', 'Created', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f5f1eb]">
               {candidates.length === 0 ? (
-                <tr><td colSpan={6} className="table-td text-center text-gray-400 py-8">No archived candidates.</td></tr>
+                <tr><td colSpan={6} className="table-td text-center text-[#a8a29e] py-8">No archived candidates.</td></tr>
               ) : candidates.map(c => (
-                <tr key={c.id} className="hover:bg-gray-50">
-                  <td className="table-td text-xs text-gray-400">{c.id}</td>
+                <tr key={c.id} className="hover:bg-[#faf7f2]">
+                  <td className="table-td text-xs text-[#a8a29e]">{c.id}</td>
                   <td className="table-td">
-                    <p className="font-medium text-gray-900">{c.firstName} {c.lastName}</p>
-                    <p className="text-xs text-gray-400">{c.email}</p>
+                    <p className="font-medium text-[#3c2a21]">{c.firstName} {c.lastName}</p>
+                    <p className="text-xs text-[#a8a29e]">{c.email}</p>
                   </td>
                   <td className="table-td">{c.appliedPosition}</td>
                   <td className="table-td">{c.department}</td>

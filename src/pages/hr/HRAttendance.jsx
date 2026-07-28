@@ -75,7 +75,7 @@ export default function HRAttendance() {
       <div className="card p-4">
         <div className="flex flex-wrap gap-3">
           <div className="relative flex-1 min-w-48">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a8a29e]" />
             <input className="input pl-9" placeholder="Search employee..." value={search} onChange={e => setSearch(e.target.value)} />
           </div>
           <select className="input w-auto" value={filterDept} onChange={e => setFilterDept(e.target.value)}>
@@ -89,12 +89,12 @@ export default function HRAttendance() {
       <div className="card p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
               <tr>{['Employee', 'Department', 'Check In', 'Check Out', 'Break', 'Working Hours', 'Status', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f5f1eb]">
               {paginated.map(({ emp, rec }) => (
-                <tr key={emp.id} className="hover:bg-gray-50">
+                <tr key={emp.id} className="hover:bg-[#faf7f2]">
                   <td className="table-td font-medium">{emp.firstName} {emp.lastName}</td>
                   <td className="table-td">{emp.department}</td>
                   <td className="table-td">{rec?.checkIn ? formatTime(rec.checkIn) : '—'}</td>
@@ -124,7 +124,7 @@ export default function HRAttendance() {
       {editRecord && (
         <Modal title="Edit Attendance" onClose={() => setEditRecord(null)}>
           <div className="space-y-4">
-            <p className="text-sm text-gray-600">Editing: <strong>{editRecord.employeeName}</strong> — {editRecord.date}</p>
+            <p className="text-sm text-[#78716c]">Editing: <strong>{editRecord.employeeName}</strong> — {editRecord.date}</p>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="label">Check In Time</label>

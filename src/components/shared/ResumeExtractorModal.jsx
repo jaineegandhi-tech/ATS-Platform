@@ -169,9 +169,9 @@ export default function ResumeExtractorModal({ isOpen, onClose, onSave, existing
             <div className="mb-4">
               {!selectedFile ? (
                 <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-xl p-6 cursor-pointer hover:border-primary hover:bg-slate-50/50 transition-colors">
-                  <Upload size={20} className="text-gray-400 mb-1" />
-                  <p className="text-sm text-gray-600 font-medium">Click to upload resume</p>
-                  <p className="text-xs text-gray-400 mt-0.5">PDF or text file · Max 10MB</p>
+                  <Upload size={20} className="text-[#a8a29e] mb-1" />
+                  <p className="text-sm text-[#78716c] font-medium">Click to upload resume</p>
+                  <p className="text-xs text-[#a8a29e] mt-0.5">PDF or text file · Max 10MB</p>
                   <input type="file" accept=".pdf,.txt,.doc,.docx" className="hidden" onChange={handleResumeUpload} />
                 </label>
               ) : (
@@ -181,11 +181,11 @@ export default function ResumeExtractorModal({ isOpen, onClose, onSave, existing
                       <Upload size={16} />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-gray-700">{selectedFile.name}</p>
-                      <p className="text-xs text-gray-400">{(selectedFile.size / 1024).toFixed(1)} KB</p>
+                      <p className="text-sm font-semibold text-[#3c2a21]">{selectedFile.name}</p>
+                      <p className="text-xs text-[#a8a29e]">{(selectedFile.size / 1024).toFixed(1)} KB</p>
                     </div>
                   </div>
-                  <button onClick={() => { setSelectedFile(null); setExtractedText(''); }} className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors">
+                  <button onClick={() => { setSelectedFile(null); setExtractedText(''); }} className="w-7 h-7 flex items-center justify-center rounded-lg text-[#a8a29e] hover:text-red-500 hover:bg-red-50 transition-colors">
                     <X size={15} />
                   </button>
                 </div>
@@ -193,9 +193,9 @@ export default function ResumeExtractorModal({ isOpen, onClose, onSave, existing
             </div>
 
             {extractedText && (
-              <div className="border border-gray-100 rounded-xl p-4 mb-4 max-h-40 overflow-y-auto bg-gray-50/50">
-                <h3 className="font-semibold text-xs text-gray-500 uppercase tracking-wide mb-2">Extracted Text Preview</h3>
-                <pre className="whitespace-pre-wrap text-xs text-gray-600 font-mono leading-relaxed">{extractedText}</pre>
+              <div className="border border-[#e8e2d9] rounded-xl p-4 mb-4 max-h-40 overflow-y-auto bg-[#faf7f2]/50">
+                <h3 className="font-semibold text-xs text-[#78716c] uppercase tracking-wide mb-2">Extracted Text Preview</h3>
+                <pre className="whitespace-pre-wrap text-xs text-[#78716c] font-mono leading-relaxed">{extractedText}</pre>
               </div>
             )}
 
@@ -228,11 +228,11 @@ export default function ResumeExtractorModal({ isOpen, onClose, onSave, existing
                   <input type="text" className="input" value={formData.noticePeriod} onChange={e => handleFormChange('noticePeriod', e.target.value)} />
                 </div>
                 <div className="flex flex-col gap-3 pt-2">
-                  <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                  <label className="flex items-center gap-2 text-sm text-[#3c2a21] cursor-pointer">
                     <input type="checkbox" className="rounded border-gray-300 text-primary focus:ring-primary" checked={formData.negotiable} onChange={e => handleFormChange('negotiable', e.target.checked)} />
                     Negotiable
                   </label>
-                  <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                  <label className="flex items-center gap-2 text-sm text-[#3c2a21] cursor-pointer">
                     <input type="checkbox" className="rounded border-gray-300 text-primary focus:ring-primary" checked={formData.immediateJoining} onChange={e => handleFormChange('immediateJoining', e.target.checked)} />
                     Immediate Joining
                   </label>
@@ -240,14 +240,14 @@ export default function ResumeExtractorModal({ isOpen, onClose, onSave, existing
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100 mt-6">
+            <div className="flex justify-end gap-3 pt-4 border-t border-[#e8e2d9] mt-6">
               <button onClick={onClose} className="btn btn-secondary">Cancel</button>
               <button onClick={() => setShowPreview(true)} className="btn btn-primary">Preview</button>
             </div>
           </>
         ) : (
           <>
-            <div className="border border-gray-100 rounded-xl overflow-hidden mb-4">
+            <div className="border border-[#e8e2d9] rounded-xl overflow-hidden mb-4">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
@@ -267,15 +267,15 @@ export default function ResumeExtractorModal({ isOpen, onClose, onSave, existing
                     ['Immediate Joining', formData.immediateJoining ? 'Yes' : 'No'],
                   ].map(([label, value]) => (
                     <tr key={label} className="table-row">
-                      <td className="table-td font-medium text-gray-500">{label}</td>
-                      <td className="table-td font-semibold text-gray-900">{value || '—'}</td>
+                      <td className="table-td font-medium text-[#78716c]">{label}</td>
+                      <td className="table-td font-semibold text-[#3c2a21]">{value || '—'}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100 mt-6">
+            <div className="flex justify-end gap-3 pt-4 border-t border-[#e8e2d9] mt-6">
               <button onClick={() => setShowPreview(false)} className="btn btn-secondary">Back</button>
               <button onClick={copyToClipboard} className="btn btn-secondary flex items-center gap-1.5">
                 <Copy size={15} />{copied ? 'Copied!' : 'Copy'}

@@ -8,8 +8,8 @@ export default function AssetHistoryModal({ asset, onClose }) {
   return (
     <Modal title={`Asset History — ${asset.name}`} onClose={onClose} size="lg">
       {history.length === 0 ? (
-        <div className="text-center py-10 text-gray-400">
-          <History size={28} className="mx-auto mb-2 text-gray-200" />
+        <div className="text-center py-10 text-[#a8a29e]">
+          <History size={28} className="mx-auto mb-2 text-[#e8e2d9]" />
           No assignment history for this asset.
         </div>
       ) : (
@@ -26,15 +26,15 @@ export default function AssetHistoryModal({ asset, onClose }) {
               {history.map(entry => (
                 <tr key={entry.id} className="table-row">
                   <td className="table-td">
-                    <p className="font-semibold text-gray-900 text-sm">{entry.assignedEmployeeName}</p>
-                    <p className="text-xs text-gray-400">{entry.assignedEmployeeId}</p>
+                    <p className="font-semibold text-[#3c2a21] text-sm">{entry.assignedEmployeeName}</p>
+                    <p className="text-xs text-[#a8a29e]">{entry.assignedEmployeeId}</p>
                   </td>
                   <td className="table-td">{entry.assignedByName || '—'}</td>
-                  <td className="table-td text-gray-500">{formatDate(entry.assignedDate)}</td>
-                  <td className="table-td text-gray-500">{formatDate(entry.expectedReturnDate)}</td>
-                  <td className="table-td text-gray-500">{formatDate(entry.returnedDate)}</td>
+                  <td className="table-td text-[#78716c]">{formatDate(entry.assignedDate)}</td>
+                  <td className="table-td text-[#78716c]">{formatDate(entry.expectedReturnDate)}</td>
+                  <td className="table-td text-[#78716c]">{formatDate(entry.returnedDate)}</td>
                   <td className="table-td">{entry.conditionOnReturn || '—'}</td>
-                  <td className="table-td text-gray-500 text-xs max-w-[160px]">{entry.notes || '—'}</td>
+                  <td className="table-td text-[#78716c] text-xs max-w-[160px]">{entry.notes || '—'}</td>
                 </tr>
               ))}
             </tbody>

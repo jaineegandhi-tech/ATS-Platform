@@ -67,11 +67,11 @@ export default function EmployeeHolidays() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="page-title">Holiday Calendar</h1>
-        <div className="flex rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-          <button onClick={() => setView('list')} className={`px-4 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition-colors ${view === 'list' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-500 hover:bg-gray-50'}`}>
+        <div className="flex rounded-lg border border-[#e8e2d9] overflow-hidden shadow-sm">
+          <button onClick={() => setView('list')} className={`px-4 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition-colors ${view === 'list' ? 'bg-indigo-600 text-white' : 'bg-[#ffffff] text-[#78716c] hover:bg-[#faf7f2]'}`}>
             <List size={13} /> List
           </button>
-          <button onClick={() => setView('calendar')} className={`px-4 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition-colors ${view === 'calendar' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-500 hover:bg-gray-50'}`}>
+          <button onClick={() => setView('calendar')} className={`px-4 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition-colors ${view === 'calendar' ? 'bg-indigo-600 text-white' : 'bg-[#ffffff] text-[#78716c] hover:bg-[#faf7f2]'}`}>
             <Calendar size={13} /> Calendar
           </button>
         </div>
@@ -88,11 +88,11 @@ export default function EmployeeHolidays() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs font-semibold opacity-70 uppercase tracking-wide">Next Holiday</p>
-              <p className="font-bold text-gray-900">{nextHoliday.name}</p>
+              <p className="font-bold text-[#3c2a21]">{nextHoliday.name}</p>
               <p className="text-xs opacity-75">{nextHoliday.date} · {dayName(nextHoliday.date)} · {nextHoliday.type}</p>
             </div>
             <div className="text-right flex-shrink-0">
-              <p className="text-2xl font-bold text-gray-900">{daysLeft}</p>
+              <p className="text-2xl font-bold text-[#3c2a21]">{daysLeft}</p>
               <p className="text-xs opacity-70">day{daysLeft !== 1 ? 's' : ''} away</p>
             </div>
           </div>
@@ -102,7 +102,7 @@ export default function EmployeeHolidays() {
       {/* Filters */}
       <div className="flex items-center gap-3">
         <div className="relative flex-1 max-w-xs">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a8a29e]" />
           <input className="input pl-9" placeholder="Search holidays..." value={search} onChange={e => setSearch(e.target.value)} />
         </div>
         <select className="input w-32" value={yearFilter} onChange={e => setYearFilter(e.target.value)}>
@@ -116,7 +116,7 @@ export default function EmployeeHolidays() {
         {Object.entries(TYPE_COLORS).map(([t, s]) => (
           <div key={t} className="flex items-center gap-1.5">
             <div className={`w-2.5 h-2.5 rounded-full ${s.dot}`} />
-            <span className="text-xs text-gray-500 font-medium">{t}</span>
+            <span className="text-xs text-[#78716c] font-medium">{t}</span>
           </div>
         ))}
       </div>
@@ -126,7 +126,7 @@ export default function EmployeeHolidays() {
         <div className="card overflow-hidden p-0">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-100 bg-gray-50/80">
+              <tr className="border-b border-[#e8e2d9] bg-[#faf7f2]/80">
                 <th className="table-th">Holiday Name</th>
                 <th className="table-th">Date</th>
                 <th className="table-th">Day</th>
@@ -135,23 +135,23 @@ export default function EmployeeHolidays() {
                 <th className="table-th">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f5f1eb]">
               {filtered.length === 0 ? (
-                <tr><td colSpan={6} className="text-center py-12 text-gray-400 text-sm">No holidays found.</td></tr>
+                <tr><td colSpan={6} className="text-center py-12 text-[#a8a29e] text-sm">No holidays found.</td></tr>
               ) : filtered.map(h => {
                 const s = typeStyle(h.type);
                 const isPast = h.date < today;
                 return (
-                  <tr key={h.id} className={`hover:bg-gray-50/60 transition-colors ${isPast ? 'opacity-50' : ''}`}>
-                    <td className="table-td font-semibold text-gray-900">{h.name}</td>
-                    <td className="table-td text-gray-600">{h.date}</td>
-                    <td className="table-td text-gray-500">{dayName(h.date)}</td>
+                  <tr key={h.id} className={`hover:bg-[#faf7f2]/60 transition-colors ${isPast ? 'opacity-50' : ''}`}>
+                    <td className="table-td font-semibold text-[#3c2a21]">{h.name}</td>
+                    <td className="table-td text-[#78716c]">{h.date}</td>
+                    <td className="table-td text-[#78716c]">{dayName(h.date)}</td>
                     <td className="table-td">
                       <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${s.chip}`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />{h.type}
                       </span>
                     </td>
-                    <td className="table-td text-gray-500 max-w-[200px] truncate">{h.description || '—'}</td>
+                    <td className="table-td text-[#78716c] max-w-[200px] truncate">{h.description || '—'}</td>
                     <td className="table-td">
                       <button onClick={() => setViewHoliday(h)} className="btn btn-secondary btn-sm">View</button>
                     </td>
@@ -165,23 +165,23 @@ export default function EmployeeHolidays() {
 
       {/* CALENDAR VIEW */}
       {view === 'calendar' && (
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-card overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-indigo-600 to-indigo-500">
-            <button onClick={() => setCalMonth(c => new Date(c.getFullYear(), c.getMonth() - 1, 1))} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors">
+        <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-hidden">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8e2d9] bg-gradient-to-r from-indigo-600 to-indigo-500">
+            <button onClick={() => setCalMonth(c => new Date(c.getFullYear(), c.getMonth() - 1, 1))} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#ffffff]/20 hover:bg-[#ffffff]/30 text-white transition-colors">
               <ChevronLeft size={16} />
             </button>
             <div className="flex items-center gap-2 text-white">
               <CalendarDays size={16} className="opacity-80" />
               <h2 className="text-sm font-bold tracking-tight">{MONTHS[calMonth.getMonth()]} {calMonth.getFullYear()}</h2>
             </div>
-            <button onClick={() => setCalMonth(c => new Date(c.getFullYear(), c.getMonth() + 1, 1))} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors">
+            <button onClick={() => setCalMonth(c => new Date(c.getFullYear(), c.getMonth() + 1, 1))} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#ffffff]/20 hover:bg-[#ffffff]/30 text-white transition-colors">
               <ChevronRight size={16} />
             </button>
           </div>
 
-          <div className="grid grid-cols-7 border-b border-gray-100">
+          <div className="grid grid-cols-7 border-b border-[#e8e2d9]">
             {DAYS_SHORT.map(d => (
-              <div key={d} className="py-2.5 text-center text-xs font-bold text-gray-400 uppercase tracking-widest bg-gray-50/80">{d}</div>
+              <div key={d} className="py-2.5 text-center text-xs font-bold text-[#a8a29e] uppercase tracking-widest bg-[#faf7f2]/80">{d}</div>
             ))}
           </div>
 
@@ -192,10 +192,10 @@ export default function EmployeeHolidays() {
               const isToday = ds === today;
               const isWeekend = i % 7 === 0 || i % 7 === 6;
               return (
-                <div key={i} className={`min-h-[110px] p-2 border-b border-r border-gray-100 transition-colors ${!d ? 'bg-gray-50/60' : isWeekend ? 'bg-slate-50/40' : 'bg-white hover:bg-indigo-50/20'}`}>
+                <div key={i} className={`min-h-[110px] p-2 border-b border-r border-[#e8e2d9] transition-colors ${!d ? 'bg-[#faf7f2]/60' : isWeekend ? 'bg-slate-50/40' : 'bg-[#ffffff] hover:bg-indigo-50/20'}`}>
                   {d && (
                     <>
-                      <span className={`text-xs font-bold w-7 h-7 flex items-center justify-center rounded-full mb-1.5 ${isToday ? 'bg-indigo-600 text-white shadow-sm' : 'text-gray-500'}`}>{d}</span>
+                      <span className={`text-xs font-bold w-7 h-7 flex items-center justify-center rounded-full mb-1.5 ${isToday ? 'bg-indigo-600 text-white shadow-sm' : 'text-[#78716c]'}`}>{d}</span>
                       <div className="space-y-1">
                         {dayHols.map(h => {
                           const s = typeStyle(h.type);
@@ -233,7 +233,7 @@ export default function EmployeeHolidays() {
                   <CalendarDays size={22} />
                 </div>
                 <div>
-                  <p className="font-bold text-gray-900 text-base">{viewHoliday.name}</p>
+                  <p className="font-bold text-[#3c2a21] text-base">{viewHoliday.name}</p>
                   <p className="text-xs font-medium opacity-80">{viewHoliday.type}</p>
                 </div>
               </div>
@@ -244,9 +244,9 @@ export default function EmployeeHolidays() {
                   ['Type', viewHoliday.type],
                   ['Description', viewHoliday.description || '—'],
                 ].map(([label, value]) => (
-                  <div key={label} className="flex items-start gap-3 py-2 border-b border-gray-50 last:border-0">
-                    <span className="text-xs text-gray-400 w-28 flex-shrink-0">{label}</span>
-                    <span className="text-xs font-semibold text-gray-800 flex-1">{value}</span>
+                  <div key={label} className="flex items-start gap-3 py-2 border-b border-[#f5f1eb] last:border-0">
+                    <span className="text-xs text-[#a8a29e] w-28 flex-shrink-0">{label}</span>
+                    <span className="text-xs font-semibold text-[#3c2a21] flex-1">{value}</span>
                   </div>
                 ))}
               </div>

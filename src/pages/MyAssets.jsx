@@ -24,18 +24,18 @@ export default function MyAssets() {
       <div className="page-header">
         <div>
           <h1 className="page-title">My Assets</h1>
-          <p className="text-xs text-gray-400 mt-0.5">{filtered.length} of {assets.length} assigned assets</p>
+          <p className="text-xs text-[#a8a29e] mt-0.5">{filtered.length} of {assets.length} assigned assets</p>
         </div>
       </div>
 
       <div className="card p-4">
         <div className="flex flex-wrap gap-3 items-center">
           <div className="relative flex-1 min-w-56">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a8a29e]" />
             <input className="input pl-9 input-sm" placeholder="Search your assets..." value={search} onChange={e => setSearch(e.target.value)} />
           </div>
           <div className="flex items-center gap-2">
-            <SlidersHorizontal size={14} className="text-gray-400" />
+            <SlidersHorizontal size={14} className="text-[#a8a29e]" />
             <select className="input w-auto input-sm" value={category} onChange={e => setCategory(e.target.value)}>
               <option value="">All Categories</option>
               {ASSET_CATEGORIES.map(c => <option key={c}>{c}</option>)}

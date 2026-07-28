@@ -16,7 +16,7 @@ export default function Payslip() {
   const employees = getStore(STORAGE_KEYS.EMPLOYEES);
   const structures = getStore(STORAGE_KEYS.SALARY_STRUCTURES);
 
-  if (!payroll) return <div className="card text-center py-10 text-gray-400">Payslip not found.</div>;
+  if (!payroll) return <div className="card text-center py-10 text-[#a8a29e]">Payslip not found.</div>;
 
   const emp = employees.find(e => e.id === payroll.employeeId);
   const structure = structures.find(s => s.id === payroll.structureId);
@@ -57,7 +57,7 @@ export default function Payslip() {
     <div className="max-w-3xl mx-auto space-y-4">
       {/* Actions — hidden on print */}
       <div className="flex items-center justify-between print:hidden">
-        <button className="text-gray-400 hover:text-gray-600 text-sm flex items-center gap-1" onClick={() => navigate(-1)}>
+        <button className="text-[#a8a29e] hover:text-[#78716c] text-sm flex items-center gap-1" onClick={() => navigate(-1)}>
           <ArrowLeft size={14} /> Back
         </button>
         <div className="flex gap-2">
@@ -67,7 +67,7 @@ export default function Payslip() {
       </div>
 
       {/* Payslip */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-card overflow-hidden" id="payslip">
+      <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-hidden" id="payslip">
         {/* Header */}
         <div className="bg-gradient-to-r from-indigo-600 to-indigo-500 px-8 py-6 text-white">
           <div className="flex items-center justify-between">
@@ -84,9 +84,9 @@ export default function Payslip() {
 
         <div className="px-8 py-6 space-y-6">
           {/* Employee Info */}
-          <div className="grid grid-cols-2 gap-6 pb-5 border-b border-gray-100">
+          <div className="grid grid-cols-2 gap-6 pb-5 border-b border-[#e8e2d9]">
             <div className="space-y-2">
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Employee Details</p>
+              <p className="text-xs font-bold text-[#a8a29e] uppercase tracking-widest">Employee Details</p>
               {[
                 ['Name',        `${emp?.firstName || ''} ${emp?.lastName || ''}`],
                 ['Employee ID', emp?.id],
@@ -94,13 +94,13 @@ export default function Payslip() {
                 ['Designation', emp?.designation],
               ].map(([k, v]) => (
                 <div key={k} className="flex gap-2 text-sm">
-                  <span className="text-gray-400 w-28 flex-shrink-0">{k}</span>
-                  <span className="font-medium text-gray-800">{v || '—'}</span>
+                  <span className="text-[#a8a29e] w-28 flex-shrink-0">{k}</span>
+                  <span className="font-medium text-[#3c2a21]">{v || '—'}</span>
                 </div>
               ))}
             </div>
             <div className="space-y-2">
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Payroll Details</p>
+              <p className="text-xs font-bold text-[#a8a29e] uppercase tracking-widest">Payroll Details</p>
               {[
                 ['Payroll Month', monthLabel(payroll.month)],
                 ['Pay Date',      payroll.approvedAt ? new Date(payroll.approvedAt).toLocaleDateString() : '—'],
@@ -108,8 +108,8 @@ export default function Payslip() {
                 ['Status',        payroll.status],
               ].map(([k, v]) => (
                 <div key={k} className="flex gap-2 text-sm">
-                  <span className="text-gray-400 w-28 flex-shrink-0">{k}</span>
-                  <span className={`font-medium ${k === 'Status' ? (payroll.status === 'approved' ? 'text-emerald-600' : 'text-amber-600') : 'text-gray-800'} capitalize`}>{v || '—'}</span>
+                  <span className="text-[#a8a29e] w-28 flex-shrink-0">{k}</span>
+                  <span className={`font-medium ${k === 'Status' ? (payroll.status === 'approved' ? 'text-emerald-600' : 'text-amber-600') : 'text-[#3c2a21]'} capitalize`}>{v || '—'}</span>
                 </div>
               ))}
             </div>
@@ -118,22 +118,22 @@ export default function Payslip() {
           {/* Earnings & Deductions */}
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Earnings</p>
+              <p className="text-xs font-bold text-[#a8a29e] uppercase tracking-widest mb-3">Earnings</p>
               <div className="space-y-2">
                 {earnings.map(([label, val]) => (
-                  <div key={label} className="flex justify-between text-sm py-1.5 border-b border-gray-50">
-                    <span className="text-gray-600">{label}</span>
-                    <span className="font-medium text-gray-900">{fmt(val)}</span>
+                  <div key={label} className="flex justify-between text-sm py-1.5 border-b border-[#f5f1eb]">
+                    <span className="text-[#78716c]">{label}</span>
+                    <span className="font-medium text-[#3c2a21]">{fmt(val)}</span>
                   </div>
                 ))}
               </div>
             </div>
             <div>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Deductions</p>
+              <p className="text-xs font-bold text-[#a8a29e] uppercase tracking-widest mb-3">Deductions</p>
               <div className="space-y-2">
                 {deductionRows.map(([label, val]) => (
-                  <div key={label} className="flex justify-between text-sm py-1.5 border-b border-gray-50">
-                    <span className="text-gray-600">{label}</span>
+                  <div key={label} className="flex justify-between text-sm py-1.5 border-b border-[#f5f1eb]">
+                    <span className="text-[#78716c]">{label}</span>
                     <span className="font-medium text-red-600">{fmt(val)}</span>
                   </div>
                 ))}
@@ -142,13 +142,13 @@ export default function Payslip() {
           </div>
 
           {/* Summary */}
-          <div className="bg-gray-50 rounded-xl p-5 grid grid-cols-3 gap-4 text-center">
+          <div className="bg-[#faf7f2] rounded-xl p-5 grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-xs text-gray-400 mb-1">Gross Salary</p>
-              <p className="text-xl font-bold text-gray-900">{fmt(payroll.grossSalary)}</p>
+              <p className="text-xs text-[#a8a29e] mb-1">Gross Salary</p>
+              <p className="text-xl font-bold text-[#3c2a21]">{fmt(payroll.grossSalary)}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-400 mb-1">Total Deductions</p>
+              <p className="text-xs text-[#a8a29e] mb-1">Total Deductions</p>
               <p className="text-xl font-bold text-red-600">{fmt(payroll.totalDeductions)}</p>
             </div>
             <div className="bg-indigo-600 rounded-xl p-3">
@@ -157,7 +157,7 @@ export default function Payslip() {
             </div>
           </div>
 
-          <p className="text-xs text-gray-400 text-center">This is a computer-generated payslip and does not require a signature.</p>
+          <p className="text-xs text-[#a8a29e] text-center">This is a computer-generated payslip and does not require a signature.</p>
         </div>
       </div>
     </div>

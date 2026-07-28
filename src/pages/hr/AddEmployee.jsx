@@ -62,8 +62,8 @@ export default function AddEmployee() {
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <span className="text-3xl">✓</span>
         </div>
-        <h2 className="text-lg font-bold text-gray-900 mb-2">Employee Created Successfully!</h2>
-        <p className="text-sm text-gray-500 mb-6">
+        <h2 className="text-lg font-bold text-[#3c2a21] mb-2">Employee Created Successfully!</h2>
+        <p className="text-sm text-[#78716c] mb-6">
           {form.firstName} {form.lastName} has been added. They can login with username <strong>{form.username}</strong> and password <strong>password123</strong>.
         </p>
         <div className="flex justify-center gap-3">
@@ -77,7 +77,7 @@ export default function AddEmployee() {
   return (
     <div className="max-w-2xl mx-auto space-y-5">
       <div className="flex items-center gap-3">
-        <button className="text-gray-400 hover:text-gray-600 text-sm" onClick={() => navigate('/employees')}>← Back</button>
+        <button className="text-[#a8a29e] hover:text-[#78716c] text-sm" onClick={() => navigate('/employees')}>← Back</button>
         <h1 className="page-title">Add Employee</h1>
       </div>
 

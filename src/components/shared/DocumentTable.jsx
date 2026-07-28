@@ -5,8 +5,8 @@ import { downloadDocument, formatFileSize, viewDocument } from '../../utils/docu
 export default function DocumentTable({ documents, showEmployee = false, canDelete = false, onReplace, onDelete }) {
   if (documents.length === 0) {
     return (
-      <div className="text-center py-12 text-gray-400">
-        <Search size={28} className="mx-auto mb-2 text-gray-200" />
+      <div className="text-center py-12 text-[#a8a29e]">
+        <Search size={28} className="mx-auto mb-2 text-[#e8e2d9]" />
         No documents found.
       </div>
     );
@@ -28,8 +28,8 @@ export default function DocumentTable({ documents, showEmployee = false, canDele
               {showEmployee && (
                 <>
                   <td className="table-td">
-                    <p className="font-semibold text-gray-900 text-sm">{doc.employeeName}</p>
-                    <p className="text-xs text-gray-400">{doc.employeeId}</p>
+                    <p className="font-semibold text-[#3c2a21] text-sm">{doc.employeeName}</p>
+                    <p className="text-xs text-[#a8a29e]">{doc.employeeId}</p>
                   </td>
                   <td className="table-td">{doc.department || '-'}</td>
                 </>
@@ -39,14 +39,14 @@ export default function DocumentTable({ documents, showEmployee = false, canDele
               </td>
               <td className="table-td">
                 <div className="flex items-start gap-2">
-                  <FileText size={15} className="text-gray-400 mt-0.5 flex-shrink-0" />
+                  <FileText size={15} className="text-[#a8a29e] mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm">{doc.name}</p>
-                    <p className="text-xs text-gray-400">{doc.fileName} - {formatFileSize(doc.fileSize)}</p>
+                    <p className="font-semibold text-[#3c2a21] text-sm">{doc.name}</p>
+                    <p className="text-xs text-[#a8a29e]">{doc.fileName} - {formatFileSize(doc.fileSize)}</p>
                   </div>
                 </div>
               </td>
-              <td className="table-td text-gray-500">{formatDate(doc.uploadedAt)}</td>
+              <td className="table-td text-[#78716c]">{formatDate(doc.uploadedAt)}</td>
               <td className="table-td">{doc.uploadedByName || '-'}</td>
               <td className="table-td"><span className="badge-green">{doc.status || 'Active'}</span></td>
               <td className="table-td">

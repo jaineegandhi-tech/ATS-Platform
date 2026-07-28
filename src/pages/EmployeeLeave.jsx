@@ -78,29 +78,29 @@ export default function EmployeeLeave() {
         {Object.entries(balances).map(([type, days]) => (
           <div key={type} className="card text-center">
             <p className="text-2xl font-bold text-primary">{days}</p>
-            <p className="text-xs text-gray-500 mt-1">{type} Leave</p>
+            <p className="text-xs text-[#78716c] mt-1">{type} Leave</p>
           </div>
         ))}
         {Object.keys(balances).length === 0 && (
-          <div className="col-span-4 card text-center text-gray-400 text-sm py-4">No leave balance assigned yet.</div>
+          <div className="col-span-4 card text-center text-[#a8a29e] text-sm py-4">No leave balance assigned yet.</div>
         )}
       </div>
 
       {/* Leave History */}
       <div className="card p-0 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-[#e8e2d9] flex items-center justify-between">
           <h2 className="section-title mb-0">Leave History</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
               <tr>{['Leave Type', 'From', 'To', 'Days', 'Reason', 'Applied On', 'Status', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f5f1eb]">
               {leaves.length === 0 ? (
-                <tr><td colSpan={8} className="table-td text-center text-gray-400 py-8">No leave applications yet.</td></tr>
+                <tr><td colSpan={8} className="table-td text-center text-[#a8a29e] py-8">No leave applications yet.</td></tr>
               ) : leaves.map(l => (
-                <tr key={l.id} className="hover:bg-gray-50">
+                <tr key={l.id} className="hover:bg-[#faf7f2]">
                   <td className="table-td font-medium">{l.leaveType}</td>
                   <td className="table-td">{formatDate(l.fromDate)}</td>
                   <td className="table-td">{formatDate(l.toDate)}</td>
