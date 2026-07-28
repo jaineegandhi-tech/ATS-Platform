@@ -233,6 +233,7 @@ const DEMO_CANDIDATES = [
   { id: 'CAND008', firstName: 'Henry', lastName: 'Anderson', email: 'henry.anderson@email.com', mobile: '+1-555-1008', location: 'Denver', appliedPosition: 'Backend Developer', department: 'Engineering', employmentType: 'Full Time', status: 'Interview Scheduled', currentRound: 'HR Round', timeline: [{ action: 'Candidate Created', by: 'EMP007', at: new Date().toISOString() }], createdAt: new Date().toISOString(), createdBy: 'EMP007' },
   { id: 'CAND009', firstName: 'Iris', lastName: 'Thomas', email: 'iris.thomas@email.com', mobile: '+1-555-1009', location: 'Portland', appliedPosition: 'HR Specialist', department: 'Human Resources', employmentType: 'Full Time', status: 'Interview Scheduled', currentRound: 'HR Round', timeline: [{ action: 'Candidate Created', by: 'EMP002', at: new Date().toISOString() }], createdAt: new Date().toISOString(), createdBy: 'EMP002' },
   { id: 'CAND010', firstName: 'Jack', lastName: 'Jackson', email: 'jack.jackson@email.com', mobile: '+1-555-1010', location: 'Philadelphia', appliedPosition: 'Business Analyst', department: 'Operations', employmentType: 'Full Time', status: 'Interview Scheduled', currentRound: 'HR Round', timeline: [{ action: 'Candidate Created', by: 'EMP002', at: new Date().toISOString() }], createdAt: new Date().toISOString(), createdBy: 'EMP002' },
+  { id: 'CAND011', firstName: 'Jane', lastName: 'Doe', email: 'jane.doe@email.com', mobile: '+1-555-1011', location: 'Remote', appliedPosition: 'Product Designer', department: 'Design', employmentType: 'Full Time', status: 'Outsourced', currentRound: null, timeline: [{ action: 'Candidate Applied via Form', by: 'System', at: new Date().toISOString() }], createdAt: new Date().toISOString(), createdBy: 'System' },
 ];
 
 const DEMO_INTERVIEWS = [
@@ -250,7 +251,7 @@ const DEMO_INTERVIEWS = [
 
 export function initStore() {
   // Force re-seed candidates if data version is outdated
-  const DATA_VERSION = '2';
+  const DATA_VERSION = '3';
   if (localStorage.getItem('hrms_data_version') !== DATA_VERSION) {
     localStorage.removeItem(STORAGE_KEYS.CANDIDATES);
     localStorage.removeItem(STORAGE_KEYS.CUSTOM_ROLES);

@@ -1,15 +1,22 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { ROLE_LABELS, canAccess } from '../../utils/roles';
 import {
   BarChart3, Briefcase, Building2, CalendarCheck, FileText,
-  GitBranch, LayoutDashboard, ListChecks, PhoneCall, ShieldCheck, Stamp, Users,
+  GitBranch, LayoutDashboard, ListChecks, PhoneCall, ShieldCheck, Stamp, Users, ChevronRight, ChevronDown
 } from 'lucide-react';
 
 const MODULES = [
   { key: 'dashboard',          to: '/dashboard',           icon: LayoutDashboard, label: 'Dashboard',             end: true },
   { key: 'jobOpenings',        to: '/job-openings',        icon: Briefcase,       label: 'Job Openings' },
-  { key: 'candidates',         to: '/candidates',          icon: Users,           label: 'Candidates' },
+  { key: 'candidates',         to: '/candidates',          icon: Users,           label: 'Candidates',
+    subMenu: [
+      { to: '/candidates?status=New+Candidate', label: 'New Candidate' },
+      { to: '/candidates?status=Email+Sent', label: 'Email Sent' },
+      { to: '/candidates?status=Outsourced', label: 'Outsourced' },
+    ]
+  },
   { key: 'interviewCalendar',  to: '/interview-calendar',  icon: CalendarCheck,   label: 'Interview Calendar' },
   { key: 'interviewSchedule',  to: '/interview-schedule',  icon: ListChecks,      label: 'Interview Schedule' },
   { key: 'approvals',          to: '/approvals',           icon: Stamp,           label: 'Interview Activity' },
@@ -22,8 +29,18 @@ const MODULES = [
 
 export default function Sidebar() {
   const { user } = useAuth();
+  const location = useLocation();
   const links = MODULES.filter(module => canAccess(user?.role, module.key, user?.id));
   const roleLabel = ROLE_LABELS[user?.role] || user?.role || '';
+  const [expandedMenus, setExpandedMenus] = useState({ candidates: false });
+
+  useEffect(() => {
+    if (location.pathname === '/candidates') {
+      setExpandedMenus(prev => ({ ...prev, candidates: true }));
+    }
+  }, [location.pathname]);
+
+  const toggleMenu = (key) => setExpandedMenus(prev => ({ ...prev, [key]: !prev[key] }));
 
   return (
     <aside
@@ -48,17 +65,63 @@ export default function Sidebar() {
 
       {/* Nav */}
       <nav className="flex-1 px-2 py-4 space-y-0.5 overflow-y-auto">
-        {links.map(({ to, icon: Icon, label, end }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={end}
-            className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`}
-          >
-            <Icon size={14} className="flex-shrink-0" />
-            <span className="truncate text-[13px]">{label}</span>
-          </NavLink>
-        ))}
+        {links.map((module) => {
+          const { key, to, icon: Icon, label, end, subMenu } = module;
+          
+          if (subMenu) {
+            const isExpanded = expandedMenus[key];
+            const isMainActive = location.pathname === to && !location.search;
+            return (
+              <div key={key}>
+                <div
+                  onClick={() => toggleMenu(key)}
+                  className={`sidebar-link cursor-pointer flex items-center justify-between ${isMainActive ? 'active' : ''}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon size={14} className="flex-shrink-0" />
+                    <span className="truncate text-[13px]">{label}</span>
+                  </div>
+                  {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                </div>
+                {isExpanded && (
+                  <div className="pl-6 py-1 space-y-0.5">
+                    <NavLink
+                      to={to}
+                      end={end}
+                      className={() => `sidebar-link ${isMainActive ? 'active' : ''}`}
+                    >
+                      <span className="truncate text-[13px]">All Candidates</span>
+                    </NavLink>
+                    {subMenu.map(sub => {
+                      const isSubActive = location.pathname + location.search === sub.to;
+                      return (
+                        <NavLink
+                          key={sub.to}
+                          to={sub.to}
+                          className={() => `sidebar-link ${isSubActive ? 'active' : ''}`}
+                        >
+                          <span className="truncate text-[13px]">{sub.label}</span>
+                        </NavLink>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          }
+
+          return (
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`}
+            >
+              <Icon size={14} className="flex-shrink-0" />
+              <span className="truncate text-[13px]">{label}</span>
+            </NavLink>
+          );
+        })}
       </nav>
 
       {/* User footer */}

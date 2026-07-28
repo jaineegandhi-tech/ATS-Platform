@@ -4,6 +4,7 @@ import { initStore } from './utils/store';
 import { canAccess } from './utils/roles';
 import AppLayout from './components/layout/AppLayout';
 import Login from './pages/Login';
+import ApplyForm from './pages/ApplyForm';
 import RecruitmentDashboard from './pages/recruitment/RecruitmentDashboard';
 import JobOpenings from './pages/hr/JobOpenings';
 import Candidates from './pages/recruitment/Candidates';
@@ -34,6 +35,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <Login />} />
+      <Route path="/apply" element={<ApplyForm />} />
       <Route path="/" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<RecruitmentDashboard />} />

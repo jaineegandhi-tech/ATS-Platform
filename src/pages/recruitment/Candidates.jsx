@@ -23,6 +23,12 @@ export default function Candidates() {
   const [filterDept, setFilterDept] = useState('');
   const [filterStatus, setFilterStatus] = useState(() => new URLSearchParams(location.search).get('status') || '');
   const [filterRound, setFilterRound] = useState('');
+
+  useEffect(() => {
+    const st = new URLSearchParams(location.search).get('status');
+    if (st !== null) setFilterStatus(st);
+    else setFilterStatus('');
+  }, [location.search]);
   const [filterDate, setFilterDate] = useState('');
   const [showArchived, setShowArchived] = useState(false);
   const [myView, setMyView] = useState(true);
@@ -89,6 +95,32 @@ export default function Candidates() {
     forceUpdate(n => n + 1);
   }
 
+  function approveOutsourced(id) {
+    if (!window.confirm('Approve this candidate? They will be moved to New Candidates.')) return;
+    const all = getStore(STORAGE_KEYS.CANDIDATES);
+    const now = new Date().toISOString();
+    setStore(STORAGE_KEYS.CANDIDATES, all.map(c => c.id === id ? { 
+      ...c, 
+      status: 'New Candidate',
+      timeline: [...(c.timeline || []), { action: 'Application Approved', by: user.id, at: now }]
+    } : c));
+    addLog('Candidate Approved', user.id, `Approved outsourced candidate`);
+    forceUpdate(n => n + 1);
+  }
+
+  function rejectOutsourced(id) {
+    if (!window.confirm('Reject this candidate?')) return;
+    const all = getStore(STORAGE_KEYS.CANDIDATES);
+    const now = new Date().toISOString();
+    setStore(STORAGE_KEYS.CANDIDATES, all.map(c => c.id === id ? { 
+      ...c, 
+      status: 'Rejected',
+      timeline: [...(c.timeline || []), { action: 'Application Rejected', by: user.id, at: now }]
+    } : c));
+    addLog('Candidate Rejected', user.id, `Rejected outsourced candidate`);
+    forceUpdate(n => n + 1);
+  }
+
   function getLatestInterview(candidateId) {
     return interviews.filter(i => i.candidateId === candidateId).sort((a, b) => b.date?.localeCompare(a.date))[0];
   }
@@ -120,11 +152,19 @@ export default function Candidates() {
               </button>
             </div>
           )}
-          {isHR && (
-            <button className="btn btn-primary btn-sm" onClick={() => navigate('/candidates/add')}>
-              <Plus size={13} /> Add Candidate
-            </button>
-          )}
+          {isHR && (() => {
+            const statusParam = new URLSearchParams(location.search).get('status');
+            const disableAdd = statusParam === 'Email Sent' || statusParam === 'Outsourced';
+            return (
+              <button 
+                className={`btn btn-primary btn-sm ${disableAdd ? 'opacity-50 cursor-not-allowed' : ''}`} 
+                onClick={() => !disableAdd && navigate('/candidates/add')}
+                disabled={disableAdd}
+              >
+                <Plus size={13} /> Add Candidate
+              </button>
+            );
+          })()}
         </div>
       </div>
 
@@ -138,7 +178,12 @@ export default function Candidates() {
           <option value="">All Departments</option>
           {departments.map(d => <option key={d}>{d}</option>)}
         </select>
-        <select className="input w-auto h-9 text-xs" value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
+        <select 
+          className="input w-auto h-9 text-xs disabled:opacity-60 disabled:cursor-not-allowed" 
+          value={filterStatus} 
+          onChange={e => setFilterStatus(e.target.value)}
+          disabled={!!new URLSearchParams(location.search).get('status')}
+        >
           <option value="">All Statuses</option>
           {STATUSES.map(s => <option key={s}>{s}</option>)}
         </select>
@@ -161,7 +206,7 @@ export default function Candidates() {
         </button>
       </div>
 
-      {/* Cards */}
+      {/* Cards or Table */}
       {filtered.length === 0 ? (
         <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card py-20 flex flex-col items-center text-center">
           <div className="w-12 h-12 rounded-2xl bg-[#faf7f2] border border-[#e8e2d9] flex items-center justify-center mb-4">
@@ -169,6 +214,47 @@ export default function Candidates() {
           </div>
           <p className="text-sm font-medium text-[#78716c]">No candidates found</p>
           <p className="text-xs text-[#a8a29e] mt-1">Try adjusting your filters.</p>
+        </div>
+      ) : filterStatus === 'Outsourced' ? (
+        <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-x-auto">
+          <table className="w-full text-left text-sm whitespace-nowrap">
+            <thead className="bg-[#f0ebe2] text-[#78716c] font-medium border-b border-[#e8e2d9]">
+              <tr>
+                <th className="px-4 py-3">Candidate</th>
+                <th className="px-4 py-3">Email</th>
+                <th className="px-4 py-3">Position</th>
+                <th className="px-4 py-3">Department</th>
+                <th className="px-4 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#e8e2d9]">
+              {filtered.map(c => (
+                <tr key={c.id} className="hover:bg-[#faf7f2] transition-colors">
+                  <td className="px-4 py-3 font-medium text-[#3c2a21]">{c.firstName} {c.lastName}</td>
+                  <td className="px-4 py-3 text-[#78716c]">{c.email}</td>
+                  <td className="px-4 py-3 text-[#78716c]">{c.appliedPosition || '—'}</td>
+                  <td className="px-4 py-3 text-[#78716c]">{c.department || '—'}</td>
+                  <td className="px-4 py-3 text-right">
+                    <div className="flex items-center justify-end gap-2">
+                      <button className="btn btn-secondary btn-sm" onClick={() => navigate(`/candidates/${c.id}`)}>
+                        <Eye size={12} className="mr-1" /> View
+                      </button>
+                      {isHR && (
+                        <>
+                          <button className="btn btn-secondary btn-sm text-emerald-600 border-emerald-200 bg-emerald-50 hover:bg-emerald-100" onClick={() => approveOutsourced(c.id)}>
+                            Approve
+                          </button>
+                          <button className="btn btn-secondary btn-sm text-red-600 border-red-200 bg-red-50 hover:bg-red-100" onClick={() => rejectOutsourced(c.id)}>
+                            Reject
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
