@@ -23,7 +23,7 @@ const MODULES = [
   { key: 'reports',            to: '/reports',             icon: BarChart3,       label: 'Reports' },
   { key: 'pipeline',           to: '/pipeline',            icon: GitBranch,       label: 'Pipeline' },
   { key: 'rolesPermissions',   to: '/roles-permissions',   icon: ShieldCheck,     label: 'Roles & Permissions' },
-  { key: 'resumeInfo',         to: '/resume-info',         icon: FileText,        label: 'Resume Info' },
+  { key: 'resumeInfo',         to: '/resume-info',         icon: FileText,        label: 'Resume Parser' },
   { key: 'telephonyInterview', to: '/telephony-interview', icon: PhoneCall,       label: 'Telephonic Interviews' },
 ];
 

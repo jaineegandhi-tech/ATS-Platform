@@ -24,7 +24,7 @@ export const ALL_MODULES = [
   { key: 'reports',            label: 'Reports' },
   { key: 'pipeline',           label: 'Pipeline' },
   { key: 'rolesPermissions',   label: 'Roles & Permissions' },
-  { key: 'resumeInfo',         label: 'Resume Info' },
+  { key: 'resumeInfo',         label: 'Resume Parser' },
   { key: 'telephonyInterview', label: 'Telephonic Interviews' },
 ];
 
