@@ -16,7 +16,7 @@ const ROUTE_LABELS = {
   'reports':             'Reports',
   'pipeline':            'Pipeline',
   'roles-permissions':   'Roles & Permissions',
-  'resume-info':         'Resume Info',
+  'resume-info':         'Resume Parser',
   'telephony-interview': 'Telephonic Interviews',
 };
 

@@ -112,7 +112,7 @@ export default function ResumeInfo() {
     <div className="space-y-6">
       <div className="pb-6 border-b border-[#e8e2d9]">
         <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
-        <h1 className="text-xl font-semibold text-[#3c2a21]">Resume Information</h1>
+        <h1 className="text-xl font-semibold text-[#3c2a21]">Resume Parser</h1>
         <p className="text-sm text-[#a8a29e] mt-0.5">Extract and review candidate resume details.</p>
       </div>
       <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-hidden">
