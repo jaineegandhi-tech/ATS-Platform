@@ -6,6 +6,7 @@ import { useStorageSync } from '../../utils/useStorageSync';
 import StatusBadge from '../../components/shared/StatusBadge';
 import { Plus, Search, Eye, Pencil, CalendarDays, Download, Archive, Users2, UserCheck, MoreVertical, Users, Mail } from 'lucide-react';
 import { ROLES, isRecruiter, isHeadHR } from '../../utils/roles';
+import ResumePreviewModal from '../../components/shared/ResumePreviewModal';
 
 const ROUNDS = ['HR Round', 'Technical Round', 'Managerial Round', 'Final Round'];
 const STATUSES = ['New Candidate', 'Email Sent', 'Interview Scheduled', 'Interview Completed', 'Passed', 'Failed', 'On Hold', 'Selected', 'Rejected', 'Next Round Scheduled', 'Offer Sent', 'Offer Accepted', 'Offer Declined', 'Joined'];
@@ -86,12 +87,11 @@ export default function Candidates() {
     forceUpdate(n => n + 1);
   }
 
-  function downloadResume(c) {
+  const [previewResume, setPreviewResume] = useState(null);
+
+  function openResumePreview(c) {
     if (!c.resume) return alert('No resume uploaded.');
-    const a = document.createElement('a');
-    a.href = c.resume;
-    a.download = `${c.firstName}_${c.lastName}_Resume.pdf`;
-    a.click();
+    setPreviewResume(c);
   }
 
   function sendEmail(c) {
@@ -297,7 +297,7 @@ export default function Candidates() {
                 onView={() => navigate(`/candidates/${c.id}`)}
                 onEdit={() => navigate(`/candidates/${c.id}/edit`)}
                 onSchedule={() => navigate(`/candidates/${c.id}/schedule`)}
-                onDownload={() => downloadResume(c)}
+                onOpenResume={() => openResumePreview(c)}
                 onArchive={() => archive(c.id)}
                 onSendEmail={() => sendEmail(c)}
               />
@@ -305,11 +305,18 @@ export default function Candidates() {
           })}
         </div>
       )}
+      
+      <ResumePreviewModal
+        isOpen={!!previewResume}
+        onClose={() => setPreviewResume(null)}
+        resumeDataUrl={previewResume?.resume}
+        candidateName={previewResume ? `${previewResume.firstName} ${previewResume.lastName}` : ''}
+      />
     </div>
   );
 }
 
-function CandidateCard({ c, initials, ownerName, hasScheduledInterview, isHR, isOnlyHR, showOwner, user, onView, onEdit, onSchedule, onDownload, onArchive, onSendEmail }) {
+function CandidateCard({ c, initials, ownerName, hasScheduledInterview, isHR, isOnlyHR, showOwner, user, onView, onEdit, onSchedule, onOpenResume, onArchive, onSendEmail }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -383,8 +390,8 @@ function CandidateCard({ c, initials, ownerName, hasScheduledInterview, isHR, is
                   <Mail size={12} /> {c.status === 'Email Sent' ? 'Resend Email' : 'Send Email'}
                 </button>
               )}
-              <button className="w-full text-left px-4 py-2 text-xs text-[#78716c] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setOpen(false); onDownload(); }}>
-                <Download size={12} /> Download Resume
+              <button className="w-full text-left px-4 py-2 text-xs text-[#78716c] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setOpen(false); onOpenResume(); }}>
+                <Eye size={12} /> View Resume
               </button>
               {isHR && c.status !== 'archived' && (
                 <button className="w-full text-left px-4 py-2 text-xs text-red-500 hover:bg-red-50 flex items-center gap-2" onClick={() => { setOpen(false); onArchive(); }}>

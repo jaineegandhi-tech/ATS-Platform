@@ -7,7 +7,8 @@ import { formatDate } from '../../utils/helpers';
 import StatusBadge from '../../components/shared/StatusBadge';
 import Modal from '../../components/shared/Modal';
 import ResumeExtractorModal from '../../components/shared/ResumeExtractorModal';
-import { Download, CalendarDays, Pencil, Star, Send, CheckCircle, FileText, Copy, Phone, UserCheck, ChevronDown } from 'lucide-react';
+import ResumePreviewModal from '../../components/shared/ResumePreviewModal';
+import { Download, CalendarDays, Pencil, Star, Send, CheckCircle, FileText, Copy, Phone, UserCheck, ChevronDown, Eye } from 'lucide-react';
 import { ROLES, isRecruiter, isHeadHR } from '../../utils/roles';
 
 export default function CandidateProfile() {
@@ -29,6 +30,7 @@ export default function CandidateProfile() {
   const [reassignModal, setReassignModal] = useState(false);
   const [reassignTo, setReassignTo] = useState('');
   const [actionsOpen, setActionsOpen] = useState(false);
+  const [previewResume, setPreviewResume] = useState(false);
   const [, forceUpdate] = useState(0);
 
   const candidate = getStore(STORAGE_KEYS.CANDIDATES).find(c => c.id === id);
@@ -175,12 +177,9 @@ export default function CandidateProfile() {
     a.click();
   }
 
-  function downloadResume() {
+  function openResumePreview() {
     if (!candidate.resume) return alert('No resume uploaded.');
-    const a = document.createElement('a');
-    a.href = candidate.resume;
-    a.download = `${candidate.firstName}_${candidate.lastName}_Resume`;
-    a.click();
+    setPreviewResume(true);
   }
 
   function handleExtractedData(extractedData) {
@@ -260,7 +259,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
           {candidate.resume && (
-            <button className="btn-secondary btn btn-sm" onClick={downloadResume}><Download size={13} /> Resume</button>
+            <button className="btn-secondary btn btn-sm" onClick={openResumePreview}><Eye size={13} /> Resume</button>
           )}
           {user?.role === ROLES.IT && candidate.joiningDetails && (
             <button className="btn-primary btn btn-sm" onClick={() => setItModal(true)}><CheckCircle size={13} /> Complete IT Setup</button>
@@ -712,6 +711,13 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
           noticePeriod: candidate.noticePeriod || '',
           immediateJoining: candidate.immediateJoining || false,
         }}
+      />
+      
+      <ResumePreviewModal
+        isOpen={previewResume}
+        onClose={() => setPreviewResume(false)}
+        resumeDataUrl={candidate.resume}
+        candidateName={`${candidate.firstName} ${candidate.lastName}`}
       />
     </div>
   );
