@@ -47,6 +47,7 @@ export default function ApplyForm() {
       ...form,
       id: generateCandidateId(),
       status: 'Outsourced',
+      isUnread: true,
       currentRound: null,
       timeline: [{ action: 'Candidate Applied via Form', by: 'System', at: now }],
       createdAt: now,
@@ -102,7 +103,10 @@ export default function ApplyForm() {
             </div>
             <div>
               <label className="label">Applied Position *</label>
-              <input required className="input" value={form.appliedPosition} onChange={e => setForm(f => ({ ...f, appliedPosition: e.target.value }))} placeholder="e.g. Software Engineer" />
+              <select required className="input" value={form.appliedPosition} onChange={e => setForm(f => ({ ...f, appliedPosition: e.target.value }))}>
+                <option value="">Select Position</option>
+                {['BA', 'QA', 'UI/UX', 'Full Stack Developer', 'Frontend developer', 'Backend developer', 'DevOps Engineer', 'Product Manager', 'Social Media Manager'].map(p => <option key={p}>{p}</option>)}
+              </select>
             </div>
             <div>
               <label className="label">Department *</label>

@@ -258,7 +258,14 @@ export default function AddCandidate() {
       <div className="card space-y-4">
         <p className="form-section-title">Job Information</p>
         <div className="grid grid-cols-2 gap-4">
-          <div><label className="label">Applied Position *</label><input className="input" value={form.appliedPosition} onChange={e => set('appliedPosition', e.target.value)} />{err('appliedPosition')}</div>
+          <div>
+            <label className="label">Applied Position *</label>
+            <select className="input" value={form.appliedPosition} onChange={e => set('appliedPosition', e.target.value)}>
+              <option value="">Select Position</option>
+              {['BA', 'QA', 'UI/UX', 'Full Stack Developer', 'Frontend developer', 'Backend developer', 'DevOps Engineer', 'Product Manager', 'Social Media Manager'].map(p => <option key={p}>{p}</option>)}
+            </select>
+            {err('appliedPosition')}
+          </div>
           <div>
             <label className="label">Department *</label>
             <select className="input" value={form.department} onChange={e => set('department', e.target.value)}>
