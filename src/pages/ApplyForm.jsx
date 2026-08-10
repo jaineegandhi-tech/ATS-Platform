@@ -47,7 +47,7 @@ export default function ApplyForm() {
       ...form,
       id: generateCandidateId(),
       status: 'Outsourced',
-      isUnread: true,
+      viewedBy: [],
       currentRound: null,
       timeline: [{ action: 'Candidate Applied via Form', by: 'System', at: now }],
       createdAt: now,

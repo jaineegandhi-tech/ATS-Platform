@@ -38,7 +38,7 @@ export default function Sidebar() {
 
   const [expandedMenus, setExpandedMenus] = useState({ candidates: false });
   const candidates = getStore(STORAGE_KEYS.CANDIDATES) || [];
-  const hasUnreadOutsourced = candidates.some(c => c.status === 'Outsourced' && c.isUnread);
+  const hasUnreadOutsourced = candidates.some(c => c.status === 'Outsourced' && (!c.viewedBy || !c.viewedBy.includes(user?.id)));
 
   useEffect(() => {
     if (location.pathname === '/candidates') {

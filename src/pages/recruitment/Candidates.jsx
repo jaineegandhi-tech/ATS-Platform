@@ -31,16 +31,22 @@ export default function Candidates() {
   }, [location.search]);
 
   useEffect(() => {
-    if (filterStatus === 'Outsourced') {
+    if (filterStatus === 'Outsourced' && user) {
       const all = getStore(STORAGE_KEYS.CANDIDATES);
-      if (all.some(c => c.status === 'Outsourced' && c.isUnread)) {
-        setStore(STORAGE_KEYS.CANDIDATES, all.map(c => 
-          c.status === 'Outsourced' ? { ...c, isUnread: false } : c
-        ));
+      let updated = false;
+      const nextAll = all.map(c => {
+        if (c.status === 'Outsourced' && (!c.viewedBy || !c.viewedBy.includes(user.id))) {
+          updated = true;
+          return { ...c, viewedBy: [...(c.viewedBy || []), user.id] };
+        }
+        return c;
+      });
+      if (updated) {
+        setStore(STORAGE_KEYS.CANDIDATES, nextAll);
         forceUpdate(n => n + 1);
       }
     }
-  }, [filterStatus]);
+  }, [filterStatus, user]);
   const [filterDate, setFilterDate] = useState('');
   const [showArchived, setShowArchived] = useState(false);
   const [myView, setMyView] = useState(true);
