@@ -1,5 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { getStore, STORAGE_KEYS } from '../../utils/store';
+import { useStorageSync } from '../../utils/useStorageSync';
 import { useAuth } from '../../context/AuthContext';
 import { ROLE_LABELS, canAccess } from '../../utils/roles';
 import {
@@ -32,7 +34,11 @@ export default function Sidebar() {
   const location = useLocation();
   const links = MODULES.filter(module => canAccess(user?.role, module.key, user?.id));
   const roleLabel = ROLE_LABELS[user?.role] || user?.role || '';
+  useStorageSync();
+
   const [expandedMenus, setExpandedMenus] = useState({ candidates: false });
+  const candidates = getStore(STORAGE_KEYS.CANDIDATES) || [];
+  const hasUnreadOutsourced = candidates.some(c => c.status === 'Outsourced' && (!c.viewedBy || !c.viewedBy.includes(user?.id)));
 
   useEffect(() => {
     if (location.pathname === '/candidates') {
@@ -100,7 +106,15 @@ export default function Sidebar() {
                           to={sub.to}
                           className={() => `sidebar-link ${isSubActive ? 'active' : ''}`}
                         >
-                          <span className="truncate text-[13px]">{sub.label}</span>
+                          <span className="truncate text-[13px] flex items-center justify-between w-full">
+                            <span>{sub.label}</span>
+                            {sub.label === 'Outsourced' && hasUnreadOutsourced && (
+                              <span className="relative flex h-2.5 w-2.5 mr-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+                              </span>
+                            )}
+                          </span>
                         </NavLink>
                       );
                     })}

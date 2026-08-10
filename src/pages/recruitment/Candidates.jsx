@@ -29,6 +29,24 @@ export default function Candidates() {
     if (st !== null) setFilterStatus(st);
     else setFilterStatus('');
   }, [location.search]);
+
+  useEffect(() => {
+    if (filterStatus === 'Outsourced' && user) {
+      const all = getStore(STORAGE_KEYS.CANDIDATES);
+      let updated = false;
+      const nextAll = all.map(c => {
+        if (c.status === 'Outsourced' && (!c.viewedBy || !c.viewedBy.includes(user.id))) {
+          updated = true;
+          return { ...c, viewedBy: [...(c.viewedBy || []), user.id] };
+        }
+        return c;
+      });
+      if (updated) {
+        setStore(STORAGE_KEYS.CANDIDATES, nextAll);
+        forceUpdate(n => n + 1);
+      }
+    }
+  }, [filterStatus, user]);
   const [filterDate, setFilterDate] = useState('');
   const [showArchived, setShowArchived] = useState(false);
   const [myView, setMyView] = useState(true);
@@ -42,7 +60,7 @@ export default function Candidates() {
     if (user?.role === ROLES.INTERVIEWER) return interviews.some(i => i.candidateId === c.id && i.interviewerIds?.includes(user.id));
     if (user?.role === ROLES.IT) return ['Selected', 'Offered', 'Offer Sent', 'Offer Accepted', 'Joined', 'Rejected', 'Failed', 'Not Joined'].includes(c.status);
     if (user?.role === ROLES.HR) {
-      if (myView) return c.assignedTo === user.id || c.createdBy === user.id;
+      if (myView) return c.assignedTo === user.id || c.createdBy === user.id || c.status === 'Outsourced';
       return true;
     }
     return true;
