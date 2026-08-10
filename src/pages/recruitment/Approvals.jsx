@@ -141,7 +141,7 @@ export default function Approvals() {
           {/* Today */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <Clock size={15} className="text-violet-500" />
+              <Clock size={15} className="text-primary" />
               <h2 className="text-sm font-semibold text-[#3c2a21]">Today's Interviews</h2>
               <span className="text-xs text-[#a8a29e]">{today}</span>
             </div>
