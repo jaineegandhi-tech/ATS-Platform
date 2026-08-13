@@ -59,10 +59,7 @@ export default function Sidebar() {
 
       {/* Logo */}
       <div className="px-5 h-14 flex items-center gap-3 border-b border-sidebar-border flex-shrink-0">
-        <div className="w-6 h-6 rounded flex items-center justify-center flex-shrink-0"
-          style={{ backgroundColor: 'var(--theme-mustard)', borderRadius: '6px' }}>
-          <Building2 size={13} color="#ffffff" />
-        </div>
+        <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-6 h-6 object-contain flex-shrink-0" />
         <span className="font-serif font-bold text-sm tracking-heading"
           style={{ color: 'var(--theme-aubergine)', fontFamily: "'Playfair Display', Georgia, serif" }}>
           eSparkBiz

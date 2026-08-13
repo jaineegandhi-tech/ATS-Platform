@@ -53,9 +53,7 @@ function Shell({ children }) {
 
         {/* Top left Logo */}
         <div className="flex items-center gap-3 z-10">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
-            <Building2 size={20} className="text-white" />
-          </div>
+          <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-10 h-10 object-contain" />
           <div className="flex flex-col">
             <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
             <span className="text-slate-800 font-bold text-xl tracking-tight leading-none">ATS</span>
@@ -123,9 +121,7 @@ function Shell({ children }) {
         <div className="w-full max-w-sm">
           {/* Mobile logo */}
           <div className="flex items-center gap-2 mb-8 lg:hidden">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-md">
-              <Building2 size={16} className="text-white" />
-            </div>
+            <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-8 h-8 object-contain" />
             <span className="text-slate-800 font-bold text-lg">ATS</span>
           </div>
           {children}
