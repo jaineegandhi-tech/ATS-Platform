@@ -64,18 +64,14 @@ export default function ApplyForm() {
       <div className="min-h-screen bg-[#faf7f2] flex flex-col items-center justify-center p-6 relative">
         {/* Top left Logo */}
         <div className="absolute top-6 left-6 hidden sm:flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
-            <Building2 size={20} className="text-white" />
-          </div>
+          <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-10 h-10 object-contain" />
           <div className="flex flex-col">
             <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
           </div>
         </div>
 
         <div className="flex items-center gap-3 mb-8 sm:hidden justify-center">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
-            <Building2 size={20} className="text-white" />
-          </div>
+          <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-10 h-10 object-contain" />
           <div className="flex flex-col text-left">
             <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
           </div>
@@ -102,9 +98,7 @@ export default function ApplyForm() {
     <div className="min-h-screen bg-[#faf7f2] py-12 px-4 sm:px-6 relative">
       {/* Top left Logo */}
       <div className="absolute top-6 left-6 hidden sm:flex items-center gap-3">
-        <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
-          <Building2 size={20} className="text-white" />
-        </div>
+        <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-10 h-10 object-contain" />
         <div className="flex flex-col">
           <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
         </div>
@@ -112,9 +106,7 @@ export default function ApplyForm() {
 
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center gap-3 mb-8 sm:hidden justify-center">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
-            <Building2 size={20} className="text-white" />
-          </div>
+          <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-10 h-10 object-contain" />
           <div className="flex flex-col text-left">
             <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
           </div>
