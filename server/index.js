@@ -3,15 +3,9 @@ import express from 'express';
 import cors from 'cors';
 
 import authRouter from './routes/auth.js';
-import employeesRouter from './routes/employees.js';
 import candidatesRouter from './routes/candidates.js';
 import interviewsRouter from './routes/interviews.js';
-import leavesRouter from './routes/leaves.js';
-import attendanceRouter from './routes/attendance.js';
-import payrollRouter from './routes/payroll.js';
-import assetsRouter from './routes/assets.js';
 import jobOpeningsRouter from './routes/jobOpenings.js';
-import holidaysRouter from './routes/holidays.js';
 import notificationsRouter from './routes/notifications.js';
 
 import documentsRouter from './routes/documents.js';
@@ -40,15 +34,9 @@ app.get('/api/health', (req, res) => res.json({
 
 // Active routes
 app.use('/api/auth', authRouter);
-app.use('/api/employees', employeesRouter);
 app.use('/api/candidates', candidatesRouter);
 app.use('/api/interviews', interviewsRouter);
-app.use('/api/leaves', leavesRouter);
-app.use('/api/attendance', attendanceRouter);
-app.use('/api/payroll', payrollRouter);
-app.use('/api/assets', assetsRouter);
 app.use('/api/job-openings', jobOpeningsRouter);
-app.use('/api/holidays', holidaysRouter);
 app.use('/api/notifications', notificationsRouter);
 app.use('/api/documents', documentsRouter);
 app.use('/api/approvals', approvalsRouter);

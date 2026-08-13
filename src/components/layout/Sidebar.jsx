@@ -65,7 +65,7 @@ export default function Sidebar() {
         </div>
         <span className="font-serif font-bold text-sm tracking-heading"
           style={{ color: 'var(--theme-aubergine)', fontFamily: "'Playfair Display', Georgia, serif" }}>
-          ATS
+          eSparkBiz
         </span>
       </div>
 

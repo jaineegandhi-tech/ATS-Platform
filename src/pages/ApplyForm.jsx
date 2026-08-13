@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { getStore, setStore, STORAGE_KEYS } from '../utils/store';
-import { Upload, X, CheckCircle } from 'lucide-react';
+import { Upload, X, CheckCircle, Building2 } from 'lucide-react';
 
 const DEPARTMENTS = ['Human Resources', 'Engineering', 'Marketing', 'Sales', 'Finance', 'Operations', 'Design', 'Product'];
 
@@ -61,7 +61,26 @@ export default function ApplyForm() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#faf7f2] flex items-center justify-center p-6">
+      <div className="min-h-screen bg-[#faf7f2] flex flex-col items-center justify-center p-6 relative">
+        {/* Top left Logo */}
+        <div className="absolute top-6 left-6 hidden sm:flex items-center gap-3">
+          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
+            <Building2 size={20} className="text-white" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 mb-8 sm:hidden justify-center">
+          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
+            <Building2 size={20} className="text-white" />
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
+          </div>
+        </div>
+
         <div className="max-w-md w-full bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card p-8 text-center">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle size={32} className="text-emerald-500" />
@@ -80,8 +99,26 @@ export default function ApplyForm() {
   }
 
   return (
-    <div className="min-h-screen bg-[#faf7f2] py-12 px-4 sm:px-6">
+    <div className="min-h-screen bg-[#faf7f2] py-12 px-4 sm:px-6 relative">
+      {/* Top left Logo */}
+      <div className="absolute top-6 left-6 hidden sm:flex items-center gap-3">
+        <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
+          <Building2 size={20} className="text-white" />
+        </div>
+        <div className="flex flex-col">
+          <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
+        </div>
+      </div>
+
       <div className="max-w-2xl mx-auto">
+        <div className="flex items-center gap-3 mb-8 sm:hidden justify-center">
+          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
+            <Building2 size={20} className="text-white" />
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
+          </div>
+        </div>
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-[#3c2a21] font-serif mb-2">Job Application Form</h1>
           <p className="text-sm text-[#78716c]">Please fill out the details below to apply for a position.</p>

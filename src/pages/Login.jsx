@@ -57,7 +57,7 @@ function Shell({ children }) {
             <Building2 size={20} className="text-white" />
           </div>
           <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-slate-500 tracking-wider">ESPARKBIZ</span>
+            <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
             <span className="text-slate-800 font-bold text-xl tracking-tight leading-none">ATS</span>
           </div>
         </div>

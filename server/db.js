@@ -33,42 +33,7 @@ db.exec(`
     updatedAt TEXT DEFAULT (datetime('now'))
   );
 
-  -- Employees Table
-  CREATE TABLE IF NOT EXISTS employees (
-    id TEXT PRIMARY KEY,
-    username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL,
-    role TEXT NOT NULL,
-    status TEXT DEFAULT 'active',
-    firstName TEXT,
-    lastName TEXT,
-    middleName TEXT,
-    email TEXT,
-    department TEXT,
-    designation TEXT,
-    joiningDate TEXT,
-    employmentType TEXT,
-    gender TEXT,
-    dob TEXT,
-    bloodGroup TEXT,
-    maritalStatus TEXT,
-    nationality TEXT,
-    mobile TEXT,
-    alternateMobile TEXT,
-    personalEmail TEXT,
-    currentAddress TEXT,
-    permanentAddress TEXT,
-    city TEXT,
-    state TEXT,
-    country TEXT,
-    postalCode TEXT,
-    reportingManager TEXT,
-    emergencyContact TEXT DEFAULT '{}',
-    profilePicture TEXT,
-    profileCompleted INTEGER DEFAULT 0,
-    createdAt TEXT DEFAULT (datetime('now')),
-    updatedAt TEXT DEFAULT (datetime('now'))
-  );
+
 
   -- Departments master list
   CREATE TABLE IF NOT EXISTS departments (
