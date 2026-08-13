@@ -283,4 +283,35 @@
 
   /* ── Page header ─────────────────────────────────────── */
   .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+
+  /* ── Calendar Page Curl ─────────────────────────────── */
+  .page-curl {
+    position: relative;
+    border-bottom-right-radius: 0;
+  }
+  .page-curl::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-width: 0 0 64px 64px;
+    border-style: solid;
+    border-color: transparent transparent #f8fafc transparent;
+    z-index: 1;
+  }
+  .page-curl::after {
+    content: "";
+    position: absolute;
+    bottom: 64px;
+    right: 64px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: -64px;
+    margin-right: -64px;
+    background: linear-gradient(225deg, transparent 49%, #ffffff 51%, #f1f5f9 80%, #cbd5e1 100%);
+    box-shadow: -4px -4px 12px rgba(0,0,0,0.06);
+    border-top-left-radius: 8px;
+    border-bottom-right-radius: 24px;
+    z-index: 2;
+  }
 }
