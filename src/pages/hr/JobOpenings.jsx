@@ -110,10 +110,10 @@ export default function JobOpenings() {
     <div className="space-y-6">
 
       {/* Page header */}
-      <div className="flex items-end justify-between pb-6 border-b border-[#e8e2d9]">
+      <div className="flex items-end justify-between pb-6 border-b border-[var(--theme-linen)]">
         <div>
           <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
-          <h1 className="text-xl font-semibold text-[#3c2a21]">Job Openings</h1>
+          <h1 className="text-xl font-semibold text-[var(--theme-aubergine)]">Job Openings</h1>
           <p className="text-sm text-[#a8a29e] mt-0.5">
             {canManage ? 'Manage open positions and track hiring progress.' : 'View active positions across the organisation.'}
           </p>
@@ -138,11 +138,11 @@ export default function JobOpenings() {
 
       {/* Cards */}
       {filtered.length === 0 ? (
-        <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card py-20 flex flex-col items-center text-center">
-          <div className="w-12 h-12 rounded-2xl bg-[#faf7f2] border border-[#e8e2d9] flex items-center justify-center mb-4">
+        <div className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card py-20 flex flex-col items-center text-center">
+          <div className="w-12 h-12 rounded-2xl bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] flex items-center justify-center mb-4">
             <Briefcase size={18} className="text-[#d4cdc4]" />
           </div>
-          <p className="text-sm font-medium text-[#78716c]">No job openings found</p>
+          <p className="text-sm font-medium text-[var(--theme-taupe)]">No job openings found</p>
           <p className="text-xs text-[#a8a29e] mt-1">Try a different search term.</p>
         </div>
       ) : (
@@ -152,12 +152,12 @@ export default function JobOpenings() {
             const isFilled = remaining === 0;
             const fillPct = opening.openings > 0 ? Math.round((opening.filled / opening.openings) * 100) : 0;
             return (
-              <div key={opening.id} className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card hover:shadow-card-hover hover:border-gray-200 transition-all duration-200 p-5 flex flex-col gap-4">
+              <div key={opening.id} className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card hover:shadow-card-hover hover:border-[var(--theme-linen)] transition-all duration-200 p-5 flex flex-col gap-4">
 
                 {/* Header */}
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <h2 className="text-sm font-semibold text-[#3c2a21] truncate">{opening.positionName}</h2>
+                    <h2 className="text-sm font-semibold text-[var(--theme-aubergine)] truncate">{opening.positionName}</h2>
                     <p className="text-xs text-[#a8a29e] mt-0.5">{opening.department}</p>
                   </div>
                   <span className={`badge flex-shrink-0 ${isFilled ? 'badge-green' : 'badge-blue'}`}>
@@ -182,8 +182,8 @@ export default function JobOpenings() {
                 {/* Stats row */}
                 <div className="grid grid-cols-3 gap-2">
                   {[['Remaining', remaining], ['Filled', opening.filled], ['Total', opening.openings]].map(([label, val]) => (
-                    <div key={label} className="bg-[#faf7f2] rounded-xl p-3 text-center">
-                      <p className="text-lg font-semibold text-[#3c2a21] leading-none">{val}</p>
+                    <div key={label} className="bg-[var(--theme-sidebar-bg)] rounded-xl p-3 text-center">
+                      <p className="text-lg font-semibold text-[var(--theme-aubergine)] leading-none">{val}</p>
                       <p className="text-[10px] text-[#a8a29e] mt-1 uppercase tracking-wide">{label}</p>
                     </div>
                   ))}

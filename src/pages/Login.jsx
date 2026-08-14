@@ -18,7 +18,7 @@ function PuzzleGraphic() {
         {/* Piece C (Right, connected to Center) */}
         <g transform="translate(60, 10)" filter="url(#shadow)">
           <path d="M 20 20 L 40 20 A 10 10 0 1 0 60 20 L 80 20 L 80 80 L 60 80 A 10 10 0 1 0 40 80 L 20 80 L 20 60 A 12 12 0 1 1 20 40 Z" 
-                fill="#ffffff" stroke="#e2e8f0" strokeWidth="2" />
+                fill='var(--theme-cream)' stroke="#e2e8f0" strokeWidth="2" />
         </g>
 
         {/* Piece B (Center) */}
@@ -55,8 +55,8 @@ function Shell({ children }) {
         <div className="flex items-center gap-3 z-10">
           <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-10 h-10 object-contain" />
           <div className="flex flex-col">
-            <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
-            <span className="text-slate-800 font-bold text-xl tracking-tight leading-none">ATS</span>
+            <span className="text-base font-bold text-[var(--theme-aubergine)] tracking-tight">eSparkBiz</span>
+            <span className="text-[var(--theme-aubergine)] font-bold text-xl tracking-tight leading-none">ATS</span>
           </div>
         </div>
 
@@ -74,40 +74,40 @@ function Shell({ children }) {
           </p>
 
           <div className="flex flex-col gap-4 w-full max-w-sm">
-            <div className="flex items-center justify-between p-4 rounded-xl border border-slate-100 bg-white/60 shadow-sm backdrop-blur-sm">
+            <div className="flex items-center justify-between p-4 rounded-xl border border-slate-100 bg-[var(--theme-cream)]/60 shadow-sm backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-primary">
                   <Users size={16} />
                 </div>
                 <span className="text-sm font-bold text-slate-700">Openings & candidates</span>
               </div>
-              <span className="text-[10px] text-slate-400 font-medium">One shared pipeline</span>
+              <span className="text-[10px] text-[var(--theme-taupe)] font-medium">One shared pipeline</span>
             </div>
             
-            <div className="flex items-center justify-between p-4 rounded-xl border border-slate-100 bg-white/60 shadow-sm backdrop-blur-sm">
+            <div className="flex items-center justify-between p-4 rounded-xl border border-slate-100 bg-[var(--theme-cream)]/60 shadow-sm backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-primary">
                   <Calendar size={16} />
                 </div>
                 <span className="text-sm font-bold text-slate-700">Interviews & approvals</span>
               </div>
-              <span className="text-[10px] text-slate-400 font-medium">Nothing slips</span>
+              <span className="text-[10px] text-[var(--theme-taupe)] font-medium">Nothing slips</span>
             </div>
 
-            <div className="flex items-center justify-between p-4 rounded-xl border border-slate-100 bg-white/60 shadow-sm backdrop-blur-sm">
+            <div className="flex items-center justify-between p-4 rounded-xl border border-slate-100 bg-[var(--theme-cream)]/60 shadow-sm backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-primary">
                   <UserPlus size={16} />
                 </div>
                 <span className="text-sm font-bold text-slate-700">Onboarding handoff</span>
               </div>
-              <span className="text-[10px] text-slate-400 font-medium">HR to IT in a click</span>
+              <span className="text-[10px] text-[var(--theme-taupe)] font-medium">HR to IT in a click</span>
             </div>
           </div>
         </div>
         
         {/* Bottom footer */}
-        <div className="flex items-center gap-4 z-10 text-slate-400 text-xs">
+        <div className="flex items-center gap-4 z-10 text-[var(--theme-taupe)] text-xs">
           <div className="flex items-center gap-1.5 font-medium">
             <ShieldCheck size={14} className="text-primary" />
             <span>Secure · Role-based access · Real-time</span>
@@ -122,7 +122,7 @@ function Shell({ children }) {
           {/* Mobile logo */}
           <div className="flex items-center gap-2 mb-8 lg:hidden">
             <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-8 h-8 object-contain" />
-            <span className="text-slate-800 font-bold text-lg">ATS</span>
+            <span className="text-[var(--theme-aubergine)] font-bold text-lg">ATS</span>
           </div>
           {children}
         </div>
@@ -177,8 +177,8 @@ export default function Login() {
 
   if (view === 'forgot') return (
     <Shell>
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-        <h2 className="text-2xl font-bold text-slate-800 mb-1">Forgot Password</h2>
+      <div className="bg-[var(--theme-cream)] p-8 rounded-2xl shadow-sm border border-slate-200">
+        <h2 className="text-2xl font-bold text-[var(--theme-aubergine)] mb-1">Forgot Password</h2>
         <p className="text-slate-500 text-sm mb-7">Enter your username to receive a reset link.</p>
         {forgotMsg ? (
           <div className="space-y-4">
@@ -193,7 +193,7 @@ export default function Login() {
           <form onSubmit={handleForgot} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5">Username</label>
-              <input className="input bg-white border-slate-300 text-slate-800 placeholder-slate-400 focus:border-primary shadow-sm" value={forgotUsername} onChange={e => setForgotUsername(e.target.value)} placeholder="Enter your username" />
+              <input className="input bg-[var(--theme-cream)] border-slate-300 text-[var(--theme-aubergine)] placeholder-slate-400 focus:border-primary shadow-sm" value={forgotUsername} onChange={e => setForgotUsername(e.target.value)} placeholder="Enter your username" />
             </div>
             <button className="btn-primary btn w-full shadow-sm" type="submit">Send Reset Link</button>
           </form>
@@ -205,17 +205,17 @@ export default function Login() {
 
   if (view === 'create') return (
     <Shell>
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-        <h2 className="text-2xl font-bold text-slate-800 mb-1">Create Password</h2>
+      <div className="bg-[var(--theme-cream)] p-8 rounded-2xl shadow-sm border border-slate-200">
+        <h2 className="text-2xl font-bold text-[var(--theme-aubergine)] mb-1">Create Password</h2>
         <p className="text-slate-500 text-sm mb-7">Set a new secure password for your account.</p>
         <form onSubmit={handleCreatePassword} className="space-y-4">
           <div>
             <label className="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5">New Password</label>
-            <input type="password" className="input bg-white border-slate-300 text-slate-800 placeholder-slate-400 focus:border-primary shadow-sm" value={createForm.password} onChange={e => setCreateForm(f => ({ ...f, password: e.target.value }))} />
+            <input type="password" className="input bg-[var(--theme-cream)] border-slate-300 text-[var(--theme-aubergine)] placeholder-slate-400 focus:border-primary shadow-sm" value={createForm.password} onChange={e => setCreateForm(f => ({ ...f, password: e.target.value }))} />
           </div>
           <div>
             <label className="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5">Confirm Password</label>
-            <input type="password" className="input bg-white border-slate-300 text-slate-800 placeholder-slate-400 focus:border-primary shadow-sm" value={createForm.confirm} onChange={e => setCreateForm(f => ({ ...f, confirm: e.target.value }))} />
+            <input type="password" className="input bg-[var(--theme-cream)] border-slate-300 text-[var(--theme-aubergine)] placeholder-slate-400 focus:border-primary shadow-sm" value={createForm.confirm} onChange={e => setCreateForm(f => ({ ...f, confirm: e.target.value }))} />
           </div>
           {createErrors.length > 0 && (
             <div className="bg-red-50 border border-red-100 rounded-xl p-3">
@@ -237,15 +237,15 @@ export default function Login() {
 
   return (
     <Shell>
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-        <h2 className="text-2xl font-bold text-slate-800 mb-1">Welcome back</h2>
+      <div className="bg-[var(--theme-cream)] p-8 rounded-2xl shadow-sm border border-slate-200">
+        <h2 className="text-2xl font-bold text-[var(--theme-aubergine)] mb-1">Welcome back</h2>
         <p className="text-slate-500 text-sm mb-7">Sign in to your ATS account.</p>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5">Username</label>
             <input
-              className={`input bg-white border text-slate-800 placeholder-slate-400 focus:border-primary shadow-sm ${error.includes('Username') ? 'border-red-400' : 'border-slate-300'}`}
+              className={`input bg-[var(--theme-cream)] border text-[var(--theme-aubergine)] placeholder-slate-400 focus:border-primary shadow-sm ${error.includes('Username') ? 'border-red-400' : 'border-slate-300'}`}
               value={form.username}
               onChange={e => { setForm(f => ({ ...f, username: e.target.value })); setError(''); }}
               placeholder="Enter your username"
@@ -259,14 +259,14 @@ export default function Login() {
             <div className="relative">
               <input
                 type={showPwd ? 'text' : 'password'}
-                className={`input bg-white border text-slate-800 placeholder-slate-400 focus:border-primary shadow-sm pr-10 ${error.includes('Password') || error.includes('credentials') ? 'border-red-400' : 'border-slate-300'}`}
+                className={`input bg-[var(--theme-cream)] border text-[var(--theme-aubergine)] placeholder-slate-400 focus:border-primary shadow-sm pr-10 ${error.includes('Password') || error.includes('credentials') ? 'border-red-400' : 'border-slate-300'}`}
                 value={form.password}
                 onChange={e => { setForm(f => ({ ...f, password: e.target.value })); setError(''); }}
                 placeholder="Enter your password"
                 autoComplete="current-password"
               />
               <button type="button" onClick={() => setShowPwd(v => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors">
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--theme-taupe)] hover:text-slate-600 transition-colors">
                 {showPwd ? <EyeOff size={15} /> : <Eye size={15} />}
               </button>
             </div>
@@ -311,7 +311,7 @@ export default function Login() {
               key={c.role}
               type="button"
               onClick={() => { setForm({ username: c.user, password: c.pass }); setError(''); }}
-              className={`bg-white hover:bg-slate-50 border rounded-xl p-3 text-left transition-all shadow-sm hover:shadow group ${
+              className={`bg-[var(--theme-cream)] hover:bg-slate-50 border rounded-xl p-3 text-left transition-all shadow-sm hover:shadow group ${
                 form.username === c.user ? 'border-primary ring-1 ring-primary/30' : 'border-slate-200 hover:border-slate-300'
               }`}
             >

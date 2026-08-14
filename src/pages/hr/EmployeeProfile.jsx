@@ -84,7 +84,7 @@ export default function EmployeeProfile({ editMode: editModeProp = false }) {
           <input type={type} className="input" value={form[field] || ''} onChange={e => set(field, e.target.value)} />
         )
       ) : (
-        <p className="text-sm text-[#3c2a21] py-2">{value || '—'}</p>
+        <p className="text-sm text-[var(--theme-aubergine)] py-2">{value || '—'}</p>
       )}
     </div>
   );
@@ -92,7 +92,7 @@ export default function EmployeeProfile({ editMode: editModeProp = false }) {
   return (
     <div className="max-w-4xl mx-auto space-y-5">
       {isHR && (
-        <button className="text-[#a8a29e] hover:text-[#78716c] text-sm" onClick={() => navigate('/employees')}>← Back to Employees</button>
+        <button className="text-[#a8a29e] hover:text-[var(--theme-taupe)] text-sm" onClick={() => navigate('/employees')}>← Back to Employees</button>
       )}
 
       {saved && <div className="bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-sm">Profile saved successfully!</div>}
@@ -118,8 +118,8 @@ export default function EmployeeProfile({ editMode: editModeProp = false }) {
           )}
         </div>
         <div className="flex-1">
-          <h1 className="text-xl font-bold text-[#3c2a21]">{emp.firstName} {emp.middleName} {emp.lastName}</h1>
-          <p className="text-[#78716c] text-sm">{emp.designation} · {emp.department}</p>
+          <h1 className="text-xl font-bold text-[var(--theme-aubergine)]">{emp.firstName} {emp.middleName} {emp.lastName}</h1>
+          <p className="text-[var(--theme-taupe)] text-sm">{emp.designation} · {emp.department}</p>
           <div className="flex items-center gap-3 mt-2">
             <StatusBadge status={emp.status} />
             <span className="text-xs text-[#a8a29e]">{emp.id}</span>
@@ -152,7 +152,7 @@ export default function EmployeeProfile({ editMode: editModeProp = false }) {
       <div className="card space-y-4">
         <h2 className="section-title">Employment Information</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div><label className="label">Employee ID</label><p className="text-sm text-[#3c2a21] py-2">{emp.id}</p></div>
+          <div><label className="label">Employee ID</label><p className="text-sm text-[var(--theme-aubergine)] py-2">{emp.id}</p></div>
           {isHR ? (
             <>
               <Field label="Department" value={emp.department} field="department" options={DEPARTMENTS} />
@@ -163,13 +163,13 @@ export default function EmployeeProfile({ editMode: editModeProp = false }) {
             </>
           ) : (
             <>
-              <div><label className="label">Department</label><p className="text-sm text-[#3c2a21] py-2">{emp.department || '—'}</p></div>
-              <div><label className="label">Designation</label><p className="text-sm text-[#3c2a21] py-2">{emp.designation || '—'}</p></div>
-              <div><label className="label">Employment Type</label><p className="text-sm text-[#3c2a21] py-2">{emp.employmentType || '—'}</p></div>
-              <div><label className="label">Role</label><p className="text-sm text-[#3c2a21] py-2 capitalize">{emp.role || '—'}</p></div>
+              <div><label className="label">Department</label><p className="text-sm text-[var(--theme-aubergine)] py-2">{emp.department || '—'}</p></div>
+              <div><label className="label">Designation</label><p className="text-sm text-[var(--theme-aubergine)] py-2">{emp.designation || '—'}</p></div>
+              <div><label className="label">Employment Type</label><p className="text-sm text-[var(--theme-aubergine)] py-2">{emp.employmentType || '—'}</p></div>
+              <div><label className="label">Role</label><p className="text-sm text-[var(--theme-aubergine)] py-2 capitalize">{emp.role || '—'}</p></div>
             </>
           )}
-          <div><label className="label">Joining Date</label><p className="text-sm text-[#3c2a21] py-2">{formatDate(emp.joiningDate)}</p></div>
+          <div><label className="label">Joining Date</label><p className="text-sm text-[var(--theme-aubergine)] py-2">{formatDate(emp.joiningDate)}</p></div>
         </div>
       </div>
 
@@ -204,7 +204,7 @@ export default function EmployeeProfile({ editMode: editModeProp = false }) {
               {editing ? (
                 <input className="input" value={form.emergencyContact?.[field] || ''} onChange={e => setEC(field, e.target.value)} />
               ) : (
-                <p className="text-sm text-[#3c2a21] py-2">{emp.emergencyContact?.[field] || '—'}</p>
+                <p className="text-sm text-[var(--theme-aubergine)] py-2">{emp.emergencyContact?.[field] || '—'}</p>
               )}
             </div>
           ))}
@@ -213,7 +213,7 @@ export default function EmployeeProfile({ editMode: editModeProp = false }) {
 
       {canViewDocuments && (
         <div className="card p-0 overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#e8e2d9] flex items-center justify-between">
+          <div className="px-6 py-4 border-b border-[var(--theme-linen)] flex items-center justify-between">
             <div>
               <h2 className="section-title mb-0">Documents</h2>
               <p className="text-xs text-[#a8a29e] mt-1">{documents.length} document(s) linked to this profile</p>
@@ -225,7 +225,7 @@ export default function EmployeeProfile({ editMode: editModeProp = false }) {
 
       {canViewAssets && (
         <div className="card p-0 overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#e8e2d9] flex items-center justify-between">
+          <div className="px-6 py-4 border-b border-[var(--theme-linen)] flex items-center justify-between">
             <div>
               <h2 className="section-title mb-0">Assets</h2>
               <p className="text-xs text-[#a8a29e] mt-1">{employeeAssets.length} asset(s) assigned to this employee</p>

@@ -100,19 +100,19 @@ export default function EmployeeList() {
                     <div className="flex items-center gap-3">
                       <Avatar employee={emp} size="sm" />
                       <div>
-                        <p className="font-semibold text-[#3c2a21] text-sm">{emp.firstName} {emp.lastName}</p>
+                        <p className="font-semibold text-[var(--theme-aubergine)] text-sm">{emp.firstName} {emp.lastName}</p>
                         <p className="text-xs text-[#a8a29e]">{emp.id}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="table-td text-[#78716c]">{emp.username}</td>
+                  <td className="table-td text-[var(--theme-taupe)]">{emp.username}</td>
                   <td className="table-td">{emp.department || '—'}</td>
                   <td className="table-td">{emp.designation || '—'}</td>
                   <td className="table-td">
                     <span className="badge badge-purple capitalize">{emp.role}</span>
                   </td>
                   <td className="table-td"><StatusBadge status={emp.status} /></td>
-                  <td className="table-td text-[#78716c]">{formatDate(emp.joiningDate)}</td>
+                  <td className="table-td text-[var(--theme-taupe)]">{formatDate(emp.joiningDate)}</td>
                   <td className="table-td">
                     <div className="flex items-center gap-1.5">
                       <button className="btn btn-xs btn-secondary" title="View" onClick={() => navigate(`/employees/${emp.id}`)}>

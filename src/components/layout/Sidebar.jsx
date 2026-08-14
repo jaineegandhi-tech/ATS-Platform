@@ -52,7 +52,7 @@ export default function Sidebar() {
     <aside
       className="w-[240px] flex flex-col flex-shrink-0 min-h-screen"
       style={{
-        backgroundColor: '#faf7f2',
+        backgroundColor: 'var(--theme-sidebar-bg)',
         borderRight: '1px solid #e8e2d9',
       }}
     >
@@ -60,8 +60,8 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="px-5 h-14 flex items-center gap-3 border-b border-sidebar-border flex-shrink-0">
         <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-6 h-6 object-contain flex-shrink-0" />
-        <span className="font-serif font-bold text-sm tracking-heading"
-          style={{ color: 'var(--theme-aubergine)', fontFamily: "'Playfair Display', Georgia, serif" }}>
+        <span className="font-bold text-sm tracking-heading"
+          style={{ color: 'var(--theme-aubergine)', fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
           eSparkBiz
         </span>
       </div>

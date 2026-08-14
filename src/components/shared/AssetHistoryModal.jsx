@@ -26,15 +26,15 @@ export default function AssetHistoryModal({ asset, onClose }) {
               {history.map(entry => (
                 <tr key={entry.id} className="table-row">
                   <td className="table-td">
-                    <p className="font-semibold text-[#3c2a21] text-sm">{entry.assignedEmployeeName}</p>
+                    <p className="font-semibold text-[var(--theme-aubergine)] text-sm">{entry.assignedEmployeeName}</p>
                     <p className="text-xs text-[#a8a29e]">{entry.assignedEmployeeId}</p>
                   </td>
                   <td className="table-td">{entry.assignedByName || '—'}</td>
-                  <td className="table-td text-[#78716c]">{formatDate(entry.assignedDate)}</td>
-                  <td className="table-td text-[#78716c]">{formatDate(entry.expectedReturnDate)}</td>
-                  <td className="table-td text-[#78716c]">{formatDate(entry.returnedDate)}</td>
+                  <td className="table-td text-[var(--theme-taupe)]">{formatDate(entry.assignedDate)}</td>
+                  <td className="table-td text-[var(--theme-taupe)]">{formatDate(entry.expectedReturnDate)}</td>
+                  <td className="table-td text-[var(--theme-taupe)]">{formatDate(entry.returnedDate)}</td>
                   <td className="table-td">{entry.conditionOnReturn || '—'}</td>
-                  <td className="table-td text-[#78716c] text-xs max-w-[160px]">{entry.notes || '—'}</td>
+                  <td className="table-td text-[var(--theme-taupe)] text-xs max-w-[160px]">{entry.notes || '—'}</td>
                 </tr>
               ))}
             </tbody>

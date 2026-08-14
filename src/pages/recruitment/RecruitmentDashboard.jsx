@@ -14,15 +14,15 @@ import {
    DS TOKENS (inline — no Tailwind grays)
 ───────────────────────────────────────── */
 const T = {
-  parchment:  '#fdfbf7',
-  linen:      '#faf7f2',
-  border:     '#e8e2d9',
-  aubergine:  '#3c2a21',
-  taupe:      '#78716c',
-  mustard:    '#d97706',
-  terracotta: '#b45309',
-  claret:     '#92400e',
-  cream:      '#ffffff',
+  parchment:  'var(--theme-parchment)',
+  linen:      'var(--theme-sidebar-bg)',
+  border:     'var(--theme-linen)',
+  aubergine:  'var(--theme-aubergine)',
+  taupe:      'var(--theme-taupe)',
+  mustard:    'var(--theme-mustard)',
+  terracotta: 'var(--theme-terracotta)',
+  claret:     'var(--theme-claret)',
+  cream:      'var(--theme-cream)',
 };
 
 /* ─────────────────────────────────────────
@@ -182,7 +182,8 @@ function ActivityTimeline({ logs }) {
 /* ─────────────────────────────────────────
    EMPTY STATE — Today's Interviews
 ───────────────────────────────────────── */
-function InterviewsEmptyState({ onSchedule }) {
+function InterviewsEmptyState({ onSchedule, role }) {
+  const isIT = role === ROLES.IT;
   return (
     <div className="flex flex-col items-center justify-center py-14 px-6 text-center">
       <div className="w-12 h-12 flex items-center justify-center mb-4"
@@ -191,11 +192,13 @@ function InterviewsEmptyState({ onSchedule }) {
       </div>
       <p className="text-sm font-medium mb-1" style={{ color: T.taupe }}>No interviews scheduled today</p>
       <p className="text-xs mb-6 max-w-[180px] leading-relaxed" style={{ color: T.taupe, opacity: 0.7 }}>
-        Your calendar is clear. Schedule an interview to get started.
+        Your calendar is clear.{!isIT && ' Schedule an interview to get started.'}
       </p>
-      <button onClick={onSchedule} className="btn btn-secondary btn-sm">
-        <CalendarPlus size={12} /> Schedule Interview
-      </button>
+      {!isIT && (
+        <button onClick={onSchedule} className="btn btn-secondary btn-sm">
+          <CalendarPlus size={12} /> Schedule Interview
+        </button>
+      )}
     </div>
   );
 }
@@ -215,7 +218,7 @@ function SectionHeader({ label, title, action, onAction, count }) {
             </p>
           )}
           <h2 className="text-sm font-bold"
-            style={{ color: T.aubergine, fontFamily: "'Playfair Display', Georgia, serif", letterSpacing: '0.45px' }}>
+            style={{ color: T.aubergine, fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", letterSpacing: '0.45px' }}>
             {title}
           </h2>
         </div>
@@ -340,7 +343,7 @@ export default function RecruitmentDashboard() {
         style={{ borderBottom: `1px solid ${T.border}` }}>
         <div className="space-y-1">
           <h1 style={{
-            fontFamily: "'Playfair Display', Georgia, serif",
+            fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
             fontSize: '24px',
             fontWeight: 700,
             letterSpacing: '0.45px',
@@ -399,7 +402,7 @@ export default function RecruitmentDashboard() {
           </div>
 
           {todaysInterviews.length === 0 ? (
-            <InterviewsEmptyState onSchedule={() => navigate('/interview-schedule')} />
+            <InterviewsEmptyState onSchedule={() => navigate('/interview-schedule')} role={role} />
           ) : (
             <div style={{ borderTop: 'none' }}>
               {todaysInterviews.map(iv => {

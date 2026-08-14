@@ -81,14 +81,14 @@ export default function HRLeaveManagement() {
       <div className="card p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
+            <thead className="bg-[var(--theme-sidebar-bg)] border-b border-[var(--theme-linen)]">
               <tr>{['Employee', 'Department', 'Leave Type', 'From', 'To', 'Days', 'Applied On', 'Status', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
             <tbody className="divide-y divide-[#f5f1eb]">
               {filtered.length === 0 ? (
                 <tr><td colSpan={9} className="table-td text-center text-[#a8a29e] py-8">No leave applications found.</td></tr>
               ) : paginated.map(l => (
-                <tr key={l.id} className="hover:bg-[#faf7f2]">
+                <tr key={l.id} className="hover:bg-[var(--theme-sidebar-bg)]">
                   <td className="table-td font-medium">{l.employeeName}</td>
                   <td className="table-td">{l.department}</td>
                   <td className="table-td">{l.leaveType}</td>
@@ -123,8 +123,8 @@ export default function HRLeaveManagement() {
           <div className="space-y-3 text-sm">
             {[['Employee', viewModal.employeeName], ['Department', viewModal.department], ['Leave Type', viewModal.leaveType], ['From', formatDate(viewModal.fromDate)], ['To', formatDate(viewModal.toDate)], ['Days', viewModal.days], ['Reason', viewModal.reason], ['Status', viewModal.status], ['Applied On', formatDate(viewModal.appliedOn)], viewModal.remarks && ['Remarks', viewModal.remarks], viewModal.rejectionReason && ['Rejection Reason', viewModal.rejectionReason]].filter(Boolean).map(([k, v]) => (
               <div key={k} className="flex justify-between border-b border-[#f5f1eb] pb-2">
-                <span className="text-[#78716c]">{k}</span>
-                <span className="font-medium text-[#3c2a21] capitalize">{v}</span>
+                <span className="text-[var(--theme-taupe)]">{k}</span>
+                <span className="font-medium text-[var(--theme-aubergine)] capitalize">{v}</span>
               </div>
             ))}
           </div>
@@ -134,7 +134,7 @@ export default function HRLeaveManagement() {
       {approveModal && (
         <Modal title="Approve Leave" onClose={() => setApproveModal(null)} size="sm">
           <div className="space-y-4">
-            <p className="text-sm text-[#78716c]">Approving leave for <strong>{approveModal.employeeName}</strong> ({approveModal.days} days requested)</p>
+            <p className="text-sm text-[var(--theme-taupe)]">Approving leave for <strong>{approveModal.employeeName}</strong> ({approveModal.days} days requested)</p>
             <div>
               <label className="label">Approved Days</label>
               <input type="number" className="input" value={approveForm.approvedDays} onChange={e => setApproveForm(f => ({ ...f, approvedDays: e.target.value }))} min={1} max={approveModal.days} />
@@ -154,7 +154,7 @@ export default function HRLeaveManagement() {
       {rejectModal && (
         <Modal title="Reject Leave" onClose={() => setRejectModal(null)} size="sm">
           <div className="space-y-4">
-            <p className="text-sm text-[#78716c]">Rejecting leave for <strong>{rejectModal.employeeName}</strong></p>
+            <p className="text-sm text-[var(--theme-taupe)]">Rejecting leave for <strong>{rejectModal.employeeName}</strong></p>
             <div>
               <label className="label">Rejection Reason *</label>
               <textarea className="input resize-none" rows={3} value={rejectReason} onChange={e => setRejectReason(e.target.value)} placeholder="Provide a reason for rejection..." />

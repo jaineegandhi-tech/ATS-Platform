@@ -101,10 +101,10 @@ export default function InterviewSchedule() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-end justify-between pb-6 border-b border-[#e8e2d9]">
+      <div className="flex items-end justify-between pb-6 border-b border-[var(--theme-linen)]">
         <div>
           <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
-          <h1 className="text-xl font-semibold text-[#3c2a21]">Interview Schedule</h1>
+          <h1 className="text-xl font-semibold text-[var(--theme-aubergine)]">Interview Schedule</h1>
         </div>
         {isHR && (
           <button className="btn btn-primary btn-sm" onClick={() => { setScheduleModal(true); setCandidateSearch(''); setSelectedCandidateId(''); }}>
@@ -125,10 +125,10 @@ export default function InterviewSchedule() {
           </select>
         </div>
 
-      <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-hidden">
+      <div className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="border-b border-[#e8e2d9]">
+            <thead className="border-b border-[var(--theme-linen)]">
               <tr>{['Candidate', 'Position', 'Round', 'Date', 'Time', 'Mode', 'Interviewer(s)', 'Status', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
             <tbody className="divide-y divide-[#f5f1eb]">
@@ -137,8 +137,8 @@ export default function InterviewSchedule() {
               ) : paginated.map(iv => {
                 const cand = getCandidate(iv.candidateId);
                 return (
-                  <tr key={iv.id} className="hover:bg-[#faf7f2] transition-colors">
-                    <td className="table-td font-medium text-[#3c2a21]">{cand?.firstName} {cand?.lastName}</td>
+                  <tr key={iv.id} className="hover:bg-[var(--theme-sidebar-bg)] transition-colors">
+                    <td className="table-td font-medium text-[var(--theme-aubergine)]">{cand?.firstName} {cand?.lastName}</td>
                     <td className="table-td">{cand?.appliedPosition}</td>
                     <td className="table-td">{iv.round}</td>
                     <td className="table-td">{formatDate(iv.date)}</td>
@@ -218,7 +218,7 @@ export default function InterviewSchedule() {
                 autoFocus
               />
             </div>
-            <div className="max-h-56 overflow-y-auto border border-[#e8e2d9] rounded-lg divide-y divide-[#f5f1eb]">
+            <div className="max-h-56 overflow-y-auto border border-[var(--theme-linen)] rounded-lg divide-y divide-[#f5f1eb]">
               {candidates
                 .filter(c => c.status !== 'archived' && (
                   !candidateSearch ||
@@ -228,8 +228,8 @@ export default function InterviewSchedule() {
                 .map(c => (
                   <button
                     key={c.id}
-                    className={`w-full text-left px-4 py-2.5 text-sm hover:bg-[#faf7f2] transition-colors ${
-                      selectedCandidateId === c.id ? 'bg-blue-50 text-blue-700 font-medium' : 'text-[#3c2a21]'
+                    className={`w-full text-left px-4 py-2.5 text-sm hover:bg-[var(--theme-sidebar-bg)] transition-colors ${
+                      selectedCandidateId === c.id ? 'bg-blue-50 text-blue-700 font-medium' : 'text-[var(--theme-aubergine)]'
                     }`}
                     onClick={() => setSelectedCandidateId(c.id)}
                   >
@@ -256,7 +256,7 @@ export default function InterviewSchedule() {
       {/* Cancel Confirm */}
       {cancelId && (
         <Modal title="Cancel Interview" onClose={() => setCancelId(null)} size="sm">
-          <p className="text-sm text-[#78716c] mb-4">Are you sure you want to cancel this interview? Interviewers will be notified.</p>
+          <p className="text-sm text-[var(--theme-taupe)] mb-4">Are you sure you want to cancel this interview? Interviewers will be notified.</p>
           <div className="flex justify-end gap-3">
             <button className="btn-secondary btn" onClick={() => setCancelId(null)}>No</button>
             <button className="btn-danger btn" onClick={cancelInterview}>Yes, Cancel</button>

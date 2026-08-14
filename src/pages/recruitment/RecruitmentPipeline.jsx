@@ -39,9 +39,9 @@ export default function RecruitmentPipeline() {
     <div className="space-y-6">
 
       {/* Page header */}
-      <div className="pb-6 border-b border-[#e8e2d9]">
+      <div className="pb-6 border-b border-[var(--theme-linen)]">
         <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
-        <h1 className="text-xl font-semibold text-[#3c2a21]">Pipeline</h1>
+        <h1 className="text-xl font-semibold text-[var(--theme-aubergine)]">Pipeline</h1>
         <p className="text-sm text-[#a8a29e] mt-0.5">{candidates.length} candidate{candidates.length !== 1 ? 's' : ''} across all stages</p>
       </div>
 
@@ -52,12 +52,12 @@ export default function RecruitmentPipeline() {
             stage.statuses.map(s => s.toLowerCase()).includes(c.status?.toLowerCase())
           );
           return (
-            <div key={stage.key} className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-hidden flex flex-col">
+            <div key={stage.key} className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card overflow-hidden flex flex-col">
 
               {/* Column header */}
               <div className="px-4 py-3 border-b border-[#f5f1eb] flex items-center justify-between">
-                <p className="text-xs font-semibold text-[#78716c] uppercase tracking-widest">{stage.label}</p>
-                <span className="text-xs font-semibold text-[#a8a29e] bg-[#faf7f2] border border-[#e8e2d9] px-2 py-0.5 rounded-full">
+                <p className="text-xs font-semibold text-[var(--theme-taupe)] uppercase tracking-widest">{stage.label}</p>
+                <span className="text-xs font-semibold text-[#a8a29e] bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] px-2 py-0.5 rounded-full">
                   {stageCandidates.length}
                 </span>
               </div>
@@ -71,11 +71,11 @@ export default function RecruitmentPipeline() {
                 ) : stageCandidates.map(c => (
                   <div
                     key={c.id}
-                    className="bg-[#faf7f2] border border-[#e8e2d9] rounded-xl p-3 hover:border-gray-200 hover:bg-[#ffffff] transition-all duration-150"
+                    className="bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] rounded-xl p-3 hover:border-[var(--theme-linen)] hover:bg-[var(--theme-cream)] transition-all duration-150"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs font-medium text-[#3c2a21] truncate">{c.firstName} {c.lastName}</p>
+                        <p className="text-xs font-medium text-[var(--theme-aubergine)] truncate">{c.firstName} {c.lastName}</p>
                         <p className="text-[10px] text-[#a8a29e] truncate mt-0.5">{c.appliedPosition}</p>
                         {c.joiningDetails?.joiningDate && (
                           <p className="text-[10px] text-emerald-600 mt-0.5">Joining: {c.joiningDetails.joiningDate}</p>

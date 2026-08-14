@@ -190,7 +190,7 @@ export default function Topbar() {
               <Bell size={15} style={{ color: 'var(--theme-taupe)' }} />
               {notifCount > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 text-[9px] font-bold rounded-full flex items-center justify-center tabular-nums"
-                  style={{ backgroundColor: '#dc2626', color: '#ffffff' }}>
+                  style={{ backgroundColor: '#dc2626', color: 'var(--theme-cream)' }}>
                   {notifCount > 9 ? '9+' : notifCount}
                 </span>
               )}
@@ -202,7 +202,7 @@ export default function Topbar() {
                 <div className="absolute right-0 top-full mt-2 w-80 z-40 overflow-hidden" style={dropdownStyle}>
                   <div className="px-4 py-3 flex items-center justify-between"
                     style={{ borderBottom: '1px solid var(--theme-linen)' }}>
-                    <p className="text-sm font-semibold" style={{ color: 'var(--theme-aubergine)', fontFamily: "'Playfair Display', serif" }}>
+                    <p className="text-sm font-semibold" style={{ color: 'var(--theme-aubergine)', fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
                       Notifications
                     </p>
                     {notifCount > 0 && (
@@ -284,7 +284,7 @@ export default function Topbar() {
               onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-semibold flex-shrink-0"
-                style={{ backgroundColor: 'var(--theme-mustard)', color: '#ffffff' }}>
+                style={{ backgroundColor: 'var(--theme-mustard)', color: 'var(--theme-cream)' }}>
                 {user?.firstName?.[0]}{user?.lastName?.[0]}
               </div>
               <div className="hidden sm:block text-left">

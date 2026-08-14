@@ -35,13 +35,13 @@ export default function AssetTable({
           {assets.map(asset => (
             <tr key={asset.id} className="table-row">
               <td className="table-td">
-                <span className="text-xs font-mono text-[#78716c]">{asset.id}</span>
+                <span className="text-xs font-mono text-[var(--theme-taupe)]">{asset.id}</span>
               </td>
               <td className="table-td">
                 <div className="flex items-start gap-2">
                   <Package size={15} className="text-[#a8a29e] mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="font-semibold text-[#3c2a21] text-sm">{asset.name}</p>
+                    <p className="font-semibold text-[var(--theme-aubergine)] text-sm">{asset.name}</p>
                     {(asset.brand || asset.model) && (
                       <p className="text-xs text-[#a8a29e]">{[asset.brand, asset.model].filter(Boolean).join(' · ')}</p>
                     )}
@@ -54,15 +54,15 @@ export default function AssetTable({
               <td className="table-td">
                 {asset.assignedEmployeeName ? (
                   <div>
-                    <p className="font-semibold text-[#3c2a21] text-sm">{asset.assignedEmployeeName}</p>
+                    <p className="font-semibold text-[var(--theme-aubergine)] text-sm">{asset.assignedEmployeeName}</p>
                     <p className="text-xs text-[#a8a29e]">{asset.assignedEmployeeId}</p>
                   </div>
                 ) : (
                   <span className="text-[#a8a29e]">—</span>
                 )}
               </td>
-              <td className="table-td text-[#78716c]">{formatDate(asset.assignedDate)}</td>
-              <td className="table-td text-[#78716c]">{formatDate(asset.expectedReturnDate)}</td>
+              <td className="table-td text-[var(--theme-taupe)]">{formatDate(asset.assignedDate)}</td>
+              <td className="table-td text-[var(--theme-taupe)]">{formatDate(asset.expectedReturnDate)}</td>
               <td className="table-td"><StatusBadge status={asset.status} /></td>
               {canManage && (
                 <td className="table-td">

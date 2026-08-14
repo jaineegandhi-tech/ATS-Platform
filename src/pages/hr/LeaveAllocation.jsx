@@ -37,7 +37,7 @@ export default function LeaveAllocation() {
   return (
     <div className="max-w-lg mx-auto space-y-5">
       <h1 className="page-title">Annual Leave Allocation</h1>
-      <p className="text-sm text-[#78716c]">Grant leave balance to all active employees simultaneously.</p>
+      <p className="text-sm text-[var(--theme-taupe)]">Grant leave balance to all active employees simultaneously.</p>
 
       {success && (
         <div className="bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-sm">{success}</div>

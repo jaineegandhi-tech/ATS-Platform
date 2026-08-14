@@ -70,14 +70,14 @@ export default function AssetAssignModal({
         ) : (
           <div>
             <label className="label">Asset</label>
-            <p className="text-sm text-[#3c2a21] py-2 font-semibold">{asset.name} <span className="text-[#a8a29e] font-normal">({asset.id})</span></p>
+            <p className="text-sm text-[var(--theme-aubergine)] py-2 font-semibold">{asset.name} <span className="text-[#a8a29e] font-normal">({asset.id})</span></p>
           </div>
         )}
 
         <div>
           <label className="label">Employee</label>
           {preselectedEmployeeId ? (
-            <p className="text-sm text-[#3c2a21] py-2 font-semibold">
+            <p className="text-sm text-[var(--theme-aubergine)] py-2 font-semibold">
               {selectedEmployee ? `${selectedEmployee.firstName} ${selectedEmployee.lastName}` : '—'}
             </p>
           ) : (

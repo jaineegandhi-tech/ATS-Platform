@@ -114,11 +114,11 @@ export default function HolidayCalendar() {
       <div className="flex items-center justify-between">
         <h1 className="page-title">Holiday Calendar</h1>
         <div className="flex items-center gap-2">
-          <div className="flex rounded-lg border border-[#e8e2d9] overflow-hidden shadow-sm">
-            <button onClick={() => setView('list')} className={`px-4 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition-colors ${view === 'list' ? 'bg-indigo-600 text-white' : 'bg-[#ffffff] text-[#78716c] hover:bg-[#faf7f2]'}`}>
+          <div className="flex rounded-lg border border-[var(--theme-linen)] overflow-hidden shadow-sm">
+            <button onClick={() => setView('list')} className={`px-4 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition-colors ${view === 'list' ? 'bg-indigo-600 text-white' : 'bg-[var(--theme-cream)] text-[var(--theme-taupe)] hover:bg-[var(--theme-sidebar-bg)]'}`}>
               <List size={13} /> List
             </button>
-            <button onClick={() => setView('calendar')} className={`px-4 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition-colors ${view === 'calendar' ? 'bg-indigo-600 text-white' : 'bg-[#ffffff] text-[#78716c] hover:bg-[#faf7f2]'}`}>
+            <button onClick={() => setView('calendar')} className={`px-4 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition-colors ${view === 'calendar' ? 'bg-indigo-600 text-white' : 'bg-[var(--theme-cream)] text-[var(--theme-taupe)] hover:bg-[var(--theme-sidebar-bg)]'}`}>
               <Calendar size={13} /> Calendar
             </button>
           </div>
@@ -147,7 +147,7 @@ export default function HolidayCalendar() {
           return (
             <div key={t} className="flex items-center gap-1.5">
               <div className={`w-2.5 h-2.5 rounded-full ${s.dot}`} />
-              <span className="text-xs text-[#78716c] font-medium">{t}</span>
+              <span className="text-xs text-[var(--theme-taupe)] font-medium">{t}</span>
             </div>
           );
         })}
@@ -158,7 +158,7 @@ export default function HolidayCalendar() {
         <div className="card overflow-hidden p-0">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[#e8e2d9] bg-[#faf7f2]/80">
+              <tr className="border-b border-[var(--theme-linen)] bg-[var(--theme-sidebar-bg)]/80">
                 <th className="table-th">Holiday Name</th>
                 <th className="table-th">Date</th>
                 <th className="table-th">Day</th>
@@ -174,20 +174,20 @@ export default function HolidayCalendar() {
               ) : filtered.map(h => {
                 const s = typeStyle(h.type);
                 return (
-                  <tr key={h.id} className="hover:bg-[#faf7f2]/60 transition-colors">
-                    <td className="table-td font-semibold text-[#3c2a21]">{h.name}</td>
-                    <td className="table-td text-[#78716c]">{h.date}</td>
-                    <td className="table-td text-[#78716c]">{dayName(h.date)}</td>
+                  <tr key={h.id} className="hover:bg-[var(--theme-sidebar-bg)]/60 transition-colors">
+                    <td className="table-td font-semibold text-[var(--theme-aubergine)]">{h.name}</td>
+                    <td className="table-td text-[var(--theme-taupe)]">{h.date}</td>
+                    <td className="table-td text-[var(--theme-taupe)]">{dayName(h.date)}</td>
                     <td className="table-td">
                       <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${s.chip}`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />{h.type}
                       </span>
                     </td>
-                    <td className="table-td text-[#78716c] max-w-[200px] truncate">{h.description || '—'}</td>
+                    <td className="table-td text-[var(--theme-taupe)] max-w-[200px] truncate">{h.description || '—'}</td>
                     <td className="table-td"><StatusBadge status={h.status} /></td>
                     <td className="table-td">
                       <div className="flex items-center gap-1">
-                        <button onClick={() => setViewHoliday(h)} className="p-1.5 rounded-lg hover:bg-[#f0ebe2] text-[#a8a29e] hover:text-[#3c2a21] transition-colors" title="View"><Eye size={14} /></button>
+                        <button onClick={() => setViewHoliday(h)} className="p-1.5 rounded-lg hover:bg-[#f0ebe2] text-[#a8a29e] hover:text-[var(--theme-aubergine)] transition-colors" title="View"><Eye size={14} /></button>
                         <button onClick={() => openEdit(h)} className="p-1.5 rounded-lg hover:bg-indigo-50 text-[#a8a29e] hover:text-indigo-600 transition-colors" title="Edit"><Pencil size={14} /></button>
                         <button onClick={() => setDeleteId(h.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-[#a8a29e] hover:text-red-600 transition-colors" title="Delete"><Trash2 size={14} /></button>
                       </div>
@@ -202,25 +202,25 @@ export default function HolidayCalendar() {
 
       {/* CALENDAR VIEW */}
       {view === 'calendar' && (
-        <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-hidden">
+        <div className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card overflow-hidden">
           {/* Nav header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8e2d9] bg-gradient-to-r from-indigo-600 to-indigo-500">
-            <button onClick={() => setCalMonth(c => new Date(c.getFullYear(), c.getMonth() - 1, 1))} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#ffffff]/20 hover:bg-[#ffffff]/30 text-white transition-colors">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--theme-linen)] bg-gradient-to-r from-indigo-600 to-indigo-500">
+            <button onClick={() => setCalMonth(c => new Date(c.getFullYear(), c.getMonth() - 1, 1))} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--theme-cream)]/20 hover:bg-[var(--theme-cream)]/30 text-white transition-colors">
               <ChevronLeft size={16} />
             </button>
             <div className="flex items-center gap-2 text-white">
               <CalendarDays size={16} className="opacity-80" />
               <h2 className="text-sm font-bold tracking-tight">{MONTHS[calMonth.getMonth()]} {calMonth.getFullYear()}</h2>
             </div>
-            <button onClick={() => setCalMonth(c => new Date(c.getFullYear(), c.getMonth() + 1, 1))} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#ffffff]/20 hover:bg-[#ffffff]/30 text-white transition-colors">
+            <button onClick={() => setCalMonth(c => new Date(c.getFullYear(), c.getMonth() + 1, 1))} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--theme-cream)]/20 hover:bg-[var(--theme-cream)]/30 text-white transition-colors">
               <ChevronRight size={16} />
             </button>
           </div>
 
           {/* Day headers */}
-          <div className="grid grid-cols-7 border-b border-[#e8e2d9]">
+          <div className="grid grid-cols-7 border-b border-[var(--theme-linen)]">
             {DAYS_SHORT.map(d => (
-              <div key={d} className="py-2.5 text-center text-xs font-bold text-[#a8a29e] uppercase tracking-widest bg-[#faf7f2]/80">{d}</div>
+              <div key={d} className="py-2.5 text-center text-xs font-bold text-[#a8a29e] uppercase tracking-widest bg-[var(--theme-sidebar-bg)]/80">{d}</div>
             ))}
           </div>
 
@@ -232,10 +232,10 @@ export default function HolidayCalendar() {
               const isToday = ds === today;
               const isWeekend = i % 7 === 0 || i % 7 === 6;
               return (
-                <div key={i} className={`min-h-[110px] p-2 border-b border-r border-[#e8e2d9] transition-colors ${!d ? 'bg-[#faf7f2]/60' : isWeekend ? 'bg-slate-50/40' : 'bg-[#ffffff] hover:bg-indigo-50/20'}`}>
+                <div key={i} className={`min-h-[110px] p-2 border-b border-r border-[var(--theme-linen)] transition-colors ${!d ? 'bg-[var(--theme-sidebar-bg)]/60' : isWeekend ? 'bg-slate-50/40' : 'bg-[var(--theme-cream)] hover:bg-indigo-50/20'}`}>
                   {d && (
                     <>
-                      <span className={`text-xs font-bold w-7 h-7 flex items-center justify-center rounded-full mb-1.5 ${isToday ? 'bg-indigo-600 text-white shadow-sm' : 'text-[#78716c]'}`}>{d}</span>
+                      <span className={`text-xs font-bold w-7 h-7 flex items-center justify-center rounded-full mb-1.5 ${isToday ? 'bg-indigo-600 text-white shadow-sm' : 'text-[var(--theme-taupe)]'}`}>{d}</span>
                       <div className="space-y-1">
                         {dayHols.map(h => {
                           const s = typeStyle(h.type);
@@ -288,7 +288,7 @@ export default function HolidayCalendar() {
             </div>
             <div className="flex items-center gap-3">
               <input type="checkbox" id="repeat" checked={form.repeatEveryYear} onChange={e => setForm(f => ({ ...f, repeatEveryYear: e.target.checked }))} className="w-4 h-4 rounded border-gray-300 text-indigo-600" />
-              <label htmlFor="repeat" className="text-sm text-[#3c2a21] cursor-pointer">Repeat Every Year</label>
+              <label htmlFor="repeat" className="text-sm text-[var(--theme-aubergine)] cursor-pointer">Repeat Every Year</label>
             </div>
             <div>
               <label className="label">Status</label>
@@ -316,7 +316,7 @@ export default function HolidayCalendar() {
                   <CalendarDays size={22} />
                 </div>
                 <div>
-                  <p className="font-bold text-[#3c2a21] text-base">{viewHoliday.name}</p>
+                  <p className="font-bold text-[var(--theme-aubergine)] text-base">{viewHoliday.name}</p>
                   <p className="text-xs font-medium opacity-80">{viewHoliday.type}</p>
                 </div>
               </div>
@@ -331,7 +331,7 @@ export default function HolidayCalendar() {
                 ].map(([label, value]) => (
                   <div key={label} className="flex items-start gap-3 py-2 border-b border-[#f5f1eb] last:border-0">
                     <span className="text-xs text-[#a8a29e] w-28 flex-shrink-0">{label}</span>
-                    <span className="text-xs font-semibold text-[#3c2a21] flex-1">{value}</span>
+                    <span className="text-xs font-semibold text-[var(--theme-aubergine)] flex-1">{value}</span>
                   </div>
                 ))}
               </div>

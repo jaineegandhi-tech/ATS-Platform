@@ -53,22 +53,22 @@ export default function Breadcrumb() {
   ];
 
   return (
-    <nav className="flex items-center gap-1 text-xs mb-4" style={{ color: '#78716c' }}>
+    <nav className="flex items-center gap-1 text-xs mb-4" style={{ color: 'var(--theme-taupe)' }}>
       {crumbs.map((crumb, i) => {
         const isLast = i === crumbs.length - 1;
         return (
           <span key={crumb.to} className="flex items-center gap-1">
-            {i > 0 && <ChevronRight size={12} style={{ color: '#e8e2d9' }} className="flex-shrink-0" />}
-            {i === 0 && <Home size={11} style={{ color: '#78716c' }} className="flex-shrink-0" />}
+            {i > 0 && <ChevronRight size={12} style={{ color: 'var(--theme-linen)' }} className="flex-shrink-0" />}
+            {i === 0 && <Home size={11} style={{ color: 'var(--theme-taupe)' }} className="flex-shrink-0" />}
             {isLast ? (
-              <span className="font-medium capitalize" style={{ color: '#3c2a21' }}>{crumb.label}</span>
+              <span className="font-medium capitalize" style={{ color: 'var(--theme-aubergine)' }}>{crumb.label}</span>
             ) : (
               <Link
                 to={crumb.to}
                 className="capitalize transition-colors"
-                style={{ color: '#78716c' }}
-                onMouseEnter={e => e.currentTarget.style.color = '#d97706'}
-                onMouseLeave={e => e.currentTarget.style.color = '#78716c'}
+                style={{ color: 'var(--theme-taupe)' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--theme-mustard)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--theme-taupe)'}
               >
                 {crumb.label}
               </Link>

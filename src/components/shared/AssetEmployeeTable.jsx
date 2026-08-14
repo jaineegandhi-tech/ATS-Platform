@@ -28,15 +28,15 @@ export default function AssetEmployeeTable({ assets }) {
               <td className="table-td">
                 <div className="flex items-start gap-2">
                   <Package size={15} className="text-[#a8a29e] mt-0.5 flex-shrink-0" />
-                  <p className="font-semibold text-[#3c2a21] text-sm">{asset.name}</p>
+                  <p className="font-semibold text-[var(--theme-aubergine)] text-sm">{asset.name}</p>
                 </div>
               </td>
               <td className="table-td">
                 <span className="badge-blue">{asset.category}</span>
               </td>
-              <td className="table-td text-[#78716c] font-mono text-xs">{asset.serialNumber || '—'}</td>
-              <td className="table-td text-[#78716c]">{formatDate(asset.assignedDate)}</td>
-              <td className="table-td text-[#78716c]">{formatDate(asset.expectedReturnDate)}</td>
+              <td className="table-td text-[var(--theme-taupe)] font-mono text-xs">{asset.serialNumber || '—'}</td>
+              <td className="table-td text-[var(--theme-taupe)]">{formatDate(asset.assignedDate)}</td>
+              <td className="table-td text-[var(--theme-taupe)]">{formatDate(asset.expectedReturnDate)}</td>
               <td className="table-td"><StatusBadge status={asset.status} /></td>
             </tr>
           ))}

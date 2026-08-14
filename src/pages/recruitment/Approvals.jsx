@@ -15,7 +15,7 @@ const TABS = ['Scheduled', 'Completed', 'Candidate Status'];
 function StarRow({ label, value }) {
   return (
     <div className="flex items-center justify-between py-1">
-      <span className="text-xs text-[#78716c]">{label}</span>
+      <span className="text-xs text-[var(--theme-taupe)]">{label}</span>
       <div className="flex items-center gap-0.5">
         {Array.from({ length: 5 }, (_, i) => (
           <Star key={i} size={11} className={i < value ? 'text-amber-400 fill-amber-400' : 'text-[#e8e2d9] fill-gray-200'} />
@@ -107,13 +107,13 @@ export default function Approvals() {
     'Move to Next Round': 'text-blue-600 bg-blue-50 border-blue-100',
     'Failed': 'text-red-600 bg-red-50 border-red-100',
     'Hold': 'text-yellow-600 bg-yellow-50 border-yellow-100',
-  }[d] || 'text-[#78716c] bg-[#faf7f2] border-gray-100');
+  }[d] || 'text-[var(--theme-taupe)] bg-[var(--theme-sidebar-bg)] border-[var(--theme-linen)]');
 
   return (
     <div className="space-y-6">
-      <div className="pb-6 border-b border-[#e8e2d9]">
+      <div className="pb-6 border-b border-[var(--theme-linen)]">
         <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
-        <h1 className="text-xl font-semibold text-[#3c2a21]">Interview Activity</h1>
+        <h1 className="text-xl font-semibold text-[var(--theme-aubergine)]">Interview Activity</h1>
         <p className="text-sm text-[#a8a29e] mt-0.5">Live view of all interview stages, feedback, and candidate status.</p>
       </div>
 
@@ -124,7 +124,7 @@ export default function Approvals() {
             key={t}
             onClick={() => setTab(t)}
             className={`px-4 py-1.5 rounded-md text-xs font-medium transition-colors ${
-              tab === t ? 'bg-[#ffffff] text-[#3c2a21] shadow-sm' : 'text-[#78716c] hover:text-[#3c2a21]'
+              tab === t ? 'bg-[var(--theme-cream)] text-[var(--theme-aubergine)] shadow-sm' : 'text-[var(--theme-taupe)] hover:text-[var(--theme-aubergine)]'
             }`}
           >
             {t}
@@ -142,11 +142,11 @@ export default function Approvals() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Clock size={15} className="text-primary" />
-              <h2 className="text-sm font-semibold text-[#3c2a21]">Today's Interviews</h2>
+              <h2 className="text-sm font-semibold text-[var(--theme-aubergine)]">Today's Interviews</h2>
               <span className="text-xs text-[#a8a29e]">{today}</span>
             </div>
             {todayInterviews.length === 0 ? (
-              <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card py-10 text-center">
+              <div className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card py-10 text-center">
                 <p className="text-sm text-[#a8a29e]">No interviews scheduled for today.</p>
               </div>
             ) : (
@@ -156,14 +156,14 @@ export default function Approvals() {
                   const isCompleted = iv.status === 'completed';
                   const fb = iv.feedback && !iv.feedback.isDraft ? iv.feedback : null;
                   return (
-                    <div key={iv.id} className={`bg-[#ffffff] rounded-2xl border shadow-card p-5 space-y-3 border-l-4 ${isCompleted ? 'border-l-emerald-300 border-gray-100' : 'border-l-blue-300 border-gray-100'}`}>
+                    <div key={iv.id} className={`bg-[var(--theme-cream)] rounded-2xl border shadow-card p-5 space-y-3 border-l-4 ${isCompleted ? 'border-l-emerald-300 border-[var(--theme-linen)]' : 'border-l-blue-300 border-[var(--theme-linen)]'}`}>
                       <div className="flex items-start justify-between">
                         <div>
-                          <p className="font-semibold text-[#3c2a21]">{cand?.firstName} {cand?.lastName}</p>
+                          <p className="font-semibold text-[var(--theme-aubergine)]">{cand?.firstName} {cand?.lastName}</p>
                           <p className="text-xs text-[#a8a29e]">{cand?.appliedPosition} · {cand?.department}</p>
                         </div>
                         <div className="flex items-center gap-2 flex-shrink-0">
-                          <span className="text-xs font-medium text-[#78716c] bg-[#faf7f2] border border-[#e8e2d9] px-2 py-1 rounded-lg tabular-nums">{iv.time}</span>
+                          <span className="text-xs font-medium text-[var(--theme-taupe)] bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] px-2 py-1 rounded-lg tabular-nums">{iv.time}</span>
                           {isCompleted
                             ? <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">Done</span>
                             : <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-1 rounded-lg">Ongoing</span>
@@ -171,31 +171,31 @@ export default function Approvals() {
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap gap-1.5 text-xs text-[#78716c]">
-                        <span className="bg-[#faf7f2] border border-[#e8e2d9] px-2 py-0.5 rounded-lg">{iv.round}</span>
-                        <span className="bg-[#faf7f2] border border-[#e8e2d9] px-2 py-0.5 rounded-lg">{iv.mode}</span>
-                        {iv.mode === 'Offline' && iv.location && <span className="bg-[#faf7f2] border border-[#e8e2d9] px-2 py-0.5 rounded-lg">📍 {iv.location}</span>}
+                      <div className="flex flex-wrap gap-1.5 text-xs text-[var(--theme-taupe)]">
+                        <span className="bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] px-2 py-0.5 rounded-lg">{iv.round}</span>
+                        <span className="bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] px-2 py-0.5 rounded-lg">{iv.mode}</span>
+                        {iv.mode === 'Offline' && iv.location && <span className="bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] px-2 py-0.5 rounded-lg">📍 {iv.location}</span>}
                         {iv.mode === 'Online' && iv.meetingLink && <a href={iv.meetingLink} target="_blank" rel="noreferrer" className="bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded-lg">Join</a>}
                       </div>
 
-                      <p className="text-xs text-[#78716c]">Interviewer(s): <strong>{names(iv.interviewerIds)}</strong></p>
+                      <p className="text-xs text-[var(--theme-taupe)]">Interviewer(s): <strong>{names(iv.interviewerIds)}</strong></p>
 
                       {/* Feedback inline once completed */}
                       {fb && (
-                        <div className="bg-[#faf7f2] rounded-xl p-3 space-y-2 border border-[#e8e2d9]">
+                        <div className="bg-[var(--theme-sidebar-bg)] rounded-xl p-3 space-y-2 border border-[var(--theme-linen)]">
                           <div className="flex items-center justify-between">
-                            <p className="text-xs font-semibold text-[#78716c]">Interviewer Feedback</p>
+                            <p className="text-xs font-semibold text-[var(--theme-taupe)]">Interviewer Feedback</p>
                             <span className={`text-xs font-semibold px-2 py-0.5 rounded border ${decisionColor(fb.decision)}`}>{fb.decision}</span>
                           </div>
                           <div className="grid grid-cols-3 gap-1">
                             {[['Tech', fb.technicalSkills], ['Comm', fb.communicationSkills], ['PS', fb.problemSolving]].map(([l, v]) => (
                               <div key={l} className="text-center">
                                 <p className="text-[10px] text-[#a8a29e]">{l}</p>
-                                <p className="text-xs font-bold text-[#3c2a21]">{v}/5</p>
+                                <p className="text-xs font-bold text-[var(--theme-aubergine)]">{v}/5</p>
                               </div>
                             ))}
                           </div>
-                          {fb.remarks && <p className="text-xs text-[#78716c] italic">"{fb.remarks}"</p>}
+                          {fb.remarks && <p className="text-xs text-[var(--theme-taupe)] italic">"{fb.remarks}"</p>}
                           {iv.hrAction
                             ? <p className="text-xs text-green-600 font-semibold">HR Decision: {iv.hrAction}</p>
                             : <p className="text-xs text-amber-600">⏳ Awaiting HR decision</p>
@@ -221,23 +221,23 @@ export default function Approvals() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Calendar size={15} className="text-[#a8a29e]" />
-              <h2 className="text-sm font-semibold text-[#3c2a21]">Upcoming Interviews</h2>
+              <h2 className="text-sm font-semibold text-[var(--theme-aubergine)]">Upcoming Interviews</h2>
             </div>
             {upcomingInterviews.length === 0 ? (
-              <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card py-10 text-center">
+              <div className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card py-10 text-center">
                 <p className="text-sm text-[#a8a29e]">No upcoming interviews.</p>
               </div>
             ) : (
               <div className="card p-0 overflow-hidden">
                 <table className="w-full">
-                  <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
+                  <thead className="bg-[var(--theme-sidebar-bg)] border-b border-[var(--theme-linen)]">
                     <tr>{['Candidate', 'Position', 'Round', 'Date', 'Time', 'Mode', 'Interviewer(s)', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
                   </thead>
                   <tbody className="divide-y divide-[#f5f1eb]">
                     {upcomingInterviews.slice((upcomingPage - 1) * PAGE_SIZE, upcomingPage * PAGE_SIZE).map(iv => {
                       const cand = candOf(iv);
                       return (
-                        <tr key={iv.id} className="hover:bg-[#faf7f2]">
+                        <tr key={iv.id} className="hover:bg-[var(--theme-sidebar-bg)]">
                           <td className="table-td font-medium">{cand?.firstName} {cand?.lastName}</td>
                           <td className="table-td">{cand?.appliedPosition}</td>
                           <td className="table-td">{iv.round}</td>
@@ -266,22 +266,22 @@ export default function Approvals() {
       {tab === 'Completed' && (
         <div className="space-y-3">
           {completed.length === 0 ? (
-            <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card py-12 text-center">
+            <div className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card py-12 text-center">
               <p className="text-sm text-[#a8a29e]">No completed interviews with feedback yet.</p>
             </div>
           ) : completed.map(iv => {
             const cand = candOf(iv);
             const fb = iv.feedback;
             return (
-              <div key={iv.id} className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card p-5 space-y-3">
+              <div key={iv.id} className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card p-5 space-y-3">
                 {/* Header row */}
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#f0ebe2] flex items-center justify-center text-[#78716c] font-semibold text-xs flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-[#f0ebe2] flex items-center justify-center text-[var(--theme-taupe)] font-semibold text-xs flex-shrink-0">
                       {cand?.firstName?.[0]}{cand?.lastName?.[0]}
                     </div>
                     <div>
-                      <p className="font-semibold text-[#3c2a21]">{cand?.firstName} {cand?.lastName}</p>
+                      <p className="font-semibold text-[var(--theme-aubergine)]">{cand?.firstName} {cand?.lastName}</p>
                       <p className="text-xs text-[#a8a29e]">{cand?.appliedPosition} · {cand?.department}</p>
                     </div>
                   </div>
@@ -293,14 +293,14 @@ export default function Approvals() {
 
                 {/* Meta row */}
                 <div className="flex flex-wrap gap-1.5 text-xs">
-                  <span className="bg-[#faf7f2] border border-[#e8e2d9] text-[#78716c] px-2 py-0.5 rounded-lg">{iv.round}</span>
-                  <span className="bg-[#faf7f2] border border-[#e8e2d9] text-[#78716c] px-2 py-0.5 rounded-lg">{formatDate(iv.date)} at {iv.time}</span>
-                  <span className="bg-[#faf7f2] border border-[#e8e2d9] text-[#78716c] px-2 py-0.5 rounded-lg">{iv.mode}</span>
-                  <span className="bg-[#faf7f2] border border-[#e8e2d9] text-[#78716c] px-2 py-0.5 rounded-lg">By: {names(iv.interviewerIds)}</span>
+                  <span className="bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] text-[var(--theme-taupe)] px-2 py-0.5 rounded-lg">{iv.round}</span>
+                  <span className="bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] text-[var(--theme-taupe)] px-2 py-0.5 rounded-lg">{formatDate(iv.date)} at {iv.time}</span>
+                  <span className="bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] text-[var(--theme-taupe)] px-2 py-0.5 rounded-lg">{iv.mode}</span>
+                  <span className="bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] text-[var(--theme-taupe)] px-2 py-0.5 rounded-lg">By: {names(iv.interviewerIds)}</span>
                 </div>
 
                 {/* Ratings strip */}
-                <div className="grid grid-cols-3 gap-3 bg-[#faf7f2] rounded-xl px-4 py-3">
+                <div className="grid grid-cols-3 gap-3 bg-[var(--theme-sidebar-bg)] rounded-xl px-4 py-3">
                   {[['Technical', fb.technicalSkills], ['Communication', fb.communicationSkills], ['Problem Solving', fb.problemSolving]].map(([l, v]) => (
                     <StarRow key={l} label={l} value={v} />
                   ))}
@@ -308,7 +308,7 @@ export default function Approvals() {
 
                 {/* Remarks */}
                 {fb.remarks && (
-                  <p className="text-sm text-[#78716c] bg-[#ffffff] border border-[#e8e2d9] rounded-lg px-3 py-2 italic">"{fb.remarks}"</p>
+                  <p className="text-sm text-[var(--theme-taupe)] bg-[var(--theme-cream)] border border-[var(--theme-linen)] rounded-lg px-3 py-2 italic">"{fb.remarks}"</p>
                 )}
 
                 {/* Next round badge */}
@@ -321,7 +321,7 @@ export default function Approvals() {
 
                 {/* HR action badge */}
                 {iv.hrAction && (
-                  <div className="flex items-center gap-2 text-xs text-[#78716c]">
+                  <div className="flex items-center gap-2 text-xs text-[var(--theme-taupe)]">
                     <CheckCheck size={13} className="text-green-500" />
                     <span>HR Decision: <strong>{iv.hrAction}</strong> by {empName(iv.actionedBy)} on {iv.actionedAt ? new Date(iv.actionedAt).toLocaleDateString() : '—'}</span>
                   </div>
@@ -339,7 +339,7 @@ export default function Approvals() {
       {tab === 'Candidate Status' && (
         <div className="card p-0 overflow-hidden">
           <table className="w-full">
-            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
+            <thead className="bg-[var(--theme-sidebar-bg)] border-b border-[var(--theme-linen)]">
               <tr>{['Candidate', 'Position', 'Department', 'Current Round', 'Status', 'Last Update', 'Updated By', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
             <tbody className="divide-y divide-[#f5f1eb]">
@@ -350,10 +350,10 @@ export default function Approvals() {
                 const updatedBy = lastEvent ? empName(lastEvent.by) : '—';
                 const updatedAt = lastEvent?.at ? new Date(lastEvent.at).toLocaleDateString() : '—';
                 return (
-                  <tr key={c.id} className="hover:bg-[#faf7f2]">
+                  <tr key={c.id} className="hover:bg-[var(--theme-sidebar-bg)]">
                     <td className="table-td">
                       <div>
-                        <p className="font-medium text-[#3c2a21]">{c.firstName} {c.lastName}</p>
+                        <p className="font-medium text-[var(--theme-aubergine)]">{c.firstName} {c.lastName}</p>
                         <p className="text-xs text-[#a8a29e]">{c.email}</p>
                       </div>
                     </td>
@@ -361,8 +361,8 @@ export default function Approvals() {
                     <td className="table-td">{c.department || '—'}</td>
                     <td className="table-td">{c.currentRound || '—'}</td>
                     <td className="table-td"><StatusBadge status={c.status} /></td>
-                    <td className="table-td text-xs text-[#78716c]">{updatedAt}</td>
-                    <td className="table-td text-xs text-[#78716c]">{updatedBy}</td>
+                    <td className="table-td text-xs text-[var(--theme-taupe)]">{updatedAt}</td>
+                    <td className="table-td text-xs text-[var(--theme-taupe)]">{updatedBy}</td>
                     <td className="table-td">
                       <button className="btn btn-sm btn-secondary" onClick={() => navigate(`/candidates/${c.id}`)}><Eye size={12} /></button>
                     </td>
@@ -387,7 +387,7 @@ export default function Approvals() {
           <Modal title="Interview Details" onClose={() => setSelected(null)} size="lg">
             <div className="space-y-4">
               {/* Candidate + Interview info */}
-              <div className="grid grid-cols-2 gap-3 bg-[#faf7f2] rounded-xl p-4 text-sm">
+              <div className="grid grid-cols-2 gap-3 bg-[var(--theme-sidebar-bg)] rounded-xl p-4 text-sm">
                 {[
                   ['Candidate', `${cand?.firstName} ${cand?.lastName}`],
                   ['Position', cand?.appliedPosition],
@@ -398,27 +398,27 @@ export default function Approvals() {
                   ['Mode', selected.mode],
                   ['Interviewer(s)', names(selected.interviewerIds)],
                 ].map(([k, v]) => (
-                  <div key={k}><p className="text-xs text-[#a8a29e]">{k}</p><p className="font-semibold text-[#3c2a21]">{v || '—'}</p></div>
+                  <div key={k}><p className="text-xs text-[#a8a29e]">{k}</p><p className="font-semibold text-[var(--theme-aubergine)]">{v || '—'}</p></div>
                 ))}
               </div>
 
               {/* Feedback */}
               <div className="space-y-3">
-                <p className="text-xs font-semibold text-[#78716c] uppercase tracking-wide">Feedback</p>
-                <div className="grid grid-cols-3 gap-3 bg-[#faf7f2] rounded-xl px-4 py-3">
+                <p className="text-xs font-semibold text-[var(--theme-taupe)] uppercase tracking-wide">Feedback</p>
+                <div className="grid grid-cols-3 gap-3 bg-[var(--theme-sidebar-bg)] rounded-xl px-4 py-3">
                   {[['Technical Skills', fb.technicalSkills], ['Communication', fb.communicationSkills], ['Problem Solving', fb.problemSolving]].map(([l, v]) => (
                     <StarRow key={l} label={l} value={v} />
                   ))}
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-xs text-[#a8a29e]">Overall Rating:</span>
-                  <span className="text-sm font-semibold text-[#3c2a21]">{fb.rating}</span>
+                  <span className="text-sm font-semibold text-[var(--theme-aubergine)]">{fb.rating}</span>
                   <span className={`text-xs font-semibold px-2.5 py-1 rounded-lg border ml-auto ${decisionColor(fb.decision)}`}>{fb.decision}</span>
                 </div>
                 {fb.remarks && (
-                  <div className="bg-[#ffffff] border border-[#e8e2d9] rounded-lg p-3">
+                  <div className="bg-[var(--theme-cream)] border border-[var(--theme-linen)] rounded-lg p-3">
                     <p className="text-xs text-[#a8a29e] mb-1">Remarks</p>
-                    <p className="text-sm text-[#3c2a21]">{fb.remarks}</p>
+                    <p className="text-sm text-[var(--theme-aubergine)]">{fb.remarks}</p>
                   </div>
                 )}
               </div>
@@ -433,7 +433,7 @@ export default function Approvals() {
                     <div><p className="text-xs text-[#a8a29e]">Time</p><p className="font-semibold">{fb.nextTime}</p></div>
                   </div>
                   {fb.nextInterviewerIds?.length > 0 && (
-                    <p className="text-xs text-[#78716c]">Interviewers: {names(fb.nextInterviewerIds)}</p>
+                    <p className="text-xs text-[var(--theme-taupe)]">Interviewers: {names(fb.nextInterviewerIds)}</p>
                   )}
                 </div>
               )}
@@ -449,8 +449,8 @@ export default function Approvals() {
 
               {/* Receptionist forward */}
               {canForward && (
-                <div className="space-y-2 pt-2 border-t border-[#e8e2d9]">
-                  <p className="text-xs text-[#78716c]">Add remarks before forwarding to HR:</p>
+                <div className="space-y-2 pt-2 border-t border-[var(--theme-linen)]">
+                  <p className="text-xs text-[var(--theme-taupe)]">Add remarks before forwarding to HR:</p>
                   <textarea className="input resize-none" rows={2} placeholder="Optional remarks..." value={remarks} onChange={e => setRemarks(e.target.value)} />
                   <div className="flex justify-end">
                     <button className="btn-primary btn" onClick={forward}><Send size={14} /> Forward to HR</button>
@@ -460,8 +460,8 @@ export default function Approvals() {
 
               {/* HR actions */}
               {canAct && (
-                <div className="pt-2 border-t border-[#e8e2d9]">
-                  <p className="text-xs text-[#78716c] mb-2">Take action on this candidate:</p>
+                <div className="pt-2 border-t border-[var(--theme-linen)]">
+                  <p className="text-xs text-[var(--theme-taupe)] mb-2">Take action on this candidate:</p>
                   <div className="flex flex-wrap gap-2">
                     <button className="btn btn-secondary btn-sm" onClick={() => navigate(`/candidates/${cand.id}/schedule`)}><CalendarPlus size={13} /> Schedule Next Round</button>
                     <button className="btn btn-success btn-sm" onClick={() => takeAction('Selected')}><CheckCircle size={13} /> Select</button>
