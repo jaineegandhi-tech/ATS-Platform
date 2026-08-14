@@ -200,10 +200,10 @@ export default function TelephonyInterview() {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="flex items-end justify-between pb-6 border-b border-[#e8e2d9]">
+      <div className="flex items-end justify-between pb-6 border-b border-[var(--theme-linen)]">
         <div>
           <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
-          <h1 className="text-xl font-semibold text-[#3c2a21]">Telephonic Interviews</h1>
+          <h1 className="text-xl font-semibold text-[var(--theme-aubergine)]">Telephonic Interviews</h1>
           <p className="text-sm text-[#a8a29e] mt-0.5">{records.length} record{records.length !== 1 ? 's' : ''} total</p>
         </div>
         {isHR && (
@@ -225,7 +225,7 @@ export default function TelephonyInterview() {
               onChange={e => setSearch(e.target.value)}
             />
             {search && (
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 text-[#a8a29e] hover:text-[#78716c]" onClick={() => setSearch('')}>
+              <button className="absolute right-2 top-1/2 -translate-y-1/2 text-[#a8a29e] hover:text-[var(--theme-taupe)]" onClick={() => setSearch('')}>
                 <X size={13} />
               </button>
             )}
@@ -250,7 +250,7 @@ export default function TelephonyInterview() {
       <div className="card p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
+            <thead className="bg-[var(--theme-sidebar-bg)] border-b border-[var(--theme-linen)]">
               <tr>
                 {['#', 'Candidate', 'Contact', 'Position', 'Department', 'Call Date', 'Time', 'Duration', 'Called By', 'Outcome', 'Current CTC', 'Expected CTC', 'Notice Period', 'Imm. Joiner', 'Notes', isHR ? 'Actions' : null].filter(Boolean).map(h => (
                   <th key={h} className="table-th whitespace-nowrap">{h}</th>
@@ -269,12 +269,12 @@ export default function TelephonyInterview() {
                   </td>
                 </tr>
               ) : sorted.map((r, idx) => (
-                <tr key={r.id} className="hover:bg-[#faf7f2] transition-colors">
+                <tr key={r.id} className="hover:bg-[var(--theme-sidebar-bg)] transition-colors">
                   <td className="table-td text-[#a8a29e] text-xs font-mono">{sorted.length - idx}</td>
-                  <td className="table-td font-semibold text-[#3c2a21] whitespace-nowrap">{r.candidateName}</td>
-                  <td className="table-td font-mono text-sm text-[#78716c] whitespace-nowrap">{r.contactNumber}</td>
+                  <td className="table-td font-semibold text-[var(--theme-aubergine)] whitespace-nowrap">{r.candidateName}</td>
+                  <td className="table-td font-mono text-sm text-[var(--theme-taupe)] whitespace-nowrap">{r.contactNumber}</td>
                   <td className="table-td whitespace-nowrap">{r.position}</td>
-                  <td className="table-td text-[#78716c] whitespace-nowrap">{r.department || '—'}</td>
+                  <td className="table-td text-[var(--theme-taupe)] whitespace-nowrap">{r.department || '—'}</td>
                   <td className="table-td whitespace-nowrap">{r.callDate ? formatDate(r.callDate) : '—'}</td>
                   <td className="table-td whitespace-nowrap">{r.callTime || '—'}</td>
                   <td className="table-td whitespace-nowrap">{r.duration ? `${r.duration} min` : '—'}</td>
@@ -289,8 +289,8 @@ export default function TelephonyInterview() {
                       {r.outcome}
                     </span>
                   </td>
-                  <td className="table-td text-sm text-[#78716c]">{r.currentCTC || '—'}</td>
-                  <td className="table-td text-sm text-[#78716c]">{r.expectedCTC || '—'}</td>
+                  <td className="table-td text-sm text-[var(--theme-taupe)]">{r.currentCTC || '—'}</td>
+                  <td className="table-td text-sm text-[var(--theme-taupe)]">{r.expectedCTC || '—'}</td>
                   <td className="table-td whitespace-nowrap">{r.noticePeriod || '—'}</td>
                   <td className="table-td text-center">
                     {r.immediateJoiner ? (
@@ -299,7 +299,7 @@ export default function TelephonyInterview() {
                       <span className="badge badge-gray"><span className="w-1.5 h-1.5 rounded-full bg-gray-400" />No</span>
                     )}
                   </td>
-                  <td className="table-td max-w-[160px] truncate text-[#78716c] text-xs" title={r.notes}>{r.notes || '—'}</td>
+                  <td className="table-td max-w-[160px] truncate text-[var(--theme-taupe)] text-xs" title={r.notes}>{r.notes || '—'}</td>
                   {isHR && (
                     <td className="table-td">
                       <div className="flex items-center gap-1">
@@ -335,7 +335,7 @@ export default function TelephonyInterview() {
 
         {/* Footer count */}
         {sorted.length > 0 && (
-          <div className="px-4 py-2.5 border-t border-[#f5f1eb] bg-[#faf7f2]/50">
+          <div className="px-4 py-2.5 border-t border-[#f5f1eb] bg-[var(--theme-sidebar-bg)]/50">
             <p className="text-xs text-[#a8a29e]">Showing {sorted.length} of {records.length} records</p>
           </div>
         )}
@@ -351,7 +351,7 @@ export default function TelephonyInterview() {
           <div className="space-y-5">
             {/* Section: Candidate Info */}
             <div>
-              <p className="text-xs font-semibold text-[#78716c] uppercase tracking-wider mb-3">Candidate Information</p>
+              <p className="text-xs font-semibold text-[var(--theme-taupe)] uppercase tracking-wider mb-3">Candidate Information</p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="label">Candidate Name <span className="text-red-500">*</span></label>
@@ -377,7 +377,7 @@ export default function TelephonyInterview() {
 
             {/* Section: Call Details */}
             <div>
-              <p className="text-xs font-semibold text-[#78716c] uppercase tracking-wider mb-3">Call Details</p>
+              <p className="text-xs font-semibold text-[var(--theme-taupe)] uppercase tracking-wider mb-3">Call Details</p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="label">Call Date <span className="text-red-500">*</span></label>
@@ -411,7 +411,7 @@ export default function TelephonyInterview() {
 
             {/* Section: CTC & Availability */}
             <div>
-              <p className="text-xs font-semibold text-[#78716c] uppercase tracking-wider mb-3">CTC & Availability</p>
+              <p className="text-xs font-semibold text-[var(--theme-taupe)] uppercase tracking-wider mb-3">CTC & Availability</p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="label">Current CTC</label>
@@ -462,7 +462,7 @@ export default function TelephonyInterview() {
       {/* Delete Confirm */}
       {deleteId && (
         <Modal title="Delete Record" onClose={() => setDeleteId(null)} size="sm">
-          <p className="text-sm text-[#78716c] mb-5">
+          <p className="text-sm text-[var(--theme-taupe)] mb-5">
             Are you sure you want to delete this telephonic interview record? This action cannot be undone.
           </p>
           <div className="flex justify-end gap-3">

@@ -30,12 +30,12 @@ export default function AssetReturnModal({ asset, currentUser, onClose, onSaved 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="label">Asset</label>
-          <p className="text-sm text-[#3c2a21] py-2 font-semibold">{asset.name} <span className="text-[#a8a29e] font-normal">({asset.id})</span></p>
+          <p className="text-sm text-[var(--theme-aubergine)] py-2 font-semibold">{asset.name} <span className="text-[#a8a29e] font-normal">({asset.id})</span></p>
         </div>
 
         <div>
           <label className="label">Assigned To</label>
-          <p className="text-sm text-[#3c2a21] py-2">{asset.assignedEmployeeName || '—'}</p>
+          <p className="text-sm text-[var(--theme-aubergine)] py-2">{asset.assignedEmployeeName || '—'}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

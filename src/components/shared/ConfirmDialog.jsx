@@ -10,7 +10,7 @@ export default function ConfirmDialog({ title, message, onConfirm, onCancel, con
           <AlertTriangle size={18} style={{ color: '#dc2626' }} />
         </div>
         <div className="flex-1">
-          <p className="text-sm leading-relaxed" style={{ color: '#78716c' }}>{message}</p>
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--theme-taupe)' }}>{message}</p>
           <div className="flex justify-end gap-2.5 mt-5">
             <button className="btn btn-secondary btn-sm" onClick={onCancel}>Cancel</button>
             <button className={`btn btn-sm ${confirmClass}`} onClick={onConfirm}>{confirmLabel}</button>

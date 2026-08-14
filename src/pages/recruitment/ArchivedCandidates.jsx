@@ -27,17 +27,17 @@ export default function ArchivedCandidates() {
       <div className="card p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
+            <thead className="bg-[var(--theme-sidebar-bg)] border-b border-[var(--theme-linen)]">
               <tr>{['ID', 'Candidate', 'Applied Position', 'Department', 'Created', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
             <tbody className="divide-y divide-[#f5f1eb]">
               {candidates.length === 0 ? (
                 <tr><td colSpan={6} className="table-td text-center text-[#a8a29e] py-8">No archived candidates.</td></tr>
               ) : candidates.map(c => (
-                <tr key={c.id} className="hover:bg-[#faf7f2]">
+                <tr key={c.id} className="hover:bg-[var(--theme-sidebar-bg)]">
                   <td className="table-td text-xs text-[#a8a29e]">{c.id}</td>
                   <td className="table-td">
-                    <p className="font-medium text-[#3c2a21]">{c.firstName} {c.lastName}</p>
+                    <p className="font-medium text-[var(--theme-aubergine)]">{c.firstName} {c.lastName}</p>
                     <p className="text-xs text-[#a8a29e]">{c.email}</p>
                   </td>
                   <td className="table-td">{c.appliedPosition}</td>

@@ -15,13 +15,13 @@ export default function Pagination({ total, page, onPage }) {
 
   return (
     <div className="flex items-center justify-between px-1 pt-3" style={{ borderTop: '1px solid #e8e2d9' }}>
-      <p className="text-xs tabular-nums" style={{ color: '#78716c' }}>{from}–{to} of {total}</p>
+      <p className="text-xs tabular-nums" style={{ color: 'var(--theme-taupe)' }}>{from}–{to} of {total}</p>
       <div className="flex items-center gap-1">
         <button
           onClick={() => onPage(page - 1)}
           disabled={page === 1}
-          style={{ ...btnBase, border: '1px solid #e8e2d9', color: '#78716c', opacity: page === 1 ? 0.3 : 1 }}
-          onMouseEnter={e => { if (page !== 1) e.currentTarget.style.backgroundColor = '#faf7f2'; }}
+          style={{ ...btnBase, border: '1px solid #e8e2d9', color: 'var(--theme-taupe)', opacity: page === 1 ? 0.3 : 1 }}
+          onMouseEnter={e => { if (page !== 1) e.currentTarget.style.backgroundColor = 'var(--theme-sidebar-bg)'; }}
           onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; }}
         >
           <ChevronLeft size={13} />
@@ -36,18 +36,18 @@ export default function Pagination({ total, page, onPage }) {
           }, [])
           .map((p, i) =>
             p === '…' ? (
-              <span key={`e${i}`} className="w-7 text-center text-xs" style={{ color: '#78716c' }}>…</span>
+              <span key={`e${i}`} className="w-7 text-center text-xs" style={{ color: 'var(--theme-taupe)' }}>…</span>
             ) : (
               <button
                 key={p}
                 onClick={() => onPage(p)}
                 style={{
                   ...btnBase,
-                  backgroundColor: p === page ? '#d97706' : 'transparent',
-                  color: p === page ? '#ffffff' : '#78716c',
+                  backgroundColor: p === page ? 'var(--theme-mustard)' : 'transparent',
+                  color: p === page ? 'var(--theme-cream)' : 'var(--theme-taupe)',
                   border: p === page ? 'none' : '1px solid #e8e2d9',
                 }}
-                onMouseEnter={e => { if (p !== page) e.currentTarget.style.backgroundColor = '#faf7f2'; }}
+                onMouseEnter={e => { if (p !== page) e.currentTarget.style.backgroundColor = 'var(--theme-sidebar-bg)'; }}
                 onMouseLeave={e => { if (p !== page) e.currentTarget.style.backgroundColor = 'transparent'; }}
               >
                 {p}
@@ -58,8 +58,8 @@ export default function Pagination({ total, page, onPage }) {
         <button
           onClick={() => onPage(page + 1)}
           disabled={page === pages}
-          style={{ ...btnBase, border: '1px solid #e8e2d9', color: '#78716c', opacity: page === pages ? 0.3 : 1 }}
-          onMouseEnter={e => { if (page !== pages) e.currentTarget.style.backgroundColor = '#faf7f2'; }}
+          style={{ ...btnBase, border: '1px solid #e8e2d9', color: 'var(--theme-taupe)', opacity: page === pages ? 0.3 : 1 }}
+          onMouseEnter={e => { if (page !== pages) e.currentTarget.style.backgroundColor = 'var(--theme-sidebar-bg)'; }}
           onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; }}
         >
           <ChevronRight size={13} />

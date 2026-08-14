@@ -89,12 +89,12 @@ export default function HRAttendance() {
       <div className="card p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
+            <thead className="bg-[var(--theme-sidebar-bg)] border-b border-[var(--theme-linen)]">
               <tr>{['Employee', 'Department', 'Check In', 'Check Out', 'Break', 'Working Hours', 'Status', 'Actions'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
             </thead>
             <tbody className="divide-y divide-[#f5f1eb]">
               {paginated.map(({ emp, rec }) => (
-                <tr key={emp.id} className="hover:bg-[#faf7f2]">
+                <tr key={emp.id} className="hover:bg-[var(--theme-sidebar-bg)]">
                   <td className="table-td font-medium">{emp.firstName} {emp.lastName}</td>
                   <td className="table-td">{emp.department}</td>
                   <td className="table-td">{rec?.checkIn ? formatTime(rec.checkIn) : '—'}</td>
@@ -124,7 +124,7 @@ export default function HRAttendance() {
       {editRecord && (
         <Modal title="Edit Attendance" onClose={() => setEditRecord(null)}>
           <div className="space-y-4">
-            <p className="text-sm text-[#78716c]">Editing: <strong>{editRecord.employeeName}</strong> — {editRecord.date}</p>
+            <p className="text-sm text-[var(--theme-taupe)]">Editing: <strong>{editRecord.employeeName}</strong> — {editRecord.date}</p>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="label">Check In Time</label>

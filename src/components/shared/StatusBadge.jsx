@@ -43,9 +43,9 @@ export default function StatusBadge({ status }) {
   const dot = {
     'badge-green':  '#16a34a',
     'badge-red':    '#dc2626',
-    'badge-yellow': '#d97706',
-    'badge-amber':  '#b45309',
-    'badge-gray':   '#78716c',
+    'badge-yellow': 'var(--theme-mustard)',
+    'badge-amber':  'var(--theme-terracotta)',
+    'badge-gray':   'var(--theme-taupe)',
   };
   const cls = map[status?.toLowerCase()] || 'badge-gray';
   return (

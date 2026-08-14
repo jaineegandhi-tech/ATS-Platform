@@ -28,7 +28,7 @@ export default function DocumentTable({ documents, showEmployee = false, canDele
               {showEmployee && (
                 <>
                   <td className="table-td">
-                    <p className="font-semibold text-[#3c2a21] text-sm">{doc.employeeName}</p>
+                    <p className="font-semibold text-[var(--theme-aubergine)] text-sm">{doc.employeeName}</p>
                     <p className="text-xs text-[#a8a29e]">{doc.employeeId}</p>
                   </td>
                   <td className="table-td">{doc.department || '-'}</td>
@@ -41,12 +41,12 @@ export default function DocumentTable({ documents, showEmployee = false, canDele
                 <div className="flex items-start gap-2">
                   <FileText size={15} className="text-[#a8a29e] mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="font-semibold text-[#3c2a21] text-sm">{doc.name}</p>
+                    <p className="font-semibold text-[var(--theme-aubergine)] text-sm">{doc.name}</p>
                     <p className="text-xs text-[#a8a29e]">{doc.fileName} - {formatFileSize(doc.fileSize)}</p>
                   </div>
                 </div>
               </td>
-              <td className="table-td text-[#78716c]">{formatDate(doc.uploadedAt)}</td>
+              <td className="table-td text-[var(--theme-taupe)]">{formatDate(doc.uploadedAt)}</td>
               <td className="table-td">{doc.uploadedByName || '-'}</td>
               <td className="table-td"><span className="badge-green">{doc.status || 'Active'}</span></td>
               <td className="table-td">

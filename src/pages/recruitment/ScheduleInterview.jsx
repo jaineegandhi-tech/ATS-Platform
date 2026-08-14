@@ -113,7 +113,7 @@ export default function ScheduleInterview() {
       <h1 className="page-title">{isRescheduling ? 'Reschedule Interview' : 'Schedule Interview'}</h1>
 
       <div className="card">
-        <p className="text-sm text-[#78716c] mb-4">{isRescheduling ? 'Rescheduling interview for' : 'Scheduling interview for'} <strong>{candidate.firstName} {candidate.lastName}</strong> — {candidate.appliedPosition}</p>
+        <p className="text-sm text-[var(--theme-taupe)] mb-4">{isRescheduling ? 'Rescheduling interview for' : 'Scheduling interview for'} <strong>{candidate.firstName} {candidate.lastName}</strong> — {candidate.appliedPosition}</p>
         <div className="grid grid-cols-2 gap-4">
           <div><label className="label">Interview Date *</label><input type="date" className="input" value={form.date} min={today} onChange={e => set('date', e.target.value)} />{err('date')}</div>
           <div><label className="label">Interview Time *</label><input type="time" className="input" value={form.time} min={minTime} onChange={e => set('time', e.target.value)} />{err('time')}</div>

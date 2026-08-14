@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -21,20 +21,34 @@
   --theme-sidebar-hover:#f5f1eb;
 }
 
+:root.dark {
+  --theme-mustard:      #f59e0b;
+  --theme-terracotta:   #d97706;
+  --theme-claret:       #b45309;
+  --theme-aubergine:    #fdfbf7;
+  --theme-parchment:    #111827;
+  --theme-linen:        #374151;
+  --theme-cream:        #1f2937;
+  --theme-chestnut:     #fdfbf7;
+  --theme-taupe:        #9ca3af;
+  --theme-sidebar-bg:   #1f2937;
+  --theme-sidebar-hover:#374151;
+}
+
 @layer base {
   html { @apply antialiased; }
   body {
     background-color: var(--theme-parchment);
     color: var(--theme-taupe);
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 14px;
     line-height: 1.6;
   }
   * { @apply box-border; }
 
-  /* Headings — Playfair Display, weight 700, letter-spacing 0.45px */
+  /* Headings */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-weight: 700;
     letter-spacing: 0.45px;
     color: var(--theme-aubergine);
@@ -126,7 +140,7 @@
     border: 1px solid var(--theme-linen);
     border-radius: 8px;
     font-size: 14px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     color: var(--theme-aubergine);
     background-color: var(--theme-cream);
     transition: border-color 150ms, box-shadow 150ms;
@@ -214,7 +228,7 @@
     color: var(--theme-taupe);
     font-size: 13px;
     font-weight: 400;
-    transition: background-color 150ms, color 150ms;
+    transition: all 250ms ease-out;
   }
   .sidebar-link:hover {
     background-color: var(--theme-sidebar-hover);
@@ -242,14 +256,14 @@
 
   /* ── Typography helpers ──────────────────────────────── */
   .page-title {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 20px;
     font-weight: 700;
     letter-spacing: 0.45px;
     color: var(--theme-aubergine);
   }
   .section-title {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.45px;

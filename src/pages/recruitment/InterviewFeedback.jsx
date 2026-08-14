@@ -121,17 +121,17 @@ export default function InterviewFeedback() {
   return (
     <div className="max-w-2xl mx-auto space-y-5">
       <div className="flex items-center gap-3">
-        <button className="text-[#a8a29e] hover:text-[#78716c] text-sm" onClick={() => navigate(`/candidates/${candidate.id}`)}>← Back</button>
+        <button className="text-[#a8a29e] hover:text-[var(--theme-taupe)] text-sm" onClick={() => navigate(`/candidates/${candidate.id}`)}>← Back</button>
         <h1 className="page-title">Interview Feedback</h1>
       </div>
 
       {saved && <div className="bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-sm">Feedback saved successfully!</div>}
 
       {/* Interview Summary */}
-      <div className="card bg-[#faf7f2]">
+      <div className="card bg-[var(--theme-sidebar-bg)]">
         <div className="grid grid-cols-2 gap-3 text-sm">
           {[['Candidate', `${candidate.firstName} ${candidate.lastName}`], ['Position', candidate.appliedPosition], ['Round', interview.round], ['Date', formatDate(interview.date)], ['Time', interview.time], ['Interviewer(s)', interview.interviewerIds?.map(getEmpName).join(', ') || '—']].map(([k, v]) => (
-            <div key={k}><p className="text-xs text-[#a8a29e]">{k}</p><p className="font-medium text-[#3c2a21]">{v}</p></div>
+            <div key={k}><p className="text-xs text-[#a8a29e]">{k}</p><p className="font-medium text-[var(--theme-aubergine)]">{v}</p></div>
           ))}
         </div>
       </div>

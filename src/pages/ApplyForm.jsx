@@ -61,28 +61,28 @@ export default function ApplyForm() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#faf7f2] flex flex-col items-center justify-center p-6 relative">
+      <div className="min-h-screen bg-[var(--theme-sidebar-bg)] flex flex-col items-center justify-center p-6 relative">
         {/* Top left Logo */}
         <div className="absolute top-6 left-6 hidden sm:flex items-center gap-3">
           <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-10 h-10 object-contain" />
           <div className="flex flex-col">
-            <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
+            <span className="text-base font-bold text-[var(--theme-aubergine)] tracking-tight">eSparkBiz</span>
           </div>
         </div>
 
         <div className="flex items-center gap-3 mb-8 sm:hidden justify-center">
           <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-10 h-10 object-contain" />
           <div className="flex flex-col text-left">
-            <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
+            <span className="text-base font-bold text-[var(--theme-aubergine)] tracking-tight">eSparkBiz</span>
           </div>
         </div>
 
-        <div className="max-w-md w-full bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card p-8 text-center">
+        <div className="max-w-md w-full bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card p-8 text-center">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle size={32} className="text-emerald-500" />
           </div>
-          <h1 className="text-2xl font-bold text-[#3c2a21] font-serif mb-2">Application Submitted</h1>
-          <p className="text-sm text-[#78716c]">Thank you for your interest! Your application has been successfully submitted and our team will review it shortly.</p>
+          <h1 className="text-2xl font-bold text-[var(--theme-aubergine)] mb-2">Application Submitted</h1>
+          <p className="text-sm text-[var(--theme-taupe)]">Thank you for your interest! Your application has been successfully submitted and our team will review it shortly.</p>
           <button 
             onClick={() => { setForm({ firstName: '', lastName: '', email: '', appliedPosition: '', department: '', resumeName: '', resume: null }); setSubmitted(false); }}
             className="btn btn-primary mt-6 w-full"
@@ -95,12 +95,12 @@ export default function ApplyForm() {
   }
 
   return (
-    <div className="min-h-screen bg-[#faf7f2] py-12 px-4 sm:px-6 relative">
+    <div className="min-h-screen bg-[var(--theme-sidebar-bg)] py-12 px-4 sm:px-6 relative">
       {/* Top left Logo */}
       <div className="absolute top-6 left-6 hidden sm:flex items-center gap-3">
         <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-10 h-10 object-contain" />
         <div className="flex flex-col">
-          <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
+          <span className="text-base font-bold text-[var(--theme-aubergine)] tracking-tight">eSparkBiz</span>
         </div>
       </div>
 
@@ -108,15 +108,15 @@ export default function ApplyForm() {
         <div className="flex items-center gap-3 mb-8 sm:hidden justify-center">
           <img src="/esparkbiz-logo.png" alt="eSparkBiz Logo" className="w-10 h-10 object-contain" />
           <div className="flex flex-col text-left">
-            <span className="text-base font-bold text-slate-800 tracking-tight">eSparkBiz</span>
+            <span className="text-base font-bold text-[var(--theme-aubergine)] tracking-tight">eSparkBiz</span>
           </div>
         </div>
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[#3c2a21] font-serif mb-2">Job Application Form</h1>
-          <p className="text-sm text-[#78716c]">Please fill out the details below to apply for a position.</p>
+          <h1 className="text-3xl font-bold text-[var(--theme-aubergine)] mb-2">Job Application Form</h1>
+          <p className="text-sm text-[var(--theme-taupe)]">Please fill out the details below to apply for a position.</p>
         </div>
 
-        <form onSubmit={submit} className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card p-6 md:p-8 space-y-6">
+        <form onSubmit={submit} className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card p-6 md:p-8 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="label">First Name *</label>
@@ -155,16 +155,16 @@ export default function ApplyForm() {
                 <button type="button" onClick={() => setForm(f => ({ ...f, resume: null, resumeName: '' }))} className="text-blue-400 hover:text-red-500"><X size={14} /></button>
               </div>
             ) : (
-              <label className="flex flex-col items-center justify-center border-2 border-dashed border-[#e8e2d9] rounded-xl p-8 mt-2 cursor-pointer hover:border-primary hover:bg-[#faf7f2] transition-colors">
+              <label className="flex flex-col items-center justify-center border-2 border-dashed border-[var(--theme-linen)] rounded-xl p-8 mt-2 cursor-pointer hover:border-primary hover:bg-[var(--theme-sidebar-bg)] transition-colors">
                 <Upload size={22} className="text-[#d4cdc4] mb-2" />
-                <p className="text-sm text-[#78716c]">Click to upload resume</p>
+                <p className="text-sm text-[var(--theme-taupe)]">Click to upload resume</p>
                 <p className="text-xs text-[#a8a29e] mt-1">PDF, DOC, DOCX · Max 10MB</p>
                 <input required type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleResume} />
               </label>
             )}
           </div>
 
-          <div className="pt-4 border-t border-[#e8e2d9]">
+          <div className="pt-4 border-t border-[var(--theme-linen)]">
             <button type="submit" className="btn btn-primary w-full h-11 text-base">Submit Application</button>
           </div>
         </form>

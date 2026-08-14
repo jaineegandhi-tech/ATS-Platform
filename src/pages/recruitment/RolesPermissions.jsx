@@ -168,10 +168,10 @@ export default function RolesPermissions() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-end justify-between pb-6 border-b border-[#e8e2d9]">
+      <div className="flex items-end justify-between pb-6 border-b border-[var(--theme-linen)]">
         <div>
           <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Administration</p>
-          <h1 className="text-xl font-semibold text-[#3c2a21]">Roles & Permissions</h1>
+          <h1 className="text-xl font-semibold text-[var(--theme-aubergine)]">Roles & Permissions</h1>
           <p className="text-sm text-[#a8a29e] mt-0.5">Manage roles, module access, and user accounts.</p>
         </div>
         {headHR && (
@@ -186,7 +186,7 @@ export default function RolesPermissions() {
         <div className="card border border-primary/20">
           <div className="flex items-center justify-between mb-5">
             <h2 className="section-title mb-0 flex items-center gap-2"><UserPlus size={15} className="text-primary" /> New User</h2>
-            <button onClick={() => setShowAddUser(false)} className="text-[#a8a29e] hover:text-[#78716c]"><X size={16} /></button>
+            <button onClick={() => setShowAddUser(false)} className="text-[#a8a29e] hover:text-[var(--theme-taupe)]"><X size={16} /></button>
           </div>
           <form onSubmit={addUser}>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-5">
@@ -212,7 +212,7 @@ export default function RolesPermissions() {
 
       {/* Permission Matrix */}
       <div className="card p-0 overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8e2d9]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--theme-linen)]">
           <h2 className="section-title mb-0 flex items-center gap-2"><Shield size={15} className="text-primary" /> Permission Matrix</h2>
           {headHR && (
             <button className="btn btn-primary btn-sm" onClick={() => { setShowNewRole(v => !v); setShowAddUser(false); }}>
@@ -223,7 +223,7 @@ export default function RolesPermissions() {
 
         {/* New Role Form */}
         {showNewRole && headHR && (
-          <div className="px-6 py-5 border-b border-[#e8e2d9] bg-surface">
+          <div className="px-6 py-5 border-b border-[var(--theme-linen)] bg-surface">
             <div className="flex items-center gap-4 mb-5">
               <div className="flex-1 max-w-xs">
                 <label className="label">Role Name</label>
@@ -311,8 +311,8 @@ export default function RolesPermissions() {
             </thead>
             <tbody>
               {ALL_MODULES.map((m, idx) => (
-                <tr key={m.key} className={idx % 2 === 0 ? 'bg-[#ffffff]' : 'bg-surface/50'}>
-                  <td className="table-td font-medium text-heading text-sm sticky left-0 bg-inherit z-10 border-r border-[#e8e2d9]">{m.label}</td>
+                <tr key={m.key} className={idx % 2 === 0 ? 'bg-[var(--theme-cream)]' : 'bg-surface/50'}>
+                  <td className="table-td font-medium text-heading text-sm sticky left-0 bg-inherit z-10 border-r border-[var(--theme-linen)]">{m.label}</td>
                   {customRoles.map(role => {
                     const isEditing = editingRoleId === role.id;
                     const perms = isEditing ? editPerms : role.permissions;
@@ -346,7 +346,7 @@ export default function RolesPermissions() {
       {/* Users Table — hidden when creating new role */}
       {!showNewRole && (
         <div className="card p-0 overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#e8e2d9]">
+          <div className="px-6 py-4 border-b border-[var(--theme-linen)]">
             <h2 className="section-title mb-0">User Accounts</h2>
           </div>
           <div className="overflow-x-auto">
@@ -394,13 +394,13 @@ export default function RolesPermissions() {
       {/* Per-user Permissions Modal */}
       {permUser && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-[#ffffff] rounded-2xl shadow-modal w-full max-w-2xl max-h-[90vh] flex flex-col">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8e2d9]">
+          <div className="bg-[var(--theme-cream)] rounded-2xl shadow-modal w-full max-w-2xl max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--theme-linen)]">
               <div>
                 <h2 className="text-base font-bold text-heading">User Permissions — {permUser.firstName} {permUser.lastName}</h2>
                 <p className="text-xs text-body mt-0.5">These permissions apply only to this user and override their role defaults.</p>
               </div>
-              <button onClick={() => setPermUser(null)} className="text-[#a8a29e] hover:text-[#78716c]"><X size={18} /></button>
+              <button onClick={() => setPermUser(null)} className="text-[#a8a29e] hover:text-[var(--theme-taupe)]"><X size={18} /></button>
             </div>
             <div className="overflow-y-auto flex-1 px-6 py-4">
               <table className="w-full">
@@ -435,7 +435,7 @@ export default function RolesPermissions() {
                 </tbody>
               </table>
             </div>
-            <div className="flex items-center justify-between px-6 py-4 border-t border-[#e8e2d9]">
+            <div className="flex items-center justify-between px-6 py-4 border-t border-[var(--theme-linen)]">
               <button className="btn btn-secondary btn-sm" onClick={() => resetUserPerms(permUser.id)}>
                 <KeyRound size={12} /> Reset to Role Default
               </button>

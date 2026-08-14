@@ -219,7 +219,7 @@ export default function AddCandidate() {
   return (
     <div className="max-w-3xl mx-auto space-y-5">
       <div className="flex items-center gap-3">
-        <button className="text-[#a8a29e] hover:text-[#78716c] text-sm" onClick={() => navigate('/candidates')}>← Back</button>
+        <button className="text-[#a8a29e] hover:text-[var(--theme-taupe)] text-sm" onClick={() => navigate('/candidates')}>← Back</button>
         <h1 className="page-title">{isEdit ? 'Edit Candidate' : 'Add Candidate'}</h1>
       </div>
 
@@ -318,9 +318,9 @@ export default function AddCandidate() {
             <button onClick={() => setForm(f => ({ ...f, resume: null, resumeName: '' }))} className="text-blue-400 hover:text-red-500"><X size={14} /></button>
           </div>
         ) : (
-          <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-xl p-8 cursor-pointer hover:border-primary hover:bg-blue-50/30 transition-colors">
+          <label className="flex flex-col items-center justify-center border-2 border-dashed border-[var(--theme-linen)] rounded-xl p-8 cursor-pointer hover:border-primary hover:bg-blue-50/30 transition-colors">
             <Upload size={22} className="text-[#d4cdc4] mb-2" />
-            <p className="text-sm text-[#78716c]">Click to upload resume</p>
+            <p className="text-sm text-[var(--theme-taupe)]">Click to upload resume</p>
             <p className="text-xs text-[#a8a29e] mt-1">PDF, DOC, DOCX · Max 10MB</p>
             <input type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleResume} />
           </label>
@@ -344,7 +344,7 @@ export default function AddCandidate() {
         <div className="flex items-center justify-between">
           <p className="form-section-title mb-0">Interview Information</p>
           {!isEdit && (
-            <label className="flex items-center gap-2 text-sm text-[#78716c] cursor-pointer">
+            <label className="flex items-center gap-2 text-sm text-[var(--theme-taupe)] cursor-pointer">
               <input type="checkbox" checked={scheduleInterview} onChange={e => setScheduleInterview(e.target.checked)} className="rounded" />
               Schedule Interview
             </label>

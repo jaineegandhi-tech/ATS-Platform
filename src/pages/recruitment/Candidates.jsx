@@ -147,10 +147,10 @@ export default function Candidates() {
     <div className="space-y-6">
 
       {/* Page header */}
-      <div className="flex items-end justify-between pb-6 border-b border-[#e8e2d9]">
+      <div className="flex items-end justify-between pb-6 border-b border-[var(--theme-linen)]">
         <div>
           <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
-          <h1 className="text-xl font-semibold text-[#3c2a21]">Candidates</h1>
+          <h1 className="text-xl font-semibold text-[var(--theme-aubergine)]">Candidates</h1>
           <p className="text-sm text-[#a8a29e] mt-0.5">{filtered.length} candidate{filtered.length !== 1 ? 's' : ''} found</p>
         </div>
         <div className="flex items-center gap-2">
@@ -158,13 +158,13 @@ export default function Candidates() {
             <div className="flex gap-0.5 bg-[#f0ebe2] rounded-lg p-1">
               <button
                 onClick={() => setMyView(true)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${myView ? 'bg-[#ffffff] text-[#3c2a21] shadow-sm' : 'text-[#78716c] hover:text-[#3c2a21]'}`}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${myView ? 'bg-[var(--theme-cream)] text-[var(--theme-aubergine)] shadow-sm' : 'text-[var(--theme-taupe)] hover:text-[var(--theme-aubergine)]'}`}
               >
                 <UserCheck size={13} /> Mine
               </button>
               <button
                 onClick={() => setMyView(false)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${!myView ? 'bg-[#ffffff] text-[#3c2a21] shadow-sm' : 'text-[#78716c] hover:text-[#3c2a21]'}`}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${!myView ? 'bg-[var(--theme-cream)] text-[var(--theme-aubergine)] shadow-sm' : 'text-[var(--theme-taupe)] hover:text-[var(--theme-aubergine)]'}`}
               >
                 <Users2 size={13} /> All
               </button>
@@ -226,17 +226,17 @@ export default function Candidates() {
 
       {/* Cards or Table */}
       {filtered.length === 0 ? (
-        <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card py-20 flex flex-col items-center text-center">
-          <div className="w-12 h-12 rounded-2xl bg-[#faf7f2] border border-[#e8e2d9] flex items-center justify-center mb-4">
+        <div className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card py-20 flex flex-col items-center text-center">
+          <div className="w-12 h-12 rounded-2xl bg-[var(--theme-sidebar-bg)] border border-[var(--theme-linen)] flex items-center justify-center mb-4">
             <Users size={18} className="text-[#d4cdc4]" />
           </div>
-          <p className="text-sm font-medium text-[#78716c]">No candidates found</p>
+          <p className="text-sm font-medium text-[var(--theme-taupe)]">No candidates found</p>
           <p className="text-xs text-[#a8a29e] mt-1">Try adjusting your filters.</p>
         </div>
       ) : filterStatus === 'Outsourced' ? (
-        <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-x-auto">
+        <div className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
-            <thead className="bg-[#f0ebe2] text-[#78716c] font-medium border-b border-[#e8e2d9]">
+            <thead className="bg-[#f0ebe2] text-[var(--theme-taupe)] font-medium border-b border-[var(--theme-linen)]">
               <tr>
                 <th className="px-4 py-3">Candidate</th>
                 <th className="px-4 py-3">Email</th>
@@ -247,11 +247,11 @@ export default function Candidates() {
             </thead>
             <tbody className="divide-y divide-[#e8e2d9]">
               {filtered.map(c => (
-                <tr key={c.id} className="hover:bg-[#faf7f2] transition-colors">
-                  <td className="px-4 py-3 font-medium text-[#3c2a21]">{c.firstName} {c.lastName}</td>
-                  <td className="px-4 py-3 text-[#78716c]">{c.email}</td>
-                  <td className="px-4 py-3 text-[#78716c]">{c.appliedPosition || '—'}</td>
-                  <td className="px-4 py-3 text-[#78716c]">{c.department || '—'}</td>
+                <tr key={c.id} className="hover:bg-[var(--theme-sidebar-bg)] transition-colors">
+                  <td className="px-4 py-3 font-medium text-[var(--theme-aubergine)]">{c.firstName} {c.lastName}</td>
+                  <td className="px-4 py-3 text-[var(--theme-taupe)]">{c.email}</td>
+                  <td className="px-4 py-3 text-[var(--theme-taupe)]">{c.appliedPosition || '—'}</td>
+                  <td className="px-4 py-3 text-[var(--theme-taupe)]">{c.department || '—'}</td>
                   <td className="px-4 py-3 text-right">
                     <div className="flex items-center justify-end gap-2">
                       <button className="btn btn-secondary btn-sm" onClick={() => navigate(`/candidates/${c.id}`)}>
@@ -327,13 +327,13 @@ function CandidateCard({ c, initials, ownerName, hasScheduledInterview, isHR, is
   }, []);
 
   return (
-    <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card hover:shadow-card-hover hover:border-gray-200 transition-all duration-200 flex flex-col">
+    <div className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card hover:shadow-card-hover hover:border-[var(--theme-linen)] transition-all duration-200 flex flex-col">
       {/* Avatar + name */}
       <div className="flex flex-col items-center pt-6 pb-4 px-4">
-        <div className="w-10 h-10 rounded-full bg-[#f0ebe2] flex items-center justify-center text-[#78716c] font-semibold text-sm mb-3 select-none">
+        <div className="w-10 h-10 rounded-full bg-[#f0ebe2] flex items-center justify-center text-[var(--theme-taupe)] font-semibold text-sm mb-3 select-none">
           {initials}
         </div>
-        <p className="text-sm font-medium text-[#3c2a21] text-center leading-tight">{c.firstName} {c.lastName}</p>
+        <p className="text-sm font-medium text-[var(--theme-aubergine)] text-center leading-tight">{c.firstName} {c.lastName}</p>
         <p className="text-xs text-[#a8a29e] text-center mt-0.5 truncate w-full">{c.appliedPosition || '—'}</p>
         <div className="mt-2.5">
           <StatusBadge status={c.status} />
@@ -374,23 +374,23 @@ function CandidateCard({ c, initials, ownerName, hasScheduledInterview, isHR, is
             <MoreVertical size={12} />
           </button>
           {open && (
-            <div className="absolute right-0 bottom-full mb-1 w-48 bg-[#ffffff] border border-[#e8e2d9] rounded-xl shadow-modal z-50 py-1.5">
+            <div className="absolute right-0 bottom-full mb-1 w-48 bg-[var(--theme-cream)] border border-[var(--theme-linen)] rounded-xl shadow-modal z-50 py-1.5">
               {isHR && (
-                <button className="w-full text-left px-4 py-2 text-xs text-[#78716c] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setOpen(false); onEdit(); }}>
+                <button className="w-full text-left px-4 py-2 text-xs text-[var(--theme-taupe)] hover:bg-[var(--theme-sidebar-bg)] flex items-center gap-2" onClick={() => { setOpen(false); onEdit(); }}>
                   <Pencil size={12} /> Edit
                 </button>
               )}
               {isHR && (
-                <button className="w-full text-left px-4 py-2 text-xs text-[#78716c] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setOpen(false); onSchedule(); }}>
+                <button className="w-full text-left px-4 py-2 text-xs text-[var(--theme-taupe)] hover:bg-[var(--theme-sidebar-bg)] flex items-center gap-2" onClick={() => { setOpen(false); onSchedule(); }}>
                   <CalendarDays size={12} /> {hasScheduledInterview ? 'Reschedule' : 'Schedule Interview'}
                 </button>
               )}
               {(c.status === 'New Candidate' || c.status === 'Email Sent') && (
-                <button className="w-full text-left px-4 py-2 text-xs text-[#78716c] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setOpen(false); onSendEmail(); }}>
+                <button className="w-full text-left px-4 py-2 text-xs text-[var(--theme-taupe)] hover:bg-[var(--theme-sidebar-bg)] flex items-center gap-2" onClick={() => { setOpen(false); onSendEmail(); }}>
                   <Mail size={12} /> {c.status === 'Email Sent' ? 'Resend Email' : 'Send Email'}
                 </button>
               )}
-              <button className="w-full text-left px-4 py-2 text-xs text-[#78716c] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setOpen(false); onOpenResume(); }}>
+              <button className="w-full text-left px-4 py-2 text-xs text-[var(--theme-taupe)] hover:bg-[var(--theme-sidebar-bg)] flex items-center gap-2" onClick={() => { setOpen(false); onOpenResume(); }}>
                 <Eye size={12} /> View Resume
               </button>
               {isHR && c.status !== 'archived' && (

@@ -1,11 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       fontFamily: {
-        sans:  ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Playfair Display', 'Georgia', 'serif'],
+        sans:  ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        serif: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
       },
       colors: {
         // ── eSparkOS Design System tokens ──────────────────────

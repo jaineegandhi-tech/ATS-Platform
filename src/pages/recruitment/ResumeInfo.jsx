@@ -110,15 +110,15 @@ export default function ResumeInfo() {
 
   return (
     <div className="space-y-6">
-      <div className="pb-6 border-b border-[#e8e2d9]">
+      <div className="pb-6 border-b border-[var(--theme-linen)]">
         <p className="text-[10px] font-semibold text-[#a8a29e] uppercase tracking-widest mb-1">Recruitment</p>
-        <h1 className="text-xl font-semibold text-[#3c2a21]">Resume Parser</h1>
+        <h1 className="text-xl font-semibold text-[var(--theme-aubergine)]">Resume Parser</h1>
         <p className="text-sm text-[#a8a29e] mt-0.5">Extract and review candidate resume details.</p>
       </div>
-      <div className="bg-[#ffffff] rounded-2xl border border-[#e8e2d9] shadow-card overflow-hidden">
+      <div className="bg-[var(--theme-cream)] rounded-2xl border border-[var(--theme-linen)] shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="border-b border-[#e8e2d9]">
+            <thead className="border-b border-[var(--theme-linen)]">
               <tr>
                 <th className="table-th">Name</th>
                 <th className="table-th">Resume File</th>
@@ -127,9 +127,9 @@ export default function ResumeInfo() {
             </thead>
             <tbody className="divide-y divide-[#f5f1eb]">
               {candidates.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((c) => (
-                <tr key={c.id} className="hover:bg-[#faf7f2] transition-colors">
-                  <td className="table-td font-medium text-[#3c2a21]">{c.firstName} {c.lastName}</td>
-                  <td className="table-td text-[#78716c]">{c.resumeName || '—'}</td>
+                <tr key={c.id} className="hover:bg-[var(--theme-sidebar-bg)] transition-colors">
+                  <td className="table-td font-medium text-[var(--theme-aubergine)]">{c.firstName} {c.lastName}</td>
+                  <td className="table-td text-[var(--theme-taupe)]">{c.resumeName || '—'}</td>
                   <td className="table-td">
                     <button
                       className="btn btn-sm btn-secondary"

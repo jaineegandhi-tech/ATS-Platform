@@ -32,24 +32,24 @@ export default function ProfileVisitors() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="card text-center">
           <p className="text-3xl font-bold text-primary">{views.length}</p>
-          <p className="text-sm text-[#78716c] mt-1">Total Profile Views</p>
+          <p className="text-sm text-[var(--theme-taupe)] mt-1">Total Profile Views</p>
         </div>
         <div className="card text-center">
           <p className="text-3xl font-bold text-purple-600">{new Set(views.map(v => v.viewedId)).size}</p>
-          <p className="text-sm text-[#78716c] mt-1">Profiles Viewed</p>
+          <p className="text-sm text-[var(--theme-taupe)] mt-1">Profiles Viewed</p>
         </div>
         <div className="card text-center">
           <p className="text-3xl font-bold text-green-600">{new Set(views.map(v => v.viewerId)).size}</p>
-          <p className="text-sm text-[#78716c] mt-1">Unique Visitors</p>
+          <p className="text-sm text-[var(--theme-taupe)] mt-1">Unique Visitors</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 card p-0 overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#e8e2d9]">
+          <div className="px-6 py-4 border-b border-[var(--theme-linen)]">
             <h2 className="section-title mb-0">Visitor Log</h2>
           </div>
-          <div className="p-4 border-b border-[#e8e2d9]">
+          <div className="p-4 border-b border-[var(--theme-linen)]">
             <div className="flex flex-wrap gap-3">
               <input className="input flex-1 min-w-40" placeholder="Search visitor or profile..." value={search} onChange={e => setSearch(e.target.value)} />
               <select className="input w-auto" value={filterDept} onChange={e => setFilterDept(e.target.value)}>
@@ -61,14 +61,14 @@ export default function ProfileVisitors() {
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
+              <thead className="bg-[var(--theme-sidebar-bg)] border-b border-[var(--theme-linen)]">
                 <tr>{['Viewer', 'Viewed Profile', 'Department', 'Date', 'Time'].map(h => <th key={h} className="table-th">{h}</th>)}</tr>
               </thead>
               <tbody className="divide-y divide-[#f5f1eb]">
                 {filtered.length === 0 ? (
                   <tr><td colSpan={5} className="table-td text-center text-[#a8a29e] py-8">No profile views recorded.</td></tr>
                 ) : filtered.slice(0, 50).map(v => (
-                  <tr key={v.id} className="hover:bg-[#faf7f2]">
+                  <tr key={v.id} className="hover:bg-[var(--theme-sidebar-bg)]">
                     <td className="table-td font-medium">{v.viewerName}</td>
                     <td className="table-td">{v.viewedName}</td>
                     <td className="table-td">{v.department}</td>
@@ -92,11 +92,11 @@ export default function ProfileVisitors() {
                 <div className="flex items-center gap-2">
                   <span className="w-5 h-5 rounded-full bg-primary text-white text-xs flex items-center justify-center font-bold">{i + 1}</span>
                   <div>
-                    <p className="text-sm font-medium text-[#3c2a21]">{emp.firstName} {emp.lastName}</p>
-                    <p className="text-xs text-[#78716c]">{emp.department}</p>
+                    <p className="text-sm font-medium text-[var(--theme-aubergine)]">{emp.firstName} {emp.lastName}</p>
+                    <p className="text-xs text-[var(--theme-taupe)]">{emp.department}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1 text-sm text-[#78716c]">
+                <div className="flex items-center gap-1 text-sm text-[var(--theme-taupe)]">
                   <Eye size={13} />{count}
                 </div>
               </div>

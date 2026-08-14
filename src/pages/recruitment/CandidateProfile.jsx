@@ -248,8 +248,8 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
             {candidate.firstName?.[0]}{candidate.lastName?.[0]}
           </div>
           <div>
-            <h1 className="text-xl font-bold text-[#3c2a21]">{candidate.firstName} {candidate.lastName}</h1>
-            <p className="text-sm text-[#78716c]">{candidate.appliedPosition} · {candidate.department}</p>
+            <h1 className="text-xl font-bold text-[var(--theme-aubergine)]">{candidate.firstName} {candidate.lastName}</h1>
+            <p className="text-sm text-[var(--theme-taupe)]">{candidate.appliedPosition} · {candidate.department}</p>
             <div className="flex items-center gap-3 mt-2">
               <StatusBadge status={candidate.status} />
               <span className="text-xs text-[#a8a29e]">{candidate.id}</span>
@@ -273,23 +273,23 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
                 Actions <ChevronDown size={13} />
               </button>
               {actionsOpen && (
-                <div className="absolute right-0 top-full mt-1 w-52 bg-[#ffffff] border border-[#e8e2d9] rounded-xl shadow-lg z-50 py-1" onMouseLeave={() => setActionsOpen(false)}>
-                  <button className="w-full text-left px-4 py-2 text-sm text-[#3c2a21] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setActionsOpen(false); navigate(`/candidates/${id}/edit`); }}>
+                <div className="absolute right-0 top-full mt-1 w-52 bg-[var(--theme-cream)] border border-[var(--theme-linen)] rounded-xl shadow-lg z-50 py-1" onMouseLeave={() => setActionsOpen(false)}>
+                  <button className="w-full text-left px-4 py-2 text-sm text-[var(--theme-aubergine)] hover:bg-[var(--theme-sidebar-bg)] flex items-center gap-2" onClick={() => { setActionsOpen(false); navigate(`/candidates/${id}/edit`); }}>
                     <Pencil size={13} /> Edit Candidate
                   </button>
-                  <button className="w-full text-left px-4 py-2 text-sm text-[#3c2a21] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setActionsOpen(false); navigate(`/candidates/${id}/schedule`); }}>
+                  <button className="w-full text-left px-4 py-2 text-sm text-[var(--theme-aubergine)] hover:bg-[var(--theme-sidebar-bg)] flex items-center gap-2" onClick={() => { setActionsOpen(false); navigate(`/candidates/${id}/schedule`); }}>
                     <CalendarDays size={13} /> {hasScheduledInterview ? 'Reschedule Interview' : 'Schedule Interview'}
                   </button>
-                  <button className="w-full text-left px-4 py-2 text-sm text-[#3c2a21] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setActionsOpen(false); setNewStatus(candidate.status); setStatusModal(true); }}>
+                  <button className="w-full text-left px-4 py-2 text-sm text-[var(--theme-aubergine)] hover:bg-[var(--theme-sidebar-bg)] flex items-center gap-2" onClick={() => { setActionsOpen(false); setNewStatus(candidate.status); setStatusModal(true); }}>
                     <CheckCircle size={13} /> Update Status
                   </button>
                   {['Selected', 'Offered'].includes(candidate.status) && (
-                    <button className="w-full text-left px-4 py-2 text-sm text-[#3c2a21] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setActionsOpen(false); setJoiningModal(true); }}>
+                    <button className="w-full text-left px-4 py-2 text-sm text-[var(--theme-aubergine)] hover:bg-[var(--theme-sidebar-bg)] flex items-center gap-2" onClick={() => { setActionsOpen(false); setJoiningModal(true); }}>
                       <Send size={13} /> Joining Details
                     </button>
                   )}
                   {isHR && (
-                    <button className="w-full text-left px-4 py-2 text-sm text-[#3c2a21] hover:bg-[#faf7f2] flex items-center gap-2" onClick={() => { setActionsOpen(false); setReassignTo(candidate.assignedTo || ''); setReassignModal(true); }}>
+                    <button className="w-full text-left px-4 py-2 text-sm text-[var(--theme-aubergine)] hover:bg-[var(--theme-sidebar-bg)] flex items-center gap-2" onClick={() => { setActionsOpen(false); setReassignTo(candidate.assignedTo || ''); setReassignModal(true); }}>
                       <UserCheck size={13} /> Reassign HR
                     </button>
                   )}
@@ -332,9 +332,9 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
               ['CTC Negotiable', candidate.negotiable ? 'Yes' : 'No'],
               ['Can Join Immediately', candidate.immediateJoining ? 'Yes' : 'No'],
             ].map(([label, value]) => value ? (
-              <div key={label} className="rounded-lg bg-[#faf7f2] p-3">
+              <div key={label} className="rounded-lg bg-[var(--theme-sidebar-bg)] p-3">
                 <p className="text-xs text-[#a8a29e]">{label}</p>
-                <p className="text-sm font-semibold text-[#3c2a21]">{value || '-'}</p>
+                <p className="text-sm font-semibold text-[var(--theme-aubergine)]">{value || '-'}</p>
               </div>
             ) : null)}
           </div>
@@ -362,7 +362,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
           )}
           {/* Telephonic Interview Record */}
           {telephonicRecord && (
-            <div className="space-y-3 pt-2 border-t border-[#e8e2d9]">
+            <div className="space-y-3 pt-2 border-t border-[var(--theme-linen)]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg bg-violet-100 flex items-center justify-center">
@@ -376,7 +376,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-[#faf7f2] border-b border-[#e8e2d9]">
+                  <thead className="bg-[var(--theme-sidebar-bg)] border-b border-[var(--theme-linen)]">
                     <tr>
                       {['Call Date', 'Call Time', 'Duration', 'Called By', 'Outcome', 'Current CTC', 'Expected CTC', 'Notice Period', 'Imm. Joiner', 'Notes'].map(h => (
                         <th key={h} className="table-th whitespace-nowrap">{h}</th>
@@ -384,7 +384,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="hover:bg-[#faf7f2]/60">
+                    <tr className="hover:bg-[var(--theme-sidebar-bg)]/60">
                       <td className="table-td">{telephonicRecord.callDate || '—'}</td>
                       <td className="table-td">{telephonicRecord.callTime || '—'}</td>
                       <td className="table-td">{telephonicRecord.duration ? `${telephonicRecord.duration} min` : '—'}</td>
@@ -399,7 +399,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
                       <td className="table-td">{telephonicRecord.expectedCTC || '—'}</td>
                       <td className="table-td">{telephonicRecord.noticePeriod || '—'}</td>
                       <td className="table-td">{telephonicRecord.immediateJoiner ? 'Yes' : 'No'}</td>
-                      <td className="table-td max-w-[160px] truncate text-xs text-[#78716c]" title={telephonicRecord.notes}>{telephonicRecord.notes || '—'}</td>
+                      <td className="table-td max-w-[160px] truncate text-xs text-[var(--theme-taupe)]" title={telephonicRecord.notes}>{telephonicRecord.notes || '—'}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -416,7 +416,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
           {[['Email', candidate.email], ['Mobile', candidate.mobile], ['Location', candidate.location], ['Employment Type', candidate.employmentType]].map(([k, v]) => (
             <div key={k} className="flex justify-between border-b border-[#f5f1eb] pb-2 last:border-0">
               <span className="text-xs text-[#a8a29e]">{k}</span>
-              <span className="text-sm font-medium text-[#3c2a21]">{v || '—'}</span>
+              <span className="text-sm font-medium text-[var(--theme-aubergine)]">{v || '—'}</span>
             </div>
           ))}
           {/* Recruitment Info merged here for Head HR */}
@@ -424,20 +424,20 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
             const creator = employees.find(e => e.id === candidate.createdBy);
             return (
               <>
-                <div className="border-t border-[#e8e2d9] pt-2 mt-1">
+                <div className="border-t border-[var(--theme-linen)] pt-2 mt-1">
                   <p className="text-xs font-semibold text-[#a8a29e] mb-2">Recruitment Info</p>
                 </div>
                 <div className="flex justify-between border-b border-[#f5f1eb] pb-2">
                   <span className="text-xs text-[#a8a29e]">Created By</span>
-                  <span className="text-sm font-medium text-[#3c2a21]">{creator ? `${creator.firstName} ${creator.lastName}` : candidate.createdBy}</span>
+                  <span className="text-sm font-medium text-[var(--theme-aubergine)]">{creator ? `${creator.firstName} ${creator.lastName}` : candidate.createdBy}</span>
                 </div>
                 <div className="flex justify-between border-b border-[#f5f1eb] pb-2">
                   <span className="text-xs text-[#a8a29e]">HR Role</span>
-                  <span className="text-sm font-medium text-[#3c2a21]">{creator?.designation || 'HR'}</span>
+                  <span className="text-sm font-medium text-[var(--theme-aubergine)]">{creator?.designation || 'HR'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-xs text-[#a8a29e]">Created On</span>
-                  <span className="text-sm font-medium text-[#3c2a21]">{candidate.createdAt ? new Date(candidate.createdAt).toLocaleDateString() : '—'}</span>
+                  <span className="text-sm font-medium text-[var(--theme-aubergine)]">{candidate.createdAt ? new Date(candidate.createdAt).toLocaleDateString() : '—'}</span>
                 </div>
               </>
             );
@@ -452,10 +452,10 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
           ) : (
             <div className="space-y-3">
               {interviews.map(iv => (
-                <div key={iv.id} className="border border-[#e8e2d9] rounded-xl p-4">
+                <div key={iv.id} className="border border-[var(--theme-linen)] rounded-xl p-4">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-sm font-semibold text-[#3c2a21]">{iv.round}</p>
+                      <p className="text-sm font-semibold text-[var(--theme-aubergine)]">{iv.round}</p>
                       <p className="text-xs text-[#a8a29e]">{formatDate(iv.date)} at {iv.time} · {iv.mode}</p>
                       <p className="text-xs text-[#a8a29e] mt-1">
                         Interviewer(s): {iv.interviewerIds?.map(getEmpName).join(', ') || '—'}
@@ -465,12 +465,12 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
                   </div>
                   {iv.feedback && (
                     <div className="mt-3 pt-3 border-t border-[#f5f1eb]">
-                      <p className="text-xs font-semibold text-[#78716c] mb-1">Feedback</p>
-                      <div className="flex items-center gap-4 text-xs text-[#78716c]">
+                      <p className="text-xs font-semibold text-[var(--theme-taupe)] mb-1">Feedback</p>
+                      <div className="flex items-center gap-4 text-xs text-[var(--theme-taupe)]">
                         <span>Rating: <strong>{iv.feedback.rating}</strong></span>
                         <span>Decision: <strong>{iv.feedback.decision}</strong></span>
                       </div>
-                      {iv.feedback.remarks && <p className="text-xs text-[#78716c] mt-1">{iv.feedback.remarks}</p>}
+                      {iv.feedback.remarks && <p className="text-xs text-[var(--theme-taupe)] mt-1">{iv.feedback.remarks}</p>}
                     </div>
                   )}
                   {!iv.feedback && iv.status !== 'cancelled' && (
@@ -503,14 +503,14 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
               ['Email', candidate.joiningDetails.email],
               ['Employee ID', candidate.itSetup?.employeeId || 'Pending IT setup'],
             ].map(([label, value]) => (
-              <div key={label} className="rounded-lg bg-[#faf7f2] p-3">
+              <div key={label} className="rounded-lg bg-[var(--theme-sidebar-bg)] p-3">
                 <p className="text-xs text-[#a8a29e]">{label}</p>
-                <p className="text-sm font-semibold text-[#3c2a21]">{value || '-'}</p>
+                <p className="text-sm font-semibold text-[var(--theme-aubergine)]">{value || '-'}</p>
               </div>
             ))}
           </div>
           {candidate.joiningDetails.onboardingNotes && (
-            <p className="text-sm text-[#78716c] mt-4 bg-blue-50 border border-blue-100 rounded-lg p-3">{candidate.joiningDetails.onboardingNotes}</p>
+            <p className="text-sm text-[var(--theme-taupe)] mt-4 bg-blue-50 border border-blue-100 rounded-lg p-3">{candidate.joiningDetails.onboardingNotes}</p>
           )}
         </div>
       )}
@@ -526,7 +526,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
             {candidate.timeline.map((t, i) => (
               <div key={i} className="relative mb-4 last:mb-0">
                 <div className="absolute -left-4 top-1 w-2.5 h-2.5 rounded-full bg-primary/60 ring-2 ring-white" />
-                <p className="text-sm font-medium text-[#3c2a21]">{t.action}</p>
+                <p className="text-sm font-medium text-[var(--theme-aubergine)]">{t.action}</p>
                 <p className="text-xs text-[#a8a29e]">{new Date(t.at).toLocaleString()} · {getEmpName(t.by)}</p>
               </div>
             ))}
@@ -538,7 +538,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
       {reassignModal && (
         <Modal title="Reassign Candidate to Another HR" onClose={() => setReassignModal(false)} size="sm">
           <div className="space-y-4">
-            <p className="text-sm text-[#78716c]">Select an HR to take over <strong>{candidate.firstName} {candidate.lastName}</strong>.</p>
+            <p className="text-sm text-[var(--theme-taupe)]">Select an HR to take over <strong>{candidate.firstName} {candidate.lastName}</strong>.</p>
             {candidate.assignedTo && (() => {
               const current = employees.find(e => e.id === candidate.assignedTo);
               return current ? <p className="text-xs text-[#a8a29e]">Currently assigned to: <strong>{current.firstName} {current.lastName}</strong></p> : null;
@@ -587,7 +587,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
       {joiningModal && (
         <Modal title="Joining Details for IT Handoff" onClose={() => setJoiningModal(false)} size="lg">
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3 bg-[#faf7f2] rounded-lg p-4">
+            <div className="grid grid-cols-2 gap-3 bg-[var(--theme-sidebar-bg)] rounded-lg p-4">
               {[
                 ['Full Name', `${candidate.firstName} ${candidate.lastName}`],
                 ['Email', candidate.email],
@@ -598,7 +598,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
               ].map(([label, value]) => (
                 <div key={label}>
                   <p className="text-xs text-[#a8a29e]">{label}</p>
-                  <p className="text-sm font-semibold text-[#3c2a21]">{value || '-'}</p>
+                  <p className="text-sm font-semibold text-[var(--theme-aubergine)]">{value || '-'}</p>
                 </div>
               ))}
             </div>
@@ -652,7 +652,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
       {itModal && (
         <Modal title="Complete IT Setup" onClose={() => setItModal(false)} size="lg">
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3 bg-[#faf7f2] rounded-lg p-4">
+            <div className="grid grid-cols-2 gap-3 bg-[var(--theme-sidebar-bg)] rounded-lg p-4">
               {[
                 ['Candidate', `${candidate.firstName} ${candidate.lastName}`],
                 ['Joining Date', candidate.joiningDetails?.joiningDate],
@@ -661,7 +661,7 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
               ].map(([label, value]) => (
                 <div key={label}>
                   <p className="text-xs text-[#a8a29e]">{label}</p>
-                  <p className="text-sm font-semibold text-[#3c2a21]">{value || '-'}</p>
+                  <p className="text-sm font-semibold text-[var(--theme-aubergine)]">{value || '-'}</p>
                 </div>
               ))}
             </div>
@@ -674,11 +674,11 @@ Immediate Joining\t${candidate.immediateJoining ? 'Yes' : 'No'}`;
                 <label className="label">Work Email</label>
                 <input className="input" value={itSetupForm.workEmail} onChange={e => setItSetupForm(f => ({ ...f, workEmail: e.target.value }))} placeholder="name@company.com" />
               </div>
-              <label className="flex items-center gap-2 text-sm text-[#78716c]">
+              <label className="flex items-center gap-2 text-sm text-[var(--theme-taupe)]">
                 <input type="checkbox" checked={itSetupForm.laptopRequired} onChange={e => setItSetupForm(f => ({ ...f, laptopRequired: e.target.checked }))} />
                 Laptop prepared
               </label>
-              <label className="flex items-center gap-2 text-sm text-[#78716c]">
+              <label className="flex items-center gap-2 text-sm text-[var(--theme-taupe)]">
                 <input type="checkbox" checked={itSetupForm.idCardRequired} onChange={e => setItSetupForm(f => ({ ...f, idCardRequired: e.target.checked }))} />
                 ID card prepared
               </label>
