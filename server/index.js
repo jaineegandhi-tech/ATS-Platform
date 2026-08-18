@@ -13,6 +13,7 @@ import approvalsRouter from './routes/approvals.js';
 import logsRouter from './routes/logs.js';
 import telephonyRouter from './routes/telephony.js';
 import rolesRouter from './routes/roles.js';
+import mailRouter from './routes/mail.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -43,6 +44,7 @@ app.use('/api/approvals', approvalsRouter);
 app.use('/api/logs', logsRouter);
 app.use('/api/telephony', telephonyRouter);
 app.use('/api/roles', rolesRouter);
+app.use('/api/mail', mailRouter);
 
 // 404 handler for unhandled API routes
 app.use('/api', (req, res) => {

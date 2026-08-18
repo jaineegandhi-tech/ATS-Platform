@@ -94,13 +94,32 @@ export default function Candidates() {
     setPreviewResume(c);
   }
 
-  function sendEmail(c) {
+  async function sendEmail(c) {
     if (!c.email) return alert('No email address on file for this candidate.');
-    const subject = encodeURIComponent('Your CV is Under Review — Thank You for Applying');
-    const body = encodeURIComponent(
-      `Dear ${c.firstName},\n\nThank you for applying for the ${c.appliedPosition || 'position'} role at our organisation.\n\nWe have received your CV and it is currently under review. Our recruitment team will be in touch with you shortly regarding the next steps.\n\nBest regards,\nRecruitment Team`
-    );
-    window.open(`mailto:${c.email}?subject=${subject}&body=${body}`);
+
+    if (c.status === 'Outsourced') {
+      try {
+        const response = await fetch('http://localhost:3000/api/mail/send-acknowledgement', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: c.email, candidateName: c.firstName })
+        });
+        const data = await response.json();
+        if (!data.success) throw new Error(data.error);
+        alert('Acknowledgement email sent successfully via SMTP.');
+      } catch (err) {
+        console.error(err);
+        alert('Failed to send email via SMTP. Check server console for errors.');
+        return;
+      }
+    } else {
+      const subject = encodeURIComponent('Your CV is Under Review — Thank You for Applying');
+      const body = encodeURIComponent(
+        `Dear ${c.firstName},\n\nThank you for applying for the ${c.appliedPosition || 'position'} role at our organisation.\n\nWe have received your CV and it is currently under review. Our recruitment team will be in touch with you shortly regarding the next steps.\n\nBest regards,\nRecruitment Team`
+      );
+      window.open(`mailto:${c.email}?subject=${subject}&body=${body}`);
+    }
+
     const now = new Date().toISOString();
     setStore(STORAGE_KEYS.CANDIDATES, getStore(STORAGE_KEYS.CANDIDATES).map(x =>
       x.id === c.id ? {

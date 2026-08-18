@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Briefcase, CheckCircle, Minus, Pencil, Plus, Search, Trash2, Users } from 'lucide-react';
+import { Briefcase, CheckCircle, Minus, Pencil, Plus, Search, Trash2, Users, XCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { STORAGE_KEYS, addLog, getStore, setStore } from '../../utils/store';
 import { isHeadHR } from '../../utils/roles';
@@ -10,7 +10,7 @@ import ConfirmDialog from '../../components/shared/ConfirmDialog';
 const DEPARTMENTS = ['Human Resources', 'Engineering', 'Marketing', 'Sales', 'Finance', 'Operations', 'Design', 'Product'];
 
 function OpeningModal({ opening, user, onClose, onSaved }) {
-  const [form, setForm] = useState(() => opening || { positionName: '', department: '', openings: 1, filled: 0, status: 'open' });
+  const [form, setForm] = useState(() => opening || { positionName: '', department: '', openings: 1, filled: 0, status: 'open', isClosed: false });
   const [error, setError] = useState('');
 
   function set(field, value) { setForm(current => ({ ...current, [field]: value })); }
@@ -28,7 +28,7 @@ function OpeningModal({ opening, user, onClose, onSaved }) {
     const all = getStore(STORAGE_KEYS.JOB_OPENINGS);
     const updatedAt = new Date().toISOString();
     const updatedBy = `${user.firstName} ${user.lastName}`;
-    const payload = { ...form, positionName, openings, filled, status: filled >= openings ? 'filled' : 'open', updatedAt, updatedBy };
+    const payload = { ...form, positionName, openings, filled, status: filled >= openings ? 'filled' : 'open', isClosed: !!form.isClosed, updatedAt, updatedBy };
     const updated = opening
       ? all.map(item => item.id === opening.id ? { ...item, ...payload } : item)
       : [{ id: `JOB${Date.now()}`, ...payload }, ...all];
@@ -60,6 +60,10 @@ function OpeningModal({ opening, user, onClose, onSaved }) {
             <label className="label">Filled Positions</label>
             <input className="input" type="number" min="0" value={form.filled} onChange={e => set('filled', e.target.value)} />
           </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <input type="checkbox" id="isClosed" checked={form.isClosed || false} onChange={e => set('isClosed', e.target.checked)} className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+          <label htmlFor="isClosed" className="text-sm font-medium text-[var(--theme-taupe)]">Temporarily Close Opening</label>
         </div>
         {error && <p className="text-xs text-red-500 bg-red-50 border border-red-100 rounded-lg px-3 py-2">{error}</p>}
         <div className="flex justify-end gap-2 pt-2 border-t border-[#f5f1eb]">
@@ -96,6 +100,17 @@ export default function JobOpenings() {
       : item);
     setStore(STORAGE_KEYS.JOB_OPENINGS, updated);
     addLog('Job Opening Updated', user.id, `${updatedBy} updated filled count for ${opening.positionName}`);
+    forceUpdate(n => n + 1);
+  }
+
+  function toggleStatus(opening) {
+    const updatedBy = `${user.firstName} ${user.lastName}`;
+    const nextIsClosed = !opening.isClosed;
+    const updated = getStore(STORAGE_KEYS.JOB_OPENINGS).map(item => item.id === opening.id
+      ? { ...item, isClosed: nextIsClosed, updatedAt: new Date().toISOString(), updatedBy }
+      : item);
+    setStore(STORAGE_KEYS.JOB_OPENINGS, updated);
+    addLog('Job Opening Updated', user.id, `${updatedBy} ${nextIsClosed ? 'closed' : 'reopened'} ${opening.positionName}`);
     forceUpdate(n => n + 1);
   }
 
@@ -160,8 +175,8 @@ export default function JobOpenings() {
                     <h2 className="text-sm font-semibold text-[var(--theme-aubergine)] truncate">{opening.positionName}</h2>
                     <p className="text-xs text-[#a8a29e] mt-0.5">{opening.department}</p>
                   </div>
-                  <span className={`badge flex-shrink-0 ${isFilled ? 'badge-green' : 'badge-blue'}`}>
-                    {isFilled ? 'Filled' : 'Open'}
+                  <span className={`badge flex-shrink-0 ${opening.isClosed ? 'badge-gray' : isFilled ? 'badge-green' : 'badge-blue'}`}>
+                    {opening.isClosed ? 'Closed' : isFilled ? 'Filled' : 'Open'}
                   </span>
                 </div>
 
@@ -205,6 +220,9 @@ export default function JobOpenings() {
                       <Plus size={11} />
                     </button>
                     <span className="text-xs text-[#a8a29e] flex-1 text-center">adjust filled</span>
+                    <button className="btn btn-xs btn-secondary" onClick={() => toggleStatus(opening)}>
+                      {opening.isClosed ? <><CheckCircle size={11} /> Reopen</> : <><XCircle size={11} /> Close</>}
+                    </button>
                     <button className="btn btn-xs btn-secondary" onClick={() => setEditing(opening)}>
                       <Pencil size={11} /> Edit
                     </button>
